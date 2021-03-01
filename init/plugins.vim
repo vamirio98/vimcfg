@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/02/16 23:35:55
+" Last Modified: 2021/02/23 12:04:59
 "=======================================================
 
 
@@ -165,7 +165,7 @@ if index(g:plugin_group, 'filetypes') >= 0
 	" preview markdown
 	"-------------------------------------------------------
 	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app &&
-		\ yarn install && npm install', 'for': ['markdown'] }
+		\ npm install', 'for': ['markdown'] }
 
 
 	"-------------------------------------------------------
@@ -267,13 +267,6 @@ if index(g:plugin_group, 'coc') >= 0
 		set signcolumn=number
 	else
 		set signcolumn=yes
-	endif
-
-	" use <C-space> to trigger completion
-	if has('nvim')
-		inoremap <silent><expr> <C-space> coc#refresh()
-	else
-		inoremap <silent><expr> <C-@> coc#refresh()
 	endif
 
 	" use tab for trigger completion and snippet expand
