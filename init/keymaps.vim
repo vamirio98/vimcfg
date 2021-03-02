@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/02/17 00:14:38
+" Last Modified: 2021/03/02 09:09:53
 "=======================================================
 
 
@@ -119,4 +119,4 @@ nnoremap <silent> <leader>evp :call EditProfile('plugins.vim')<CR>
 nnoremap <silent> <leader>evk :call EditProfile('keymaps.vim')<CR>
 
 " reload Vim profile
-nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :source %<CR>

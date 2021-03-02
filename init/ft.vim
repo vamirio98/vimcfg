@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/02/17 11:09:19
+" Last Modified: 2021/03/02 11:32:09
 "
 "=======================================================
 
@@ -35,7 +35,8 @@ function! CreateVimFile()
 	call setline(4, "\" Created by hyl on " . strftime("%Y/%m/%d"))
 	call setline(5, "\" Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(6, "\"=======================================================")
-	execute "normal! jA"
+	execute "normal! j"
+	execute "startinsert!"
 endfunction
 
 "-------------------------------------------------------
@@ -49,7 +50,8 @@ function! CreateCFile()
 	call setline(5, " * Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(6, " *=======================================================")
 	call setline(7, " */")
-	execute "normal! jA"
+	execute "normal! j"
+	execute "startinsert!"
 endfunction
 
 "-------------------------------------------------------
@@ -64,7 +66,8 @@ function! CreateShellFile()
 	call setline(6, "# Created by hyl on " . strftime("%Y/%m/%d"))
 	call setline(7, "# Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(8, "#=======================================================")
-	execute "normal! 3jA"
+	execute "normal! 3j"
+	execute "startinsert!"
 endfunction
 
 
@@ -89,30 +92,46 @@ endfunction
 "=======================================================
 augroup Vim
 	autocmd!
+	autocmd BufEnter *.vim let b:AutoPairs = {'(':')', '[':']', '{':'}',
+		\ "'":"'", "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 	" comment title
-	autocmd BufEnter *.vim nnoremap <M-S-c>
-		\ o"=======================================================
-		\<CR><CR>
-		\=======================================================
-		\<ESC>ka<space>
-	autocmd BufEnter *.vim inoremap <M-S-c>
-		\ "=======================================================
-		\<CR><CR>
-		\=======================================================
-		\<ESC>ka<space>
+	autocmd BufEnter *.vim nnoremap <M-C> :call AddVimCommentTitle('n')<CR>
+	autocmd BufEnter *.vim inoremap <M-C> <ESC>:call AddVimCommentTitle('i')<CR>
 
 	" comment subtitle
-	autocmd BufEnter *.vim nnoremap <M-c>
-		\ o"-------------------------------------------------------
-		\<CR><CR>
-		\-------------------------------------------------------
-		\<ESC>ka<space>
-	autocmd BufEnter *.vim inoremap <M-c>
-		\ "-------------------------------------------------------
-		\<CR><CR>
-		\-------------------------------------------------------
-		\<ESC>ka<space>
+	autocmd BufEnter *.vim nnoremap <M-c> :call AddVimCommentSubtitle('n')<CR>
+	autocmd BufEnter *.vim inoremap <M-c> <ESC>:call AddVimCommentSubtitle('i')<CR>
 augroup END
+
+function! AddVimCommentTitle(mode)
+	let l:title = ["\"=======================================================",
+		\ "\"",
+		\ "\"======================================================="]
+	if a:mode == 'n'       " normal mode
+		call append(line('.'), l:title)
+		execute "normal! 2j"
+		execute "startinsert!"
+	elseif a:mode == 'i'   " insert mode
+		call append(line('.')-1, l:title)
+		execute "normal! 2k"
+		execute "startinsert!"
+	endif
+endfunction
+
+function! AddVimCommentSubtitle(mode)
+	let l:title = ["\"-------------------------------------------------------",
+		\ "\"",
+		\ "\"-------------------------------------------------------"]
+	if a:mode == 'n'       " normal mode
+		call append(line('.'), l:title)
+		execute "normal! 2j"
+		execute "startinsert!"
+	elseif a:mode == 'i'   " insert mode
+		call append(line('.')-1, l:title)
+		execute "normal! 2k"
+		execute "startinsert!"
+	endif
+endfunction
 
 
 "=======================================================
