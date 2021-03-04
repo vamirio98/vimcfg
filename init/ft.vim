@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/02 11:32:09
+" Last Modified: 2021/03/04 12:04:31
 "
 "=======================================================
 
@@ -95,12 +95,16 @@ augroup Vim
 	autocmd BufEnter *.vim let b:AutoPairs = {'(':')', '[':']', '{':'}',
 		\ "'":"'", "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 	" comment title
-	autocmd BufEnter *.vim nnoremap <M-C> :call AddVimCommentTitle('n')<CR>
-	autocmd BufEnter *.vim inoremap <M-C> <ESC>:call AddVimCommentTitle('i')<CR>
+	autocmd BufEnter *.vim nnoremap <buffer> <M-C> :call
+		\ AddVimCommentTitle('n')<CR>
+	autocmd BufEnter *.vim inoremap <buffer> <M-C> <ESC>:call
+		\ AddVimCommentTitle('i')<CR>
 
 	" comment subtitle
-	autocmd BufEnter *.vim nnoremap <M-c> :call AddVimCommentSubtitle('n')<CR>
-	autocmd BufEnter *.vim inoremap <M-c> <ESC>:call AddVimCommentSubtitle('i')<CR>
+	autocmd BufEnter *.vim nnoremap <buffer> <M-c> :call
+		\ AddVimCommentSubtitle('n')<CR>
+	autocmd BufEnter *.vim inoremap <buffer> <M-c> <ESC>:call
+		\ AddVimCommentSubtitle('i')<CR>
 augroup END
 
 function! AddVimCommentTitle(mode)
@@ -139,6 +143,11 @@ endfunction
 "=======================================================
 augroup cfamily
 	autocmd!
+	" comment subtitle
+	autocmd FileType c{,c,pp} nnoremap <buffer> <M-c> :call
+		\ AddCCommentSubtitle('n')<CR>
+	autocmd FileType c{,c,pp} inoremap <buffer> <M-c> <ESC>:call
+		\ AddCCommentSubtitle('i')<CR>
 	" quickly comment single line
 	autocmd FileType c{,c,pp} nnoremap <buffer> <localleader>/ I//<ESC>
 
@@ -147,6 +156,22 @@ augroup cfamily
 	autocmd FileType c{,c,pp} iabbrev <buffer> incldue include
 	autocmd FileType c{,c,pp} iabbrev <buffer> inculde include
 augroup END
+
+function! AddCCommentSubtitle(mode)
+	let l:title = ["/*-------------------------------------------------------",
+		\ " *",
+		\ " *-------------------------------------------------------",
+		\ " */"]
+	if a:mode == 'n'       " normal mode
+		call append(line('.'), l:title)
+		execute "normal! 2j"
+		execute "startinsert!"
+	elseif a:mode == 'i'   " insert mode
+		call append(line('.')-1, l:title)
+		execute "normal! 3k"
+		execute "startinsert!"
+	endif
+endfunction
 
 
 "=======================================================
