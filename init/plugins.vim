@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/08 23:11:55
+" Last Modified: 2021/03/12 21:44:28
 "=======================================================
 
 
@@ -101,6 +101,13 @@ if index(g:plugin_group, 'enhanced') >= 0
 	autocmd Syntax * RainbowParenthesesLoadRound
 	autocmd Syntax * RainbowParenthesesLoadSquare
 	autocmd Syntax * RainbowParenthesesLoadBraces
+
+
+	"-------------------------------------------------------
+	" lessspace
+	"-------------------------------------------------------
+	" operate on everything but files in blacklist
+	let g:lessspace_blacklist = ['diff', 'markdown']
 endif
 
 

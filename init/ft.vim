@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/04 12:04:31
+" Last Modified: 2021/03/16 23:43:44
 "
 "=======================================================
 
@@ -108,9 +108,23 @@ augroup Vim
 augroup END
 
 function! AddVimCommentTitle(mode)
-	let l:title = ["\"=======================================================",
-		\ "\"",
-		\ "\"======================================================="]
+	let l:cur_indent = indent('.')
+	let l:n_tab = l:cur_indent / &tabstop
+	let l:n_space = l:cur_indent % &tabstop
+
+	let l:str = ""
+	while l:n_tab > 0
+		let l:str = l:str . "\t"
+		let l:n_tab -= 1
+	endwhile
+	while l:n_space > 0
+		let l:str = l:str . " "
+		let l:n_space -= 1
+	endwhile
+
+	let l:title = [l:str . "\"=======================================================",
+		\ l:str . "\"",
+		\ l:str . "\"======================================================="]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
@@ -123,9 +137,23 @@ function! AddVimCommentTitle(mode)
 endfunction
 
 function! AddVimCommentSubtitle(mode)
-	let l:title = ["\"-------------------------------------------------------",
-		\ "\"",
-		\ "\"-------------------------------------------------------"]
+	let l:cur_indent = indent('.')
+	let l:n_tab = l:cur_indent / &tabstop
+	let l:n_space = l:cur_indent % &tabstop
+
+	let l:str = ""
+	while l:n_tab > 0
+		let l:str = l:str . "\t"
+		let l:n_tab -= 1
+	endwhile
+	while l:n_space > 0
+		let l:str = l:str . " "
+		let l:n_space -= 1
+	endwhile
+
+	let l:title = [l:str . "\"-------------------------------------------------------",
+		\ l:str . "\"",
+		\ l:str . "\"-------------------------------------------------------"]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
@@ -158,10 +186,24 @@ augroup cfamily
 augroup END
 
 function! AddCCommentSubtitle(mode)
-	let l:title = ["/*-------------------------------------------------------",
-		\ " *",
-		\ " *-------------------------------------------------------",
-		\ " */"]
+	let l:cur_indent = indent('.')
+	let l:n_tab = l:cur_indent / &tabstop
+	let l:n_space = l:cur_indent % &tabstop
+
+	let l:str = ""
+	while l:n_tab > 0
+		let l:str = l:str . "\t"
+		let l:n_tab -= 1
+	endwhile
+	while l:n_space > 0
+		let l:str = l:str . " "
+		let l:n_space -= 1
+	endwhile
+
+	let l:title = [l:str . "/*-------------------------------------------------------",
+		\ l:str . " *",
+		\ l:str . " *-------------------------------------------------------",
+		\ l:str . " */"]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
