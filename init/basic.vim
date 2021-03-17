@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/02/16 23:51:23
+" Last Modified: 2021/03/17 13:15:50
 "=======================================================
 
 
@@ -16,10 +16,14 @@ let maplocalleader = "\<space>"
 "-------------------------------------------------------
 " jump to the last position when reopening a file
 "-------------------------------------------------------
-autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
-	\ 	exe "normal! g'\"" |
-	\ endif
+autocmd BufReadPost * call s:ReturnLastPos()
+function s:ReturnLastPos()
+	let l:last_pos = [line("'\""), col("'\"")]
+	if l:last_pos[0] > 1 && last_pos[1] <= line("$")
+		\ && &ft !~# 'commit'
+		call cursor(l:last_pos)
+	endif
+endfunction
 
 
 "-------------------------------------------------------
