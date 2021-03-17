@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/17 12:56:07
+" Last Modified: 2021/03/17 22:41:37
 "
 "=======================================================
 
@@ -75,8 +75,8 @@ endfunction
 " auto set Last Modified time
 "-------------------------------------------------------
 execute "autocmd BufWritePre,FileWritePre " . join(s:ft, ",") .
-	\ " call s:ReturnToCurPos()"
-function! s:ReturnToCurPos()
+	\ " call s:ModifyTime()"
+function! s:ModifyTime()
 	let l:cur_pos = getcurpos('.')
 	call LastModified()
 	call cursor(l:cur_pos[1], l:cur_pos[2])
