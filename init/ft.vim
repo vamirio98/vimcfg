@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/16 23:43:44
+" Last Modified: 2021/03/17 12:56:07
 "
 "=======================================================
 
@@ -75,7 +75,14 @@ endfunction
 " auto set Last Modified time
 "-------------------------------------------------------
 execute "autocmd BufWritePre,FileWritePre " . join(s:ft, ",") .
-	\ " ks | call LastModified() | 's"
+	\ " call s:ReturnToCurPos()"
+function! s:ReturnToCurPos()
+	let l:cur_pos = getcurpos('.')
+	call LastModified()
+	call cursor(l:cur_pos[1], l:cur_pos[2])
+endfunction
+
+
 function! LastModified()
 	if line("$") > 20
 		let l:nl = 20
@@ -107,7 +114,7 @@ augroup Vim
 		\ AddVimCommentSubtitle('i')<CR>
 augroup END
 
-function! AddVimCommentTitle(mode)
+function! s:GetIndent()
 	let l:cur_indent = indent('.')
 	let l:n_tab = l:cur_indent / &tabstop
 	let l:n_space = l:cur_indent % &tabstop
@@ -121,7 +128,12 @@ function! AddVimCommentTitle(mode)
 		let l:str = l:str . " "
 		let l:n_space -= 1
 	endwhile
+	return l:str
+endfunction
 
+
+function! AddVimCommentTitle(mode)
+	let l:str = s:GetIndent()
 	let l:title = [l:str . "\"=======================================================",
 		\ l:str . "\"",
 		\ l:str . "\"======================================================="]
@@ -137,20 +149,7 @@ function! AddVimCommentTitle(mode)
 endfunction
 
 function! AddVimCommentSubtitle(mode)
-	let l:cur_indent = indent('.')
-	let l:n_tab = l:cur_indent / &tabstop
-	let l:n_space = l:cur_indent % &tabstop
-
-	let l:str = ""
-	while l:n_tab > 0
-		let l:str = l:str . "\t"
-		let l:n_tab -= 1
-	endwhile
-	while l:n_space > 0
-		let l:str = l:str . " "
-		let l:n_space -= 1
-	endwhile
-
+	let l:str = s:GetIndent()
 	let l:title = [l:str . "\"-------------------------------------------------------",
 		\ l:str . "\"",
 		\ l:str . "\"-------------------------------------------------------"]
@@ -186,20 +185,7 @@ augroup cfamily
 augroup END
 
 function! AddCCommentSubtitle(mode)
-	let l:cur_indent = indent('.')
-	let l:n_tab = l:cur_indent / &tabstop
-	let l:n_space = l:cur_indent % &tabstop
-
-	let l:str = ""
-	while l:n_tab > 0
-		let l:str = l:str . "\t"
-		let l:n_tab -= 1
-	endwhile
-	while l:n_space > 0
-		let l:str = l:str . " "
-		let l:n_space -= 1
-	endwhile
-
+	let l:str = s:GetIndent()
 	let l:title = [l:str . "/*-------------------------------------------------------",
 		\ l:str . " *",
 		\ l:str . " *-------------------------------------------------------",
