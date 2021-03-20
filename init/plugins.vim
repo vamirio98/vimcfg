@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/12 21:44:28
+" Last Modified: 2021/03/20 12:26:39
 "=======================================================
 
 
@@ -398,7 +398,7 @@ if index(g:plugin_group, 'asynctask') >= 0
 	nnoremap <silent> q :call asyncrun#quickfix_toggle(6)<cr>
 
 	" specify what terminal do I want to use
-	let g:asynctasks_term_pos = 'bottom'
+	let g:asynctasks_term_pos = 'tab'
 
 	" reuse a terminal
 	let g:asynctasks_term_reuse = 1
