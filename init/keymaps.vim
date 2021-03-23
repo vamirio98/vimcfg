@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/02 09:09:53
+" Last Modified: 2021/03/23 10:22:37
 "=======================================================
 
 
@@ -38,12 +38,12 @@ cnoremap <C-e> <end>
 "-------------------------------------------------------
 
 " move between words
-nnoremap <M-h> b
-nnoremap <M-l> w
-inoremap <M-h> <C-left>
-inoremap <M-l> <C-right>
-cnoremap <M-h> <C-left>
-cnoremap <M-l> <C-right>
+nnoremap <C-y> b
+nnoremap <C-p> w
+inoremap <C-y> <C-left>
+inoremap <C-p> <C-right>
+cnoremap <C-y> <C-left>
+cnoremap <C-p> <C-right>
 
 " move between windows
 nnoremap <M-H> <C-w>h
