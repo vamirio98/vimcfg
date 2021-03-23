@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/20 12:50:57
+" Last Modified: 2021/03/23 16:24:36
 "=======================================================
 
 
@@ -339,6 +339,17 @@ if index(g:plugin_group, 'coc') >= 0
 	" apply AutoFix to problem on the current line
 	nmap <leader>qf <Plug>(coc-fix-current)
 
+	" translation
+	" popup
+	nmap <Leader>tt <Plug>(coc-translator-p)
+	vmap <Leader>tt <Plug>(coc-translator-pv)
+	" echo
+	nmap <Leader>te <Plug>(coc-translator-e)
+	vmap <Leader>te <Plug>(coc-translator-ev)
+	" replace
+	nmap <Leader>tr <Plug>(coc-translator-r)
+	vmap <Leader>tr <Plug>(coc-translator-rv)
+
 	" remap <C-j> and <C-k> for scroll float window/popups
 	if has('nvim-0.4.0') || has('patch-8.2.0750')
 		nnoremap <silent><nowait><expr> <C-j>
@@ -439,20 +450,6 @@ endif
 " language tool - translator and grammar check
 "=======================================================
 if index(g:plugin_group, 'language_tool') >= 0
-	"-------------------------------------------------------
-	" translator
-	"-------------------------------------------------------
-	Plug 'voldikss/vim-translator'
-
-
-	"-------------------------------------------------------
-	" vim-translator
-	"-------------------------------------------------------
-	" display translations in a window
-	nmap <silent> <M-t> <Plug>TranslateW
-	vmap <silent> <M-t> <Plug>TranslateWV
-
-	let g:translator_default_engines = ['bing', 'google']
 endif
 
 "=======================================================

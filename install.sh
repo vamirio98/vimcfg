@@ -3,7 +3,7 @@
 # install.sh - auto install script
 #
 # Created by hyl on 2021/02/17
-# Last Modified: 2021/02/17 00:21:41
+# Last Modified: 2021/03/23 16:20:50
 #=======================================================
 
 
@@ -22,7 +22,7 @@ if [ ! -d "${VIM_PLUG_DIR}" ]; then
 fi
 
 # config asynctasks
-cp -u ${PROJECT_DIR}/tasks.ini ${VIM_DIR} && \
+cp -u ${PROJECT_DIR}/plugcfg/tasks.ini ${VIM_DIR} && \
 	echo -e "\033[32mUpdated ${VIM_DIR}/task.ini\033[0m"
 
 # install plugins
@@ -30,7 +30,7 @@ vim -c 'PlugInstall! | q | q' && echo -e "\033[32mInstalled plugins\033[0m"
 
 
 # install coc-plugins
-vim -c 'CocInstall -sync coc-json coc-snippets coc-highlight coc-tsserver coc-python coc-html coc-css coc-clangd | q | q' && \
+vim -c 'CocInstall -sync coc-json coc-snippets coc-highlight coc-tsserver coc-python coc-html coc-css coc-clangd coc-translator | q | q' && \
 	echo -e "\033[32mInstalled coc-plugins\033[0m"
 
 
@@ -45,9 +45,9 @@ fi
 if [ ! -d "cpp" ]; then
 	mkdir cpp && echo -e "\033[32mCreated dir cpp\033[0m"
 fi
-cp -u ${PROJECT_DIR}/c.json c/c.json && \
+cp -u ${PROJECT_DIR}/plugcfg/c.json c/c.json && \
 	echo -e "\033[32mUpdated c.json\033[0m"
-cp -u ${PROJECT_DIR}/c.json cpp/cpp.json && \
+cp -u ${PROJECT_DIR}/plugcfg/c.json cpp/cpp.json && \
 	echo -e "\033[32mUpdated cpp.json\033[0m"
 
 cd ${PROJECT_DIR} && echo -e "\033[33mNow in $(pwd)\033[0m" && \
