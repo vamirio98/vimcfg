@@ -1,5 +1,5 @@
 # vimcfg
-Personal **Vim** profile.
+Personal **Vim** Profile.
 
 ## Requirements
 ```
