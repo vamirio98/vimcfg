@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/23 10:22:37
+" Last Modified: 2021/03/29 10:16:44
 "=======================================================
 
 
@@ -88,16 +88,16 @@ nnoremap <silent> <M-w> :bdelete<CR>
 "------------------------------------------------------
 " fast add quotes and brackets
 "------------------------------------------------------
-nnoremap ' bi'<ESC>ea'<ESC>
-nnoremap " bi"<ESC>ea"<ESC>
-vnoremap ' c''<ESC>hp
-vnoremap " c""<ESC>hp
-nnoremap ( bi(<ESC>ea)<ESC>
-nnoremap [ bi[<ESC>ea]<ESC>
-nnoremap { bi{<ESC>ea}<ESC>
-vnoremap ( c()<ESC>hpe
-vnoremap [ c[]<ESC>hpe
-vnoremap { c{}<ESC>hpe
+nnoremap <Leader>' bi'<ESC>ea'<ESC>
+nnoremap <Leader>" bi"<ESC>ea"<ESC>
+vnoremap <Leader>' c''<ESC>hp
+vnoremap <Leader>" c""<ESC>hp
+nnoremap <Leader>( bi(<ESC>ea)<ESC>
+nnoremap <Leader>[ bi[<ESC>ea]<ESC>
+nnoremap <Leader>{ bi{<ESC>ea}<ESC>
+vnoremap <Leader>( c()<ESC>hpe
+vnoremap <Leader>[ c[]<ESC>hpe
+vnoremap <Leader>{ c{}<ESC>hpe
 
 
 "------------------------------------------------------
