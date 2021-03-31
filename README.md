@@ -13,7 +13,7 @@ clangd
 * Clone this project to ~/.vim/vimcfg
 ```
 cd .vim
-git clone https://github.com/vamirio/vimcfg.git
+git clone https://github.com/vamirio98/vimcfg.git
 ```
 * Edit ~/.vimrc, add the following code:
 ```
