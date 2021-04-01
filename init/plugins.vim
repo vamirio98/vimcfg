@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/31 16:54:49
+" Last Modified: 2021/04/01 15:06:15
 "=======================================================
 
 
@@ -378,13 +378,13 @@ endif
 " debug
 "=======================================================
 if index(g:plugin_group, 'debug') >= 0
-	Plug 'puremourning/vimspector'
+	"Plug 'puremourning/vimspector'
 
 
 	"-------------------------------------------------------
 	" vimspector
 	"-------------------------------------------------------
-	let g:vimspector_enable_mappings = 'HUMAN'
+	"let g:vimspector_enable_mappings = 'HUMAN'
 endif
 
 
@@ -399,6 +399,9 @@ if index(g:plugin_group, 'asynctask') >= 0
 	"-------------------------------------------------------
 	" AsyncTasks, AsyncRun
 	"-------------------------------------------------------
+	" extra config file
+	let g:asynctasks_extra_config = ['~/.vim/vimcfg/plugcfg/tasks.ini']
+
 	" automatically open Qickfix window with a height of 6
 	let g:asyncrun_open = 6
 
