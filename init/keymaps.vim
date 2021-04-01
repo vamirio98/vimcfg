@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/31 10:22:23
+" Last Modified: 2021/04/01 16:47:12
 "=======================================================
 
 
@@ -80,8 +80,6 @@ inoremap <C-u> <ESC>viwgUea
 "------------------------------------------------------
 " easily deal with buffers
 "------------------------------------------------------
-nnoremap <silent> <tab> :bnext<CR>
-nnoremap <silent> <S-tab> :bprevious<CR>
 nnoremap <silent> <M-w> :bdelete<CR>
 
 

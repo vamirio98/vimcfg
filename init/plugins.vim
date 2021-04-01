@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/04/01 15:20:39
+" Last Modified: 2021/04/01 17:01:35
 "=======================================================
 
 
@@ -222,7 +222,21 @@ if index(g:plugin_group, 'airline') >= 0
 
 	" select path formatter ariline use
 	let g:airline#extensions#tabline#formatter = 'unique_tail'
-	"let g:airline#extensions#tabline#buffer_nr_show = 1
+
+	" quick selcet buffer
+	let g:airline#extensions#tabline#buffer_idx_mode = 1
+	nmap <Leader>1 <Plug>AirlineSelectTab1
+	nmap <Leader>2 <Plug>AirlineSelectTab2
+	nmap <Leader>3 <Plug>AirlineSelectTab3
+	nmap <Leader>4 <Plug>AirlineSelectTab4
+	nmap <Leader>5 <Plug>AirlineSelectTab5
+	nmap <Leader>6 <Plug>AirlineSelectTab6
+	nmap <Leader>7 <Plug>AirlineSelectTab7
+	nmap <Leader>8 <Plug>AirlineSelectTab8
+	nmap <Leader>9 <Plug>AirlineSelectTab9
+	nmap <Leader>0 <Plug>AirlineSelectTab0
+	nmap <Leader>- <Plug>AirlineSelectPrevTab
+	nmap <Leader>+ <Plug>AirlineSelectNextTab
 endif
 
 
@@ -371,6 +385,24 @@ if index(g:plugin_group, 'coc') >= 0
 			\ coc#float#has_scroll() ?
 			\ coc#float#scroll(0) : "\<C-b>"
 	endif
+
+	" mapping for CocList
+	" show all diagnostics
+	nnoremap <silent><nowait> <space>a :<C-u>CocList diagnostics<CR>
+	" manage extensions
+	nnoremap <silent><nowait> <space>e :<C-u>CocList extensions<CR>
+	" show commands
+	nnoremap <silent><nowait> <space>c :<C-u>CocList commands<CR>
+	" find symbol of current document
+	nnoremap <silent><nowait> <space>o :<C-u>CocList outline<CR>
+	" search workspace symbols
+	nnoremap <silent><nowait> <space>s :<C-u>CocList -I symbols<CR>
+	" do default action for next item
+	nnoremap <silent><nowait> <space>j :<C-u>CocNext<CR>
+	" do default action for previous item
+	nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
+	" resume last coc list
+	nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
 endif
 
 

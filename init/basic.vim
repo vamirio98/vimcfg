@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/17 13:15:50
+" Last Modified: 2021/04/01 16:48:22
 "=======================================================
 
 
@@ -10,7 +10,7 @@
 " set <leader> key
 "-------------------------------------------------------
 let mapleader = "\\"
-let maplocalleader = "\<space>"
+let maplocalleader = "\<tab>"
 
 
 "-------------------------------------------------------
