@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/04/01 15:06:15
+" Last Modified: 2021/04/01 15:20:39
 "=======================================================
 
 
@@ -392,8 +392,8 @@ if index(g:plugin_group, 'asynctask') >= 0
 	"-------------------------------------------------------
 	" run asynchronous tasks
 	"-------------------------------------------------------
-	Plug 'skywind3000/asynctasks.vim'
-	Plug 'skywind3000/asyncrun.vim'
+	Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
+	Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
 
 
 	"-------------------------------------------------------
