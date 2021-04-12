@@ -10,19 +10,30 @@ clangd
 ```
 
 ## Install
-* Clone this project to ~/.vim/vimcfg
+* In Unix
+
 ```
-cd .vim
+// Clone this project
+cd ~/.vim
 git clone https://github.com/vamirio98/vimcfg.git
-```
-* Edit ~/.vimrc, add the following code:
-```
+
+// Edit ~/.vimrc, add the following code:
 source ~/.vim/vimcfg/init.vim
-```
-* Enter the directory vimcfg, and run install.sh
-```
+
+// Enter the directory vimcfg, and run install.sh
 ./install.sh
 ```
+
+* In Windows
+```
+// Clone this project
+cd ~/vimfiles
+git clone https://github.com/vamirio98/vimcfg.git
+
+// Edit ~/_vimrc, add the following code:
+source ~/vimfiles/vimcfg/init.vim
+```
+
 
 ## Reference
 [skywind3000/vim-init](https://github.com/skywind3000/vim-init)

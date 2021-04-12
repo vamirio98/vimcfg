@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by hyl on 2021/02/16
-" Last Modified: 2021/02/17 00:14:17
+" Last Modified: 2021/04/12 23:01:51
 "=======================================================
 
 " prevent reload
@@ -24,9 +24,13 @@ command! -nargs=1 LoadScript exec 'source ' . s:home . '/' . '<args>'
 " add dir vim-init to runtimepath
 execute 'set runtimepath+=' . s:home
 
-" add dir ~/.vim to runtimepath(sometimes vim will not add it
+" add dir ~/.vim or ~/vimfile to runtimepath(sometimes vim will not add it
 " automatically for you)
-set runtimepath+=~/.vim
+if has('unix')
+	set runtimepath+=~/.vim
+elseif has('win32')
+	set runtimepath+=~/vimfiles
+endif
 
 
 "-------------------------------------------------------
