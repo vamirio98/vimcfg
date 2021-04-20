@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/04/01 16:48:22
+" Last Modified: 2021/04/19 14:19:56
 "=======================================================
 
 
@@ -53,9 +53,6 @@ set ttimeoutlen=50
 "-------------------------------------------------------
 " search setting
 "-------------------------------------------------------
-" when searching, ignore case
-set ignorecase
-
 " case is ignored by default, unless the search content contains
 " uppercase letters
 set smartcase

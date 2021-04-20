@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/04/12 23:32:04
+" Last Modified: 2021/04/19 14:35:10
 "=======================================================
 
 "-------------------------------------------------------
@@ -20,11 +20,9 @@ endif
 
 " set line number
 set number
-set relativenumber
 
-" show cursor position
+" cursorline
 set cursorline
-set cursorcolumn
 
 " set folding mode
 set foldmethod=indent
