@@ -1,12 +1,8 @@
 "=======================================================
 " plugins.vim - plugins config
 "
-" Created by hyl on 2021/02/15
-<<<<<<< HEAD
-" Last Modified: 2021/04/20 10:33:43
-=======
-" Last Modified: 2021/04/20 10:33:43
->>>>>>> 5eae1c685d068361400d8cc5bca5729eb97ffa3e
+" Created by Haoyuan Li on 2021/02/15
+" Last Modified: 2021/04/20 10:42:05
 "=======================================================
 
 

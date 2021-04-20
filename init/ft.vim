@@ -2,8 +2,8 @@
 "
 " ft.vim - config for specified file type
 "
-" Created by hyl on 2021/02/15
-" Last Modified: 2021/04/19 14:09:01
+" Created by Haoyuan Li on 2021/02/15
+" Last Modified: 2021/04/20 10:42:53
 "
 "=======================================================
 
