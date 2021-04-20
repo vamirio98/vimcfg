@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/03/31 10:20:05
+" Last Modified: 2021/04/19 14:09:01
 "
 "=======================================================
 
@@ -32,7 +32,7 @@ function! CreateVimFile()
 	call setline(1, "\"=======================================================")
 	call setline(2, "\" " . expand("%t") . " -")
 	call setline(3, "\" ")
-	call setline(4, "\" Created by hyl on " . strftime("%Y/%m/%d"))
+	call setline(4, "\" Created by Haoyuan Li on " . strftime("%Y/%m/%d"))
 	call setline(5, "\" Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(6, "\"=======================================================")
 	execute "normal! j"
@@ -46,7 +46,7 @@ function! CreateCFile()
 	call setline(1, "/*=======================================================")
 	call setline(2, " * " . expand("%t") . " -")
 	call setline(3, " *")
-	call setline(4, " * Created by hyl on " . strftime("%Y/%m/%d"))
+	call setline(4, " * Created by Haoyuan Li on " . strftime("%Y/%m/%d"))
 	call setline(5, " * Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(6, " *=======================================================")
 	call setline(7, " */")

@@ -2,7 +2,11 @@
 " plugins.vim - plugins config
 "
 " Created by hyl on 2021/02/15
-" Last Modified: 2021/04/15 19:26:37
+<<<<<<< HEAD
+" Last Modified: 2021/04/20 10:33:43
+=======
+" Last Modified: 2021/04/20 10:33:43
+>>>>>>> 5eae1c685d068361400d8cc5bca5729eb97ffa3e
 "=======================================================
 
 
@@ -20,7 +24,11 @@ endif
 " use vim-plug to manager all plunins
 " specify a directory for plugins
 "=======================================================
-call plug#begin('~/.vim/plugged')
+if has('unix')
+	call plug#begin('~/.vim/plugged')
+elseif has('win32')
+	call plug#begin('~/vimfiles/plugged')
+endif	
 
 
 "=======================================================
@@ -432,7 +440,11 @@ if index(g:plugin_group, 'asynctask') >= 0
 	" AsyncTasks, AsyncRun
 	"-------------------------------------------------------
 	" extra config file
-	let g:asynctasks_extra_config = ['~/.vim/vimcfg/plugcfg/tasks.ini']
+	if has('unix')
+		let g:asynctasks_extra_config = ['~/.vim/vimcfg/plugcfg/tasks.ini']
+	elseif has('win32')
+		let g:asynctasks_extra_config = ['~/vimfiles/vimcfg/plugcfg/tasks.ini']
+	endif
 
 	" automatically open Qickfix window with a height of 6
 	let g:asyncrun_open = 6
