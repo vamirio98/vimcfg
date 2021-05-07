@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/04/20 10:43:03
+" Last Modified: 2021/05/06 12:08:59
 "=======================================================
 
 
@@ -104,7 +104,7 @@ vnoremap <Leader>{ c{}<ESC>hpe
 
 function EditProfile(filename)
 	" get the directory where this file is located
-	execute "vsp " . g:vim_config_init_dir . "/" . a:filename
+	execute "e " . g:vim_config_init_dir . "/" . a:filename
 endfunction
 
 " fast edit Vim profile

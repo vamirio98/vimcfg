@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/04/20 10:42:05
+" Last Modified: 2021/05/06 12:12:14
 "=======================================================
 
 
@@ -63,6 +63,11 @@ if index(g:plugin_group, 'enhanced') >= 0
 	" strip whitespace
 	"-------------------------------------------------------
 	Plug 'thirtythreeforty/lessspace.vim'
+
+	"-------------------------------------------------------
+	" terminal help
+	"-------------------------------------------------------
+	Plug 'skywind3000/vim-terminal-help'
 
 
 	"-------------------------------------------------------

@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/04/20 10:42:53
+" Last Modified: 2021/05/07 15:14:14
 "
 "=======================================================
 
@@ -195,8 +195,9 @@ function! AddCCommentSubtitle(mode)
 		execute "normal! 2j"
 		execute "startinsert!"
 	elseif a:mode == 'i'   " insert mode
-		call append(line('.')-1, l:title)
-		execute "normal! 3k"
+		call setline(line('.'), l:title[0])
+		call append(line('.'), l:title[1:-1])
+		execute "normal! j"
 		execute "startinsert!"
 	endif
 endfunction
