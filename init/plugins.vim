@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/07 21:27:57
+" Last Modified: 2021/05/07 22:07:23
 "=======================================================
 
 
