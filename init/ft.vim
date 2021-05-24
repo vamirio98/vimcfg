@@ -3,7 +3,7 @@
 " ft.vim - config for specified file type
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/07 15:14:14
+" Last Modified: 2021/05/18 11:33:52
 "
 "=======================================================
 
@@ -201,6 +201,16 @@ function! AddCCommentSubtitle(mode)
 		execute "startinsert!"
 	endif
 endfunction
+
+
+"=======================================================
+" assembly
+"=======================================================
+augroup assembly
+	autocmd!
+	" set indent
+	autocmd FileType asm setlocal smartindent
+augroup END
 
 
 "=======================================================

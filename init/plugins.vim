@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/24 09:30:54
+" Last Modified: 2021/05/24 09:36:24
 "=======================================================
 
 
@@ -263,8 +263,8 @@ if index(g:plugin_group, 'nerdtree') >= 0
 	"-------------------------------------------------------
 	" nerdtree
 	"-------------------------------------------------------
-	" use <F2> to open NERDTree
-	nnoremap <silent> <F2> :NERDTreeToggle<CR>
+	" open NERDTree
+	nnoremap <silent> <leader>od :NERDTreeToggle<CR>
 
 	" colse Vim if the only window left open is a NERDTree
 	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
