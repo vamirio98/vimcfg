@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/07 21:27:57
+" Last Modified: 2021/05/24 09:30:54
 "=======================================================
 
 
@@ -164,9 +164,7 @@ if index(g:plugin_group, 'tags') >= 0
 	let g:gutentags_ctags_extra_args += ['--c-kinds=+pxl']
 
 	" use universal-ctags
-	if has('win32') || has('win64')
-		let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-	endif
+	let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 	" gutentags whitelist
 	let gutentags_exclude_filetypes = ['text']
