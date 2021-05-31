@@ -5,7 +5,7 @@ Personal **Vim** Profile.
 ```
 Vim >= 8.0
 nodejs >= 10.12
-yarn
+npm
 clangd
 ```
 
@@ -19,9 +19,6 @@ git clone https://github.com/vamirio98/vimcfg.git
 
 // Edit ~/.vimrc, add the following code:
 source ~/.vim/vimcfg/init.vim
-
-// Enter the directory vimcfg, and run install.sh
-./install.sh
 ```
 
 * In Windows
@@ -33,6 +30,12 @@ git clone https://github.com/vamirio98/vimcfg.git
 // Edit ~/_vimrc, add the following code:
 source ~/vimfiles/vimcfg/init.vim
 ```
+
+After the steps above, run Vim and execute the command:
+`
+:PlugInstall
+`
+to install all plugins.
 
 
 ## Reference
