@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/04 14:49:30
+" Last Modified: 2021/07/04 14:54:29
 "=======================================================
 
 
@@ -44,6 +44,12 @@ inoremap <M-h> <C-left>
 inoremap <M-l> <C-right>
 cnoremap <M-h> <C-left>
 cnoremap <M-l> <C-right>
+
+" logic jump to the next/previous line(press wrap logic)
+nnoremap <M-j> gj
+nnoremap <M-k> gk
+inoremap <M-j> <C-\><C-o>gj
+inoremap <M-k> <C-\><C-o>gk
 
 " move between windows
 nnoremap <M-H> <C-w>h
