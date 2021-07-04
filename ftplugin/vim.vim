@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/04 19:06:06
+" Last Modified: 2021/07/04 19:17:52
 "=======================================================
 
 "-------------------------------------------------------
@@ -85,10 +85,10 @@ endfunction
 function! s:ModifyTime()
 	let l:cur_pos = getcurpos()
     call cursor(1, 1)
-    let l:b = searchpos('"=', 'cn')
+    let l:b = searchpos('"=', 'c')
     let l:e = searchpos('"=', 'n')
     let l:t = search('Last Modified:')
-    if l:b[0] < l:t && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 1
+    if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 1
         execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
                     \ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
     endif
