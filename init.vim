@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by hyl on 2021/02/16
-" Last Modified: 2021/07/04 14:39:30
+" Last Modified: 2021/07/04 17:03:19
 "=======================================================
 
 " prevent reload
@@ -38,9 +38,6 @@ LoadScript init/basic.vim
 
 " load terminal key extention config
 LoadScript init/terminal.vim
-
-" load indent config
-LoadScript init/indent.vim
 
 " load plugins config
 LoadScript init/plugins.vim

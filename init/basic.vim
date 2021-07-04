@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/04/20 10:42:23
+" Last Modified: 2021/07/04 17:02:52
 "=======================================================
 
 
@@ -108,3 +108,15 @@ set matchtime=2
 
 " delay drawing(improve performance)
 set lazyredraw
+
+"-------------------------------------------------------
+" round indent to multiple of 'shiftwidth'
+" (default 8, length of a tab)
+"-------------------------------------------------------
+set shiftround
+
+"-------------------------------------------------------
+" expand a <tab> into <space>
+"-------------------------------------------------------
+set expandtab
+set smarttab
