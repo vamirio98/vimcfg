@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/04 16:23:34
+" Last Modified: 2021/07/04 19:01:33
 "=======================================================
 
 "-------------------------------------------------------
@@ -13,7 +13,7 @@ function! s:AddFileHead()
 	call setline(2, " * " . expand("%t") . " -")
 	call setline(3, " *")
 	call setline(4, " * Created by Haoyuan Li on " . strftime("%Y/%m/%d"))
-	call setline(5, "\" Last Modified: " . strftime("%Y/%m/%d %T"))
+	call setline(5, " * Last Modified: " . strftime("%Y/%m/%d %T"))
 	call setline(6, " *=======================================================")
 	call setline(7, " */")
 	execute "normal! j"
@@ -53,6 +53,25 @@ function! AddCommentSubtitle(mode)
 	endif
 endfunction
 
+
+"-------------------------------------------------------
+" auto modify the Last Modified Time
+"-------------------------------------------------------
+function! s:ModifyTime()
+	let l:cur_pos = getcurpos()
+    call cursor(1, 1)
+    let l:b = searchpos('/*', 'cn')
+    let l:e = searchpos('*/', 'n')
+    let l:t = search('Last Modified:')
+    if l:b[0] < l:t && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 2
+        execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
+                    \ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
+    endif
+	call cursor(l:cur_pos[1], l:cur_pos[2])
+endfunction
+autocmd BufWritePre,FileWritePre *.c call s:ModifyTime()
+
+
 " quickly comment single line
 nnoremap <buffer> <localleader>/ I//<ESC>
 
@@ -60,4 +79,3 @@ nnoremap <buffer> <localleader>/ I//<ESC>
 iabbrev <buffer> reutrn return
 iabbrev <buffer> incldue include
 iabbrev <buffer> inculde include
-

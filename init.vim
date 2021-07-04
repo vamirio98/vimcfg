@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by hyl on 2021/02/16
-" Last Modified: 2021/07/04 17:03:19
+" Last Modified: 2021/07/04 18:42:34
 "=======================================================
 
 " prevent reload
@@ -44,9 +44,6 @@ LoadScript init/plugins.vim
 
 " load UI style
 LoadScript init/style.vim
-
-" load config for file types
-LoadScript init/ft.vim
 
 " load keymaps
 LoadScript init/keymaps.vim

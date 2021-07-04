@@ -2,8 +2,7 @@
 " asm.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/04 16:40:12
+" Last Modified: 2021/07/04 19:07:25
 "=======================================================
 
-" set indent
 setlocal smartindent
