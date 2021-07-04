@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by hyl on 2021/02/16
-" Last Modified: 2021/04/12 23:01:51
+" Last Modified: 2021/07/04 14:39:30
 "=======================================================
 
 " prevent reload
@@ -15,13 +15,10 @@ end
 " get the directory where this file is located
 let s:home = resolve(expand('<sfile>:p:h'))
 
-" get the init subdir
-let g:vim_config_init_dir = s:home . "/init"
-
 " define a command to load the file
 command! -nargs=1 LoadScript exec 'source ' . s:home . '/' . '<args>'
 
-" add dir vim-init to runtimepath
+" add dir vimcfg to runtimepath
 execute 'set runtimepath+=' . s:home
 
 " add dir ~/.vim or ~/vimfile to runtimepath(sometimes vim will not add it

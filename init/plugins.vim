@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/24 09:36:24
+" Last Modified: 2021/07/04 14:49:19
 "=======================================================
 
 
@@ -314,17 +314,17 @@ if index(g:plugin_group, 'coc') >= 0
 		return !col || getline('.')[col - 1] =~# '\s'
 	endfunction
 
-	" make <Alt-l> to auto-select the first completion item and notify
-	" coc.nvim, to format on enter, <Alt-l> could be remapped by other
+	" make <Alt-m> to auto-select the first completion item and notify
+	" coc.nvim, to format on enter, <Alt-m> could be remapped by other
 	" vim plugin
-	inoremap <silent><expr> <M-l> pumvisible() ? coc#_select_confirm()
+	inoremap <silent><expr> <M-m> pumvisible() ? coc#_select_confirm()
 		\: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
-	" use <Alt-j> for jump to next placeholder
-	let g:coc_snippet_next = '<M-j>'
+	" use <Alt-k> for jump to next placeholder
+	let g:coc_snippet_next = '<M-k>'
 
-	" use <Alt-k> for jump to previous placeholder
-	let g:coc_snippet_prev = '<M-k>'
+	" use <Alt-j> for jump to previous placeholder
+	let g:coc_snippet_prev = '<M-j>'
 
 	" Remap key for gotos
 	nmap <silent> gd <Plug>(coc-definition)

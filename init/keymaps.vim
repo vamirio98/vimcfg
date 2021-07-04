@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/05/06 12:08:59
+" Last Modified: 2021/07/04 14:49:30
 "=======================================================
 
 
@@ -38,12 +38,12 @@ cnoremap <C-e> <end>
 "-------------------------------------------------------
 
 " move between words
-nnoremap <C-y> b
-nnoremap <C-p> w
-inoremap <C-y> <C-left>
-inoremap <C-p> <C-right>
-cnoremap <C-y> <C-left>
-cnoremap <C-p> <C-right>
+nnoremap <M-h> b
+nnoremap <M-l> w
+inoremap <M-h> <C-left>
+inoremap <M-l> <C-right>
+cnoremap <M-h> <C-left>
+cnoremap <M-l> <C-right>
 
 " move between windows
 nnoremap <M-H> <C-w>h
@@ -101,7 +101,6 @@ vnoremap <Leader>{ c{}<ESC>hpe
 "------------------------------------------------------
 " fast edit and reload vimrc
 "------------------------------------------------------
-
 function EditProfile(filename)
 	" get the directory where this file is located
 	execute "e " . g:vim_config_init_dir . "/" . a:filename
@@ -116,5 +115,12 @@ nnoremap <silent> <leader>evf :call EditProfile('ft.vim')<CR>
 nnoremap <silent> <leader>evp :call EditProfile('plugins.vim')<CR>
 nnoremap <silent> <leader>evk :call EditProfile('keymaps.vim')<CR>
 
+function SaveProfile()
+	let l:ft = fnamemodify(bufname("%"), ":e")
+        if l:ft == "vim"
+                execute "source %"
+        endif
+endfunction
+
 " reload Vim profile
-nnoremap <silent> <leader>sv :source %<CR>
+nnoremap <silent> <leader>sv :call SaveProfile()<CR>
