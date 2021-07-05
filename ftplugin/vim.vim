@@ -2,8 +2,13 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/04 19:17:52
+" Last Modified: 2021/07/05 14:33:19
 "=======================================================
+
+
+let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
+        \ '"""':'"""', "'''":"'''"}
+
 
 "-------------------------------------------------------
 " add file head
@@ -97,5 +102,10 @@ endfunction
 autocmd BufWritePre,FileWritePre *.vim call s:ModifyTime()
 
 
-let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
-        \ '"""':'"""', "'''":"'''"}
+"-------------------------------------------------------
+" jump out comments
+"-------------------------------------------------------
+nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '"[-=]')<CR>
+nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '"[-=]')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '"[-=]')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '"[-=]')<CR>

@@ -2,8 +2,18 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/04 19:14:40
+" Last Modified: 2021/07/05 16:32:47
 "=======================================================
+
+
+" quickly comment single line
+nnoremap <buffer> <localleader>/ I//<ESC>
+
+" snippets for C/C++
+iabbrev <buffer> reutrn return
+iabbrev <buffer> incldue include
+iabbrev <buffer> inculde include
+
 
 "-------------------------------------------------------
 " add file head
@@ -27,8 +37,8 @@ endif
 "-------------------------------------------------------
 " add comment subtitle
 "-------------------------------------------------------
-nnoremap <buffer> <M-c> :call AddCommentSubtitle('n')<CR>
-inoremap <buffer> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
+nnoremap <buffer> <silent> <M-c> :call AddCommentSubtitle('n')<CR>
+inoremap <buffer> <silent> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentSubtitle(mode)
         let l:cur_indent = indent('.')
@@ -72,10 +82,10 @@ endfunction
 autocmd BufWritePre,FileWritePre *.c call s:ModifyTime()
 
 
-" quickly comment single line
-nnoremap <buffer> <localleader>/ I//<ESC>
-
-" snippets for C/C++
-iabbrev <buffer> reutrn return
-iabbrev <buffer> incldue include
-iabbrev <buffer> inculde include
+"-------------------------------------------------------
+" jump out comments
+"-------------------------------------------------------
+nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '\(\/\*\\|\*\/\)')<CR>
+nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '\(\/\*\\|\*\/\)')<CR>
