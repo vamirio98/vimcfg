@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 16:43:15
+" Last Modified: 2021/07/05 17:55:34
 "=======================================================
 
 
@@ -33,11 +33,13 @@ endif
 "-------------------------------------------------------
 " comment title
 nnoremap <buffer> <M-C> :call AddCommentTitle('n')<CR>
-inoremap <buffer> <M-C> <ESC>:call AddCommentTitle('i')<CR>
+" insert i before entering normal mode to avoid plugin lessspace delete indent
+inoremap <buffer> <M-C> i<ESC>:call AddCommentTitle('i')<CR>
 
 " comment subtitle
 nnoremap <buffer> <M-c> :call AddCommentSubtitle('n')<CR>
-inoremap <buffer> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
+" insert i before entering normal mode to avoid plugin lessspace delete indent
+inoremap <buffer> <M-c> i<ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentTitle(mode)
     let l:cur_indent = indent('.')

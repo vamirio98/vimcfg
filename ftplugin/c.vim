@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 16:40:39
+" Last Modified: 2021/07/05 17:56:15
 "=======================================================
 
 
@@ -38,7 +38,8 @@ endif
 " add comment subtitle
 "-------------------------------------------------------
 nnoremap <buffer> <silent> <M-c> :call AddCommentSubtitle('n')<CR>
-inoremap <buffer> <silent> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
+" insert i before entering normal mode to avoid plugin lessspace delete indent
+inoremap <buffer> <silent> <M-c> i<ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentSubtitle(mode)
     let l:cur_indent = indent('.')
