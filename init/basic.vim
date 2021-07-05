@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/04 17:02:52
+" Last Modified: 2021/07/05 22:59:23
 "=======================================================
 
 
@@ -114,9 +114,3 @@ set lazyredraw
 " (default 8, length of a tab)
 "-------------------------------------------------------
 set shiftround
-
-"-------------------------------------------------------
-" expand a <tab> into <space>
-"-------------------------------------------------------
-set expandtab
-set smarttab
