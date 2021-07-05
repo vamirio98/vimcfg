@@ -2,7 +2,7 @@
 " sh.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 14:28:41
+" Last Modified: 2021/07/05 16:44:02
 "=======================================================
 
 "-------------------------------------------------------
@@ -41,7 +41,11 @@ function! s:ModifyTime()
     endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
-autocmd BufWritePre,FileWritePre *.sh call s:ModifyTime()
+
+augroup SHELL
+    autocmd!
+    autocmd BufWritePre,FileWritePre *.sh call s:ModifyTime()
+augroup END
 
 
 "-------------------------------------------------------

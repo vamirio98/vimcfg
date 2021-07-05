@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 16:32:47
+" Last Modified: 2021/07/05 16:40:39
 "=======================================================
 
 
@@ -41,16 +41,16 @@ nnoremap <buffer> <silent> <M-c> :call AddCommentSubtitle('n')<CR>
 inoremap <buffer> <silent> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentSubtitle(mode)
-        let l:cur_indent = indent('.')
-        let l:str = ""
-        while l:cur_indent > 0
-                let l:str = l:str . " "
-                let l:cur_indent -= 1
-        endwhile
-        let l:title = [l:str . "/*-------------------------------------------------------",
-		\ l:str . " *",
-		\ l:str . " *-------------------------------------------------------",
-		\ l:str . " */"]
+    let l:cur_indent = indent('.')
+    let l:str = ""
+    while l:cur_indent > 0
+            let l:str = l:str . " "
+            let l:cur_indent -= 1
+    endwhile
+    let l:title = [l:str . "/*-------------------------------------------------------",
+                \ l:str . " *",
+                \ l:str . " *-------------------------------------------------------",
+                \ l:str . " */"]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
@@ -79,7 +79,11 @@ function! s:ModifyTime()
     endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
-autocmd BufWritePre,FileWritePre *.c call s:ModifyTime()
+
+augroup C
+    autocmd!
+    autocmd BufWritePre,FileWritePre *.c call s:ModifyTime()
+augroup END
 
 
 "-------------------------------------------------------

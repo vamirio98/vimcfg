@@ -2,12 +2,12 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 14:33:19
+" Last Modified: 2021/07/05 16:43:15
 "=======================================================
 
 
 let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
-        \ '"""':'"""', "'''":"'''"}
+            \ '"""':'"""', "'''":"'''"}
 
 
 "-------------------------------------------------------
@@ -40,15 +40,15 @@ nnoremap <buffer> <M-c> :call AddCommentSubtitle('n')<CR>
 inoremap <buffer> <M-c> <ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentTitle(mode)
-        let l:cur_indent = indent('.')
-        let l:str = ""
-        while l:cur_indent > 0
-                let l:str = l:str . " "
-                let l:cur_indent -= 1
-        endwhile
+    let l:cur_indent = indent('.')
+    let l:str = ""
+    while l:cur_indent > 0
+            let l:str = l:str . " "
+            let l:cur_indent -= 1
+    endwhile
 	let l:title = [l:str . "\"=======================================================",
-		\ l:str . "\"",
-		\ l:str . "\"======================================================="]
+                \ l:str . "\"",
+                \ l:str . "\"======================================================="]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
@@ -62,15 +62,15 @@ function! AddCommentTitle(mode)
 endfunction
 
 function! AddCommentSubtitle(mode)
-        let l:cur_indent = indent('.')
-        let l:str = ""
-        while l:cur_indent > 0
-                let l:str = l:str . " "
-                let l:cur_indent -= 1
-        endwhile
+    let l:cur_indent = indent('.')
+    let l:str = ""
+    while l:cur_indent > 0
+            let l:str = l:str . " "
+            let l:cur_indent -= 1
+    endwhile
 	let l:title = [l:str . "\"-------------------------------------------------------",
-		\ l:str . "\"",
-		\ l:str . "\"-------------------------------------------------------"]
+                \ l:str . "\"",
+                \ l:str . "\"-------------------------------------------------------"]
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
@@ -99,7 +99,11 @@ function! s:ModifyTime()
     endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
-autocmd BufWritePre,FileWritePre *.vim call s:ModifyTime()
+
+augroup VIM
+    autocmd!
+    autocmd BufWritePre,FileWritePre *.vim call s:ModifyTime()
+augroup END
 
 
 "-------------------------------------------------------
