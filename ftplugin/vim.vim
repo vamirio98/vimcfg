@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/07 10:58:15
+" Last Modified: 2021/07/11 10:33:51
 "=======================================================
 
 
@@ -14,12 +14,12 @@ let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
 " add file head
 "-------------------------------------------------------
 function! s:AddFileHead()
-	call setline(1, '"=======================================================')
+	call setline(1, '"-------------------------------------------------------')
 	call setline(2, '" ' . expand("%:t") . ' -')
 	call setline(3, '" ')
 	call setline(4, '" Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
 	call setline(5, '" Last Modified: ' . strftime("%Y/%m/%d %T"))
-	call setline(6, '"=======================================================')
+	call setline(6, '"-------------------------------------------------------')
 	execute "normal! j"
 	execute "startinsert!"
 endfunction
@@ -32,38 +32,11 @@ endif
 " comment title
 "-------------------------------------------------------
 " comment title
-nnoremap <buffer> <M-C> :call AddCommentTitle('n')<CR>
+nnoremap <buffer> <M-c> :call AddCommentTitle('n')<CR>
 " insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <M-C> i<ESC>:call AddCommentTitle('i')<CR>
-
-" comment subtitle
-nnoremap <buffer> <M-c> :call AddCommentSubtitle('n')<CR>
-" insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <M-c> i<ESC>:call AddCommentSubtitle('i')<CR>
+inoremap <buffer> <M-c> i<ESC>:call AddCommentTitle('i')<CR>
 
 function! AddCommentTitle(mode)
-    let l:cur_indent = indent('.')
-    let l:str = ""
-    while l:cur_indent > 0
-            let l:str = l:str . " "
-            let l:cur_indent -= 1
-    endwhile
-	let l:title = [l:str . "\"=======================================================",
-                \ l:str . "\"",
-                \ l:str . "\"======================================================="]
-	if a:mode == 'n'       " normal mode
-		call append(line('.'), l:title)
-		execute "normal! 2j"
-		execute "startinsert!"
-	elseif a:mode == 'i'   " insert mode
-		call setline(line('.'), l:title[0])
-		call append(line('.'), l:title[1:-1])
-		execute "normal! j"
-		execute "startinsert!"
-	endif
-endfunction
-
-function! AddCommentSubtitle(mode)
     let l:cur_indent = indent('.')
     let l:str = ""
     while l:cur_indent > 0

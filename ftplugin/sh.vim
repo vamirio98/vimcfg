@@ -2,7 +2,7 @@
 " sh.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/07 10:59:14
+" Last Modified: 2021/07/11 10:31:53
 "=======================================================
 
 "-------------------------------------------------------
@@ -11,12 +11,12 @@
 function! s:AddFileHead()
 	call setline(1, "#!/bin/bash")
 	call setline(2, "")
-	call setline(3, "#=======================================================")
+	call setline(3, "#-------------------------------------------------------")
 	call setline(4, "# " . expand("%:t") . " -")
 	call setline(5, "#")
 	call setline(6, "# Created by hyl on " . strftime("%Y/%m/%d"))
 	call setline(7, "# Last Modified: " . strftime("%Y/%m/%d %T"))
-	call setline(8, "#=======================================================")
+	call setline(8, "#-------------------------------------------------------")
 	execute "normal! 3j"
 	execute "startinsert!"
 endfunction
