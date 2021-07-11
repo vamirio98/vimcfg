@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/05 17:56:15
+" Last Modified: 2021/07/11 09:59:59
 "=======================================================
 
 
@@ -19,13 +19,12 @@ iabbrev <buffer> inculde include
 " add file head
 "-------------------------------------------------------
 function! s:AddFileHead()
-	call setline(1, "/*=======================================================")
-	call setline(2, " * " . expand("%t") . " -")
-	call setline(3, " *")
-	call setline(4, " * Created by Haoyuan Li on " . strftime("%Y/%m/%d"))
-	call setline(5, " * Last Modified: " . strftime("%Y/%m/%d %T"))
-	call setline(6, " *=======================================================")
-	call setline(7, " */")
+    call setline(1, '/*')
+	call setline(2, ' * ' . expand("%t") . ' -')
+	call setline(3, ' *')
+	call setline(4, ' * Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
+	call setline(5, ' * Last Modified: ' . strftime("%Y/%m/%d %T"))
+	call setline(6, ' */')
 	execute "normal! j"
 	execute "startinsert!"
 endfunction
@@ -43,15 +42,14 @@ inoremap <buffer> <silent> <M-c> i<ESC>:call AddCommentSubtitle('i')<CR>
 
 function! AddCommentSubtitle(mode)
     let l:cur_indent = indent('.')
-    let l:str = ""
+    let l:str = ''
     while l:cur_indent > 0
-            let l:str = l:str . " "
+            let l:str = l:str . ' '
             let l:cur_indent -= 1
     endwhile
-    let l:title = [l:str . "/*-------------------------------------------------------",
-                \ l:str . " *",
-                \ l:str . " *-------------------------------------------------------",
-                \ l:str . " */"]
+    let l:title = [l:str . '/*',
+                \ l:str . ' *',
+                \ l:str . ' */']
 	if a:mode == 'n'       " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
