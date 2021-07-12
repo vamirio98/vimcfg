@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/12 09:09:44
+" Last Modified: 2021/07/12 09:14:10
 "=======================================================
 
 
@@ -29,14 +29,13 @@ if line('$') == 1
 endif
 
 "-------------------------------------------------------
-" comment title
+" add comment
 "-------------------------------------------------------
-" comment title
-nnoremap <buffer> <M-c> :call AddCommentTitle('n')<CR>
+nnoremap <buffer> <M-c> :call AddComment('n')<CR>
 " insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <M-c> i<ESC>:call AddCommentTitle('i')<CR>
+inoremap <buffer> <M-c> i<ESC>:call AddComment('i')<CR>
 
-function! AddCommentTitle(mode)
+function! AddComment(mode)
     let l:cur_indent = indent('.')
     let l:str = ""
     while l:cur_indent > 0
@@ -84,7 +83,7 @@ augroup END
 "-------------------------------------------------------
 " jump out comments
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '"-')<CR>
-nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '"-')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '"-')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '"-')<CR>
+nnoremap <buffer> <silent> <M-g> :call JumpToComment('n', '', '"-')<CR>
+nnoremap <buffer> <silent> <M-G> :call JumpToComment('n', 'b', '"-')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call JumpToComment('i', '', '"-')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call JumpToComment('i', 'b', '"-')<CR>

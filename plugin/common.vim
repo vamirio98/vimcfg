@@ -2,17 +2,16 @@
 " common.vim - some common functions
 " 
 " Created by Haoyuan Li on 2021/07/05
-" Last Modified: 2021/07/05 16:30:35
+" Last Modified: 2021/07/12 09:16:23
 "=======================================================
 
 
 "-------------------------------------------------------
-" jump to comment titles
+" jump to comment
 "-------------------------------------------------------
-function! JumpToCommentTitle(mode, dir, id)
+function! JumpToComment(mode, dir, id)
     let l:cur_pos = getcurpos()[1]
     let l:next_pos = search(a:id, a:dir . 'cn')
-    echom l:next_pos
     if l:next_pos == 0
         return
     endif

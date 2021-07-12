@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/11 10:26:11
+" Last Modified: 2021/07/12 09:13:11
 "=======================================================
 
 
@@ -34,13 +34,13 @@ if line('$') == 1
 endif
 
 "-------------------------------------------------------
-" add comment subtitle
+" add comment
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-c> :call AddCommentSubtitle('n')<CR>
+nnoremap <buffer> <silent> <M-c> :call AddComment('n')<CR>
 " insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <silent> <M-c> i<ESC>:call AddCommentSubtitle('i')<CR>
+inoremap <buffer> <silent> <M-c> i<ESC>:call AddComment('i')<CR>
 
-function! AddCommentSubtitle(mode)
+function! AddComment(mode)
     let l:cur_indent = indent('.')
     let l:str = ''
     while l:cur_indent > 0
@@ -86,9 +86,9 @@ augroup END
 
 
 "-------------------------------------------------------
-" jump out comments
+" jump to comments
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '\(\/\*\\|\*\/\)')<CR>
-nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '\(\/\*\\|\*\/\)')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '\(\/\*\\|\*\/\)')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '\(\/\*\\|\*\/\)')<CR>
+nnoremap <buffer> <silent> <M-g> :call JumpToComment('n', '', '\(\/\*\\|\*\/\)')<CR>
+nnoremap <buffer> <silent> <M-G> :call JumpToComment('n', 'b', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call JumpToComment('i', '', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call JumpToComment('i', 'b', '\(\/\*\\|\*\/\)')<CR>
