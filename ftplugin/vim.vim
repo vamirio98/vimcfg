@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/11 10:33:51
+" Last Modified: 2021/07/12 09:09:44
 "=======================================================
 
 
@@ -84,7 +84,7 @@ augroup END
 "-------------------------------------------------------
 " jump out comments
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '"[-=]')<CR>
-nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '"[-=]')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '"[-=]')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '"[-=]')<CR>
+nnoremap <buffer> <silent> <M-g> :call JumpToCommentTitle('n', '', '"-')<CR>
+nnoremap <buffer> <silent> <M-G> :call JumpToCommentTitle('n', 'b', '"-')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call JumpToCommentTitle('i', '', '"-')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call JumpToCommentTitle('i', 'b', '"-')<CR>
