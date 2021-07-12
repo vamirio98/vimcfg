@@ -2,7 +2,7 @@
 " common.vim - some common functions
 " 
 " Created by Haoyuan Li on 2021/07/05
-" Last Modified: 2021/07/12 09:16:23
+" Last Modified: 2021/07/12 09:25:13
 "=======================================================
 
 
@@ -13,12 +13,13 @@ function! JumpToComment(mode, dir, id)
     let l:cur_pos = getcurpos()[1]
     let l:next_pos = search(a:id, a:dir . 'cn')
     if l:next_pos == 0
+        call s:RestoreMode(a:mode)
         return
     endif
 
-    if a:dir ==# 'b' && l:cur_pos < l:next_pos
-        return
-    elseif a:dir ==# '' && l:cur_pos > l:next_pos
+    if (a:dir ==# '' && l:cur_pos > l:next_pos) ||
+                \ (a:dir ==# 'b' && l:cur_pos < l:next_pos)
+        call s:RestoreMode(a:mode)
         return
     endif
 
@@ -29,6 +30,10 @@ function! JumpToComment(mode, dir, id)
         let l:op = 'j'
     endif
     execute "normal! " . l:op
+    call s:RestoreMode(a:mode)
+endfunction
+
+function! s:RestoreMode(mode)
     if a:mode ==? 'i'
         startinsert!
     endif
