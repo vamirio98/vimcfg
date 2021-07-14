@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/12 09:13:11
+" Last Modified: 2021/07/14 22:13:13
 "=======================================================
 
 
@@ -20,7 +20,7 @@ iabbrev <buffer> inculde include
 "-------------------------------------------------------
 function! s:AddFileHead()
     call setline(1, '/*')
-	call setline(2, ' * ' . expand("%t") . ' -')
+	call setline(2, ' * ' . expand("%:t") . ' -')
 	call setline(3, ' *')
 	call setline(4, ' * Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
 	call setline(5, ' * Last Modified: ' . strftime("%Y/%m/%d %T"))
