@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by hyl on 2021/02/16
-" Last Modified: 2021/07/04 18:42:34
+" Last Modified: 2021/07/15 00:15:35
 "=======================================================
 
 " prevent reload
@@ -13,7 +13,9 @@ else
 end
 
 " get the directory where this file is located
-let s:home = resolve(expand('<sfile>:p:h'))
+let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+" use in init/keymaps.vim
+let g:cfg_init_dir = s:home . '/init/'
 
 " define a command to load the file
 command! -nargs=1 LoadScript exec 'source ' . s:home . '/' . '<args>'
