@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/05 22:59:23
+" Last Modified: 2021/07/15 22:10:18
 "=======================================================
 
 
@@ -99,6 +99,8 @@ endif
 "-------------------------------------------------------
 " other config
 "-------------------------------------------------------
+" mouse support
+set mouse=a
 
 " show the matching brackets
 set showmatch

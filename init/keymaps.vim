@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/15 00:15:43
+" Last Modified: 2021/07/15 22:10:59
 "=======================================================
 
 
@@ -16,8 +16,6 @@ inoremap <M-q> <ESC>
 " fast move
 "------------------------------------------------------
 inoremap <C-h> <left>
-inoremap <C-j> <down>
-inoremap <C-k> <up>
 inoremap <C-l> <right>
 inoremap <C-a> <home>
 inoremap <C-e> <end>
