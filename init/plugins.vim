@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/04 14:49:19
+" Last Modified: 2021/07/16 23:03:45
 "=======================================================
 
 
@@ -386,10 +386,10 @@ if index(g:plugin_group, 'coc') >= 0
 			\ coc#float#scroll(0) : "\<C-b>"
 		inoremap <silent><nowait><expr> <C-j>
 			\ coc#float#has_scroll() ?
-			\ "\<C-r>=coc#float#has_scroll(1)<CR>" : "\<right>"
+			\ "\<C-r>=coc#float#scroll(1)\<CR>" : "\<right>"
 		inoremap <silent><nowait><expr> <C-k>
 			\ coc#float#has_scroll() ?
-			\ "\<C-r>=coc#float#has_scroll(0)<CR>" : "\<left>"
+			\ "\<C-r>=coc#float#scroll(0)\<CR>" : "\<left>"
 		vnoremap <silent><nowait><expr> <C-j>
 			\ coc#float#has_scroll() ?
 			\ coc#float#scroll(1) : "\<C-f>"
