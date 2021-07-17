@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/14 22:13:13
+" Last Modified: 2021/07/17 22:45:17
 "=======================================================
 
 
@@ -19,7 +19,7 @@ iabbrev <buffer> inculde include
 " add file head
 "-------------------------------------------------------
 function! s:AddFileHead()
-    call setline(1, '/*')
+    call setline(1, '/**')
 	call setline(2, ' * ' . expand("%:t") . ' -')
 	call setline(3, ' *')
 	call setline(4, ' * Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
@@ -47,7 +47,7 @@ function! AddComment(mode)
             let l:str = l:str . ' '
             let l:cur_indent -= 1
     endwhile
-    let l:title = [l:str . '/*',
+    let l:title = [l:str . '/**',
                 \ l:str . ' *',
                 \ l:str . ' */']
 	if a:mode == 'n'       " normal mode
