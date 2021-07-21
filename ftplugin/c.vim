@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/17 22:45:17
+" Last Modified: 2021/07/21 21:29:33
 "=======================================================
 
 
@@ -81,7 +81,7 @@ endfunction
 
 augroup C
     autocmd!
-    autocmd BufWritePre,FileWritePre *.c call s:ModifyTime()
+    autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call s:ModifyTime()
 augroup END
 
 
