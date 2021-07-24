@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/16 23:03:45
+" Last Modified: 2021/07/24 19:50:41
 "=======================================================
 
 
@@ -65,9 +65,9 @@ if index(g:plugin_group, 'enhanced') >= 0
 	Plug 'thirtythreeforty/lessspace.vim'
 
 	"-------------------------------------------------------
-	" terminal help
+	" float terminal
 	"-------------------------------------------------------
-	Plug 'skywind3000/vim-terminal-help'
+    Plug 'voldikss/vim-floaterm'
 
 
 	"-------------------------------------------------------
@@ -117,6 +117,19 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" operate on everything but files in blacklist
 	let g:lessspace_blacklist = ['diff', 'markdown']
+
+	"-------------------------------------------------------
+	" float terminal
+	"-------------------------------------------------------
+    " toggle the terminal
+    let g:floaterm_keymap_toggle = '<F12>'
+    " close window if the job exits normally
+    let g:floaterm_autoclose = 1
+    " kill all floaterm instance when quit vim
+    augroup Floaterm
+        au!
+        au QuitPre * execute "FloatermKill!"
+    augroup END
 endif
 
 
