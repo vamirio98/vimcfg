@@ -1,9 +1,9 @@
-"=======================================================
+"-------------------------------------------------------
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/15 22:10:59
-"=======================================================
+" Last Modified: 2021/09/12 10:57:57
+"-------------------------------------------------------
 
 
 "-------------------------------------------------------
@@ -114,16 +114,15 @@ endfunction
 nnoremap <silent> <leader>evb :call EditProfile('basic.vim')<CR>
 nnoremap <silent> <leader>evt :call EditProfile('terminal.vim')<CR>
 nnoremap <silent> <leader>evs :call EditProfile('style.vim')<CR>
-nnoremap <silent> <leader>evi :call EditProfile('indent.vim')<CR>
 nnoremap <silent> <leader>evf :call EditProfile('ft.vim')<CR>
 nnoremap <silent> <leader>evp :call EditProfile('plugins.vim')<CR>
 nnoremap <silent> <leader>evk :call EditProfile('keymaps.vim')<CR>
 
 function SaveProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
-        if l:ft == "vim"
-                execute "source %"
-        endif
+		if l:ft == "vim"
+			execute "source %"
+		endif
 endfunction
 
 " reload Vim profile

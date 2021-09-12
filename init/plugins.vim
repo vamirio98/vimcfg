@@ -1,14 +1,14 @@
-"=======================================================
+"-------------------------------------------------------
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/07/24 19:50:41
-"=======================================================
+" Last Modified: 2021/09/12 10:57:46
+"-------------------------------------------------------
 
 
-"=======================================================
+"-------------------------------------------------------
 " default groups
-"=======================================================
+"-------------------------------------------------------
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
 	let g:plugin_group += ['airline', 'nerdtree', 'coc', 'debug']
@@ -16,20 +16,20 @@ if !exists('g:plugin_group')
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " use vim-plug to manager all plunins
 " specify a directory for plugins
-"=======================================================
+"-------------------------------------------------------
 if has('unix')
 	call plug#begin('~/.vim/plugged')
 elseif has('win32')
 	call plug#begin('~/vimfiles/plugged')
-endif	
+endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " basic plugins
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'basic') >= 0
 	"-------------------------------------------------------
 	" show the start screen, display the recently edited files
@@ -45,9 +45,9 @@ if index(g:plugin_group, 'basic') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " enhanced plugins
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" insert or delete brackets, parens, quotes in pair
@@ -67,7 +67,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" float terminal
 	"-------------------------------------------------------
-    Plug 'voldikss/vim-floaterm'
+	Plug 'voldikss/vim-floaterm'
 
 
 	"-------------------------------------------------------
@@ -85,22 +85,22 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" set color of parentheses
 	let g:rbpt_colorpairs = [
-		\ ['brown',       'RoyalBlue3'],
-		\ ['Darkblue',    'SeaGreen3'],
-		\ ['darkgray',    'DarkOrchid3'],
+		\ ['brown',		  'RoyalBlue3'],
+		\ ['Darkblue',	  'SeaGreen3'],
+		\ ['darkgray',	  'DarkOrchid3'],
 		\ ['darkgreen',   'firebrick3'],
-		\ ['darkcyan',    'RoyalBlue3'],
-		\ ['darkred',     'SeaGreen3'],
+		\ ['darkcyan',	  'RoyalBlue3'],
+		\ ['darkred',	  'SeaGreen3'],
 		\ ['darkmagenta', 'DarkOrchid3'],
-		\ ['brown',       'firebrick3'],
-		\ ['gray',        'RoyalBlue3'],
-		\ ['black',       'SeaGreen3'],
+		\ ['brown',		  'firebrick3'],
+		\ ['gray',		  'RoyalBlue3'],
+		\ ['black',		  'SeaGreen3'],
 		\ ['darkmagenta', 'DarkOrchid3'],
-		\ ['Darkblue',    'firebrick3'],
+		\ ['Darkblue',	  'firebrick3'],
 		\ ['darkgreen',   'RoyalBlue3'],
-		\ ['darkcyan',    'SeaGreen3'],
-		\ ['red',         'firebrick3'],
-		\ ['darkred',     'DarkOrchid3'],
+		\ ['darkcyan',	  'SeaGreen3'],
+		\ ['red',		  'firebrick3'],
+		\ ['darkred',	  'DarkOrchid3'],
 	\ ]
 
 	let g:rbpt_max = 16
@@ -121,21 +121,21 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" float terminal
 	"-------------------------------------------------------
-    " toggle the terminal
-    let g:floaterm_keymap_toggle = '<F12>'
-    " close window if the job exits normally
-    let g:floaterm_autoclose = 1
-    " kill all floaterm instance when quit vim
-    augroup Floaterm
-        au!
-        au QuitPre * execute "FloatermKill!"
-    augroup END
+	" toggle the terminal
+	let g:floaterm_keymap_toggle = '<F12>'
+	" close window if the job exits normally
+	let g:floaterm_autoclose = 1
+	" kill all floaterm instance when quit vim
+	augroup Floaterm
+		au!
+		au QuitPre * execute "FloatermKill!"
+	augroup END
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " auto generate ctags/gtags and provide auto indexing function
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'tags') >= 0
 	"---------------------------------------------------------
 	" asynchronous generate tag file
@@ -148,7 +148,7 @@ if index(g:plugin_group, 'tags') >= 0
 	"-------------------------------------------------------
 	" set root dir of a project
 	let g:gutentags_project_root = ['.root', '.svn', '.git',
-		\ '.project']
+				\ '.project']
 
 	" set ctags file name
 	let g:gutentags_ctas_tagfile = '.tags'
@@ -171,8 +171,7 @@ if index(g:plugin_group, 'tags') >= 0
 	endif
 
 	" set ctags arguments
-	let g:gutentags_ctags_extra_args = ['--fields=+niazS',
-		\ '--extra=+q']
+	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 	let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxl']
 	let g:gutentags_ctags_extra_args += ['--c-kinds=+pxl']
 
@@ -184,9 +183,9 @@ if index(g:plugin_group, 'tags') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " filetypes plugin
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'filetypes') >= 0
 	"-------------------------------------------------------
 	" additional Vim sytax highlight for C++
@@ -197,7 +196,7 @@ if index(g:plugin_group, 'filetypes') >= 0
 	" preview markdown
 	"-------------------------------------------------------
 	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app &&
-		\ npm install', 'for': ['markdown'] }
+				\ npm install', 'for': ['markdown'] }
 
 
 	"-------------------------------------------------------
@@ -228,9 +227,9 @@ if index(g:plugin_group, 'filetypes') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " airline
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'airline') >= 0
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
@@ -265,12 +264,12 @@ if index(g:plugin_group, 'airline') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " NERDTree
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'nerdtree') >= 0
 	Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeFocus',
-		\ 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
+				\ 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
 
 
 	"-------------------------------------------------------
@@ -281,13 +280,13 @@ if index(g:plugin_group, 'nerdtree') >= 0
 
 	" colse Vim if the only window left open is a NERDTree
 	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
-		\ && b:NERDTree.isTabTree()) | q | endif
+				\ && b:NERDTree.isTabTree()) | q | endif
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " coc
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'honza/vim-snippets'
@@ -317,9 +316,9 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" use tab for trigger completion and snippet expand
 	inoremap <silent><expr> <tab>
-		\ pumvisible() ? "\<C-n>" :
-		\ <SID>check_back_space() ? "\<tab>" :
-		\ coc#refresh()
+				\ pumvisible() ? "\<C-n>" :
+				\ <SID>check_back_space() ? "\<tab>" :
+				\ coc#refresh()
 	inoremap <expr><S-tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 	function! s:check_back_space() abort
@@ -331,7 +330,7 @@ if index(g:plugin_group, 'coc') >= 0
 	" coc.nvim, to format on enter, <Alt-m> could be remapped by other
 	" vim plugin
 	inoremap <silent><expr> <M-m> pumvisible() ? coc#_select_confirm()
-		\: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+				\: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 	" use <Alt-k> for jump to next placeholder
 	let g:coc_snippet_next = '<M-k>'
@@ -368,8 +367,7 @@ if index(g:plugin_group, 'coc') >= 0
 	" highlight symbol under cursor on CursorHold
 	augroup coc_hightligt
 		autocmd!
-		autocmd CursorHold * silent call
-			\ CocActionAsync('highlight')
+		autocmd CursorHold * silent call CocActionAsync('highlight')
 	augroup END
 
 	" symbol renaming
@@ -392,23 +390,23 @@ if index(g:plugin_group, 'coc') >= 0
 	" remap <C-j> and <C-k> for scroll float window/popups
 	if has('nvim-0.4.0') || has('patch-8.2.0750')
 		nnoremap <silent><nowait><expr> <C-j>
-			\ coc#float#has_scroll() ?
-			\ coc#float#scroll(1) : "\<C-f>"
+					\ coc#float#has_scroll() ?
+					\ coc#float#scroll(1) : "\<C-f>"
 		nnoremap <silent><nowait><expr> <C-k>
-			\ coc#float#has_scroll() ?
-			\ coc#float#scroll(0) : "\<C-b>"
+					\ coc#float#has_scroll() ?
+					\ coc#float#scroll(0) : "\<C-b>"
 		inoremap <silent><nowait><expr> <C-j>
-			\ coc#float#has_scroll() ?
-			\ "\<C-r>=coc#float#scroll(1)\<CR>" : "\<right>"
+					\ coc#float#has_scroll() ?
+					\ "\<C-r>=coc#float#scroll(1)\<CR>" : "\<right>"
 		inoremap <silent><nowait><expr> <C-k>
-			\ coc#float#has_scroll() ?
-			\ "\<C-r>=coc#float#scroll(0)\<CR>" : "\<left>"
+					\ coc#float#has_scroll() ?
+					\ "\<C-r>=coc#float#scroll(0)\<CR>" : "\<left>"
 		vnoremap <silent><nowait><expr> <C-j>
-			\ coc#float#has_scroll() ?
-			\ coc#float#scroll(1) : "\<C-f>"
+					\ coc#float#has_scroll() ?
+					\ coc#float#scroll(1) : "\<C-f>"
 		vnoremap <silent><nowait><expr> <C-k>
-			\ coc#float#has_scroll() ?
-			\ coc#float#scroll(0) : "\<C-b>"
+					\ coc#float#has_scroll() ?
+					\ coc#float#scroll(0) : "\<C-b>"
 	endif
 
 	" mapping for CocList
@@ -431,9 +429,9 @@ if index(g:plugin_group, 'coc') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " debug
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'debug') >= 0
 	"Plug 'puremourning/vimspector'
 
@@ -513,15 +511,15 @@ if index(g:plugin_group, 'asynctask') >= 0
 endif
 
 
-"=======================================================
+"-------------------------------------------------------
 " language tool - translator and grammar check
-"=======================================================
+"-------------------------------------------------------
 if index(g:plugin_group, 'language_tool') >= 0
 endif
 
-"=======================================================
+"-------------------------------------------------------
 " initialize plugin system
-"=======================================================
+"-------------------------------------------------------
 call plug#end()
 
 

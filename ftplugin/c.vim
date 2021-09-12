@@ -1,9 +1,9 @@
-"=======================================================
+"-------------------------------------------------------
 " c.vim -
-" 
+"
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/24 20:38:03
-"=======================================================
+" Last Modified: 2021/09/12 10:59:55
+"-------------------------------------------------------
 
 
 " quickly comment single line
@@ -19,7 +19,7 @@ iabbrev <buffer> inculde include
 " add file head
 "-------------------------------------------------------
 function! s:AddFileHead()
-    call setline(1, '/**')
+	call setline(1, '/**')
 	call setline(2, ' * ' . expand("%:t") . ' -')
 	call setline(3, ' *')
 	call setline(4, ' * Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
@@ -30,7 +30,7 @@ function! s:AddFileHead()
 endfunction
 
 if line('$') == 1
-        call s:AddFileHead()
+	call s:AddFileHead()
 endif
 
 "-------------------------------------------------------
@@ -41,16 +41,16 @@ nnoremap <buffer> <silent> <M-c> :call AddComment('n')<CR>
 inoremap <buffer> <silent> <M-c> i<ESC>:call AddComment('i')<CR>
 
 function! AddComment(mode)
-    let l:cur_indent = indent('.')
-    let l:str = ''
-    while l:cur_indent > 0
-            let l:str = l:str . ' '
-            let l:cur_indent -= 1
-    endwhile
-    let l:title = [l:str . '/**',
-                \ l:str . ' *',
-                \ l:str . ' */']
-	if a:mode == 'n'       " normal mode
+	let l:cur_indent = indent('.')
+	let l:str = ''
+	while l:cur_indent > 0
+		let l:str = l:str . ' '
+		let l:cur_indent -= 1
+	endwhile
+	let l:title = [l:str . '/**',
+				\ l:str . ' *',
+				\ l:str . ' */']
+	if a:mode == 'n'	   " normal mode
 		call append(line('.'), l:title)
 		execute "normal! 2j"
 		execute "startinsert!"
@@ -68,20 +68,20 @@ endfunction
 "-------------------------------------------------------
 function! s:ModifyTime()
 	let l:cur_pos = getcurpos()
-    call cursor(1, 1)
-    let l:b = searchpos('/*', 'c')
-    let l:e = searchpos('*/', 'n')
-    let l:t = search('Last Modified:')
-    if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 2
-        execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
-                    \ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
-    endif
+	call cursor(1, 1)
+	let l:b = searchpos('/*', 'c')
+	let l:e = searchpos('*/', 'n')
+	let l:t = search('Last Modified:')
+	if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 2
+		execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
+					\ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
+	endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
 
 augroup C
-    autocmd!
-    autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call s:ModifyTime()
+	autocmd!
+	autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call s:ModifyTime()
 augroup END
 
 

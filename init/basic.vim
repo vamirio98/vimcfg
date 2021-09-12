@@ -1,9 +1,9 @@
-"=======================================================
+"-------------------------------------------------------
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/07 23:51:26
-"=======================================================
+" Last Modified: 2021/09/12 10:28:16
+"-------------------------------------------------------
 
 
 "-------------------------------------------------------
@@ -20,7 +20,7 @@ autocmd BufReadPost * call s:ReturnLastPos()
 function s:ReturnLastPos()
 	let l:last_pos = [line("'\""), col("'\"")]
 	if l:last_pos[0] > 1 && last_pos[1] <= line("$")
-		\ && &ft !~# 'commit'
+				\ && &ft !~# 'commit'
 		call cursor(l:last_pos)
 	endif
 endfunction
@@ -44,7 +44,6 @@ set wrap
 " turn on function key timeout detection(the function key in the
 " terminal is a charset starts with ESC)
 set ttimeout
-
 
 " function key timeout detection: 50ms
 set ttimeoutlen=50

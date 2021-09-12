@@ -1,9 +1,9 @@
-"=======================================================
+"-------------------------------------------------------
 " sh.vim -
-" 
+"
 " Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/07/12 09:14:23
-"=======================================================
+" Last Modified: 2021/09/12 10:44:06
+"-------------------------------------------------------
 
 "-------------------------------------------------------
 " add file head
@@ -22,7 +22,7 @@ function! s:AddFileHead()
 endfunction
 
 if line('$') == 1
-        call s:AddFileHead()
+	call s:AddFileHead()
 endif
 
 
@@ -31,20 +31,20 @@ endif
 "-------------------------------------------------------
 function! s:ModifyTime()
 	let l:cur_pos = getcurpos()
-    call cursor(1, 1)
-    let l:b = searchpos('#=', 'c')
-    let l:e = searchpos('#=', 'n')
-    let l:t = search('Last Modified:')
-    if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 1
-        execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
-                    \ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
-    endif
+	call cursor(1, 1)
+	let l:b = searchpos('#=', 'c')
+	let l:e = searchpos('#=', 'n')
+	let l:t = search('Last Modified:')
+	if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 1
+		execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
+					\ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
+	endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
 
 augroup SHELL
-    autocmd!
-    autocmd BufWritePre,FileWritePre *.sh call s:ModifyTime()
+	autocmd!
+	autocmd BufWritePre,FileWritePre *.sh call s:ModifyTime()
 augroup END
 
 
