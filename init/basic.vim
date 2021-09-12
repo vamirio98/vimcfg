@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/12 10:28:16
+" Last Modified: 2021/09/12 11:06:20
 "-------------------------------------------------------
 
 
@@ -59,8 +59,7 @@ set smartcase
 " highlight the search result
 set hlsearch
 
-" dynamically and incrementally display the search results during
-" input
+" dynamically and incrementally display the search results during input
 set incsearch
 
 
