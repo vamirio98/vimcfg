@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 14 10:28:44
+" Last Modified: 2021 Oct 14 10:49:00
 "-------------------------------------------------------
 
 " quickly comment single line
@@ -61,33 +61,16 @@ function! AddComment(mode)
 	endif
 endfunction
 
-
-"-------------------------------------------------------
-" auto modify the Last Modified Time
-"-------------------------------------------------------
-function! s:ModifyTime()
-	let l:cur_pos = getcurpos()
-	call cursor(1, 1)
-	let l:b = searchpos('/*', 'c')
-	let l:e = searchpos('*/', 'n')
-	let l:t = search('Last Modified:')
-	if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 2
-		execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
-					\ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
-	endif
-	call cursor(l:cur_pos[1], l:cur_pos[2])
-endfunction
-
 augroup C
 	autocmd!
-	autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call s:ModifyTime()
+	autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call base#ModifyTime('/*', '*/')
 augroup END
 
 
 "-------------------------------------------------------
 " jump to comments
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-g> :call JumpToComment('n', '', '\(\/\*\\|\*\/\)')<CR>
-nnoremap <buffer> <silent> <M-G> :call JumpToComment('n', 'b', '\(\/\*\\|\*\/\)')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call JumpToComment('i', '', '\(\/\*\\|\*\/\)')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call JumpToComment('i', 'b', '\(\/\*\\|\*\/\)')<CR>
+nnoremap <buffer> <silent> <M-g> :call base#JumpToComment('n', '', '\(\/\*\\|\*\/\)')<CR>
+nnoremap <buffer> <silent> <M-G> :call base#JumpToComment('n', 'b', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-g> <ESC>:call base#JumpToComment('i', '', '\(\/\*\\|\*\/\)')<CR>
+inoremap <buffer> <silent> <M-G> <ESC>:call base#JumpToComment('i', 'b', '\(\/\*\\|\*\/\)')<CR>
