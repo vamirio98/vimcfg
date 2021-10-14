@@ -1,10 +1,9 @@
 "-------------------------------------------------------
 " vim.vim -
-"
-" Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/09/12 10:43:47
+" 
+" Created by Vamirio on 2021 Oct 14
+" Last Modified: 2021 Oct 14 10:27:13
 "-------------------------------------------------------
-
 
 let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
 			\ '"""':'"""', "'''":"'''"}
@@ -17,8 +16,8 @@ function! s:AddFileHead()
 	call setline(1, '"-------------------------------------------------------')
 	call setline(2, '" ' . expand("%:t") . ' -')
 	call setline(3, '" ')
-	call setline(4, '" Created by Haoyuan Li on ' . strftime("%Y/%m/%d"))
-	call setline(5, '" Last Modified: ' . strftime("%Y/%m/%d %T"))
+	call setline(4, '" Created by Vamirio on ' . strftime("%Y %b %d"))
+	call setline(5, '" Last Modified: ' . strftime("%Y %b %d %T"))
 	call setline(6, '"-------------------------------------------------------')
 	execute "normal! j"
 	execute "startinsert!"
@@ -69,7 +68,7 @@ function! s:ModifyTime()
 	let l:t = search('Last Modified:')
 	if l:b[0] < 5 && l:t < l:e[0] && l:b[1] == 1 && l:e[1] == 1
 		execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
-					\ . "Last Modified: " . strftime("%Y\\/%m\\/%d %T")
+					\ . "Last Modified: " . strftime("%Y %b %d %T")
 	endif
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
