@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 14 10:49:00
+" Last Modified: 2021 Oct 15 09:18:28
 "-------------------------------------------------------
 
 " quickly comment single line
@@ -14,22 +14,8 @@ iabbrev <buffer> incldue include
 iabbrev <buffer> inculde include
 
 
-"-------------------------------------------------------
-" add file head
-"-------------------------------------------------------
-function! s:AddFileHead()
-	call setline(1, '/**')
-	call setline(2, ' * ' . expand("%:t") . ' -')
-	call setline(3, ' *')
-	call setline(4, ' * Created by Vamirio on ' . strftime("%Y %b %d"))
-	call setline(5, ' * Last Modified: ' . strftime("%Y %b %d %T"))
-	call setline(6, ' */')
-	execute "normal! j"
-	execute "startinsert!"
-endfunction
-
 if line('$') == 1
-	call s:AddFileHead()
+	call base#AddFileHead('/**', ' *', ' */', 1)
 endif
 
 "-------------------------------------------------------
