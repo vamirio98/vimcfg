@@ -2,21 +2,17 @@
 " c.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 09:18:28
+" Last Modified: 2021 Oct 15 10:26:44
 "-------------------------------------------------------
 
 " quickly comment single line
 nnoremap <buffer> <localleader>/ I//<ESC>
 
-" snippets for C/C++
+" abbreviation for C/C++
 iabbrev <buffer> reutrn return
 iabbrev <buffer> incldue include
 iabbrev <buffer> inculde include
 
-
-if line('$') == 1
-	call base#AddFileHead('/**', ' *', ' */', 1)
-endif
 
 "-------------------------------------------------------
 " add comment
@@ -47,9 +43,16 @@ function! AddComment(mode)
 	endif
 endfunction
 
+
+" add file head
+if line('$') == 1 && getline(1) == ''
+	call base#AddFileHead('/**', ' *', ' */', 1)
+endif
+
+
 augroup C
 	autocmd!
-	autocmd BufWritePre,FileWritePre *.c{,c,pp},*h{,pp} call base#ModifyTime('/*', '*/')
+	autocmd BufWritePre,FileWritePre *.c{,c,pp},*.h{,pp} call base#ModifyTime('/*', '*/')
 augroup END
 
 

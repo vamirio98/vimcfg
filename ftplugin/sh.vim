@@ -2,10 +2,10 @@
 " sh.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 09:24:57
+" Last Modified: 2021 Oct 15 10:27:06
 "-------------------------------------------------------
 
-if line('$') == 1
+if line('$') == 1 && getline(1) == ''
 	call setline(1, "#!/bin/bash")
 	call append(1, "")
 	call base#AddFileHead(
