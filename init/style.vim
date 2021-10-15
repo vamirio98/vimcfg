@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/12 10:58:16
+" Last Modified: 2021 Oct 15 11:13:17
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -15,7 +15,7 @@ colorscheme solarized
 
 " set font in GUI
 if has('win32') && has('gui_running')
-	set guifont=DejaVu_Sans_Mono:h14
+	set guifont=DejaVu_Sans_Mono:h12
 endif
 
 " set line number
