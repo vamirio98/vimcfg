@@ -2,7 +2,7 @@
 " c.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 10:26:44
+" Last Modified: 2021 Oct 16 22:21:00
 "-------------------------------------------------------
 
 " quickly comment single line
@@ -17,31 +17,10 @@ iabbrev <buffer> inculde include
 "-------------------------------------------------------
 " add comment
 "-------------------------------------------------------
-nnoremap <buffer> <silent> <M-c> :call AddComment('n')<CR>
-" insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <silent> <M-c> i<ESC>:call AddComment('i')<CR>
-
-function! AddComment(mode)
-	let l:cur_indent = indent('.')
-	let l:str = ''
-	while l:cur_indent > 0
-		let l:str = l:str . ' '
-		let l:cur_indent -= 1
-	endwhile
-	let l:title = [l:str . '/**',
-				\ l:str . ' *',
-				\ l:str . ' */']
-	if a:mode == 'n'	   " normal mode
-		call append(line('.'), l:title)
-		execute "normal! 2j"
-		execute "startinsert!"
-	elseif a:mode == 'i'   " insert mode
-		call setline(line('.'), l:title[0])
-		call append(line('.'), l:title[1:-1])
-		execute "normal! j"
-		execute "startinsert!"
-	endif
-endfunction
+nnoremap <buffer> <silent> <M-c> :call base#AddComment('n',
+			\ ['/**', ' * ', ' */'])<CR>
+inoremap <buffer> <silent> <M-c> <ESC>:call base#AddComment('i',
+			\ ['/**', ' * ', ' */'])<CR>
 
 
 " add file head

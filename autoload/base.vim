@@ -2,7 +2,7 @@
 " base.vim - some base function
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 09:22:06
+" Last Modified: 2021 Oct 16 22:16:19
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -70,4 +70,33 @@ function! s:RestoreMode(mode)
     if a:mode ==? 'i'
         startinsert!
     endif
+endfunction
+
+function! base#AddComment(mode, comment_mark)
+	let l:cur_indent = indent('.')
+	let l:str = ''
+
+	let l:count = l:cur_indent / &tabstop
+	while l:count > 0
+		let l:str = l:str . "\t"
+		let l:count -= 1
+	endwhile
+	let l:count = l:cur_indent % &tabstop
+	while l:count > 0
+		let l:str = l:str . " "
+		let l:count -= 1
+	endwhile
+
+	let l:comment = [l:str . a:comment_mark[0],
+				\ l:str . a:comment_mark[1],
+				\ l:str . a:comment_mark[2]]
+	if a:mode == 'n'      " normal mode
+		call append(line('.'), l:comment)
+		execute "normal! 2j"
+	elseif a:mode == 'i'  " insert mode
+		call setline(line('.'), l:comment[0])
+		call append(line('.'), l:comment[1:-1])
+		execute "normal! j"
+	endif
+	execute "startinsert!"
 endfunction

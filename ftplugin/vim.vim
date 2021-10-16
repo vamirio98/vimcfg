@@ -2,7 +2,7 @@
 " vim.vim -
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 10:27:16
+" Last Modified: 2021 Oct 16 22:20:40
 "-------------------------------------------------------
 
 let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
@@ -20,31 +20,15 @@ endif
 "-------------------------------------------------------
 " add comment
 "-------------------------------------------------------
-nnoremap <buffer> <M-c> :call AddComment('n')<CR>
-" insert i before entering normal mode to avoid plugin lessspace delete indent
-inoremap <buffer> <M-c> i<ESC>:call AddComment('i')<CR>
+nnoremap <buffer> <M-c> :call base#AddComment('n',
+			\ ['"-------------------------------------------------------',
+			\ '" ',
+			\ '"-------------------------------------------------------'])<CR>
+inoremap <buffer> <M-c> <ESC>:call base#AddComment('i',
+			\ ['"-------------------------------------------------------',
+			\ '" ',
+			\ '"-------------------------------------------------------'])<CR>
 
-function! AddComment(mode)
-	let l:cur_indent = indent('.')
-	let l:str = ""
-	while l:cur_indent > 0
-		let l:str = l:str . " "
-		let l:cur_indent -= 1
-	endwhile
-	let l:title = [l:str . "\"-------------------------------------------------------",
-				\ l:str . "\"",
-				\ l:str . "\"-------------------------------------------------------"]
-	if a:mode == 'n'	   " normal mode
-		call append(line('.'), l:title)
-		execute "normal! 2j"
-		execute "startinsert!"
-	elseif a:mode == 'i'   " insert mode
-		call setline(line('.'), l:title[0])
-		call append(line('.'), l:title[1:-1])
-		execute "normal! j"
-		execute "startinsert!"
-	endif
-endfunction
 
 augroup VIM
 	autocmd!
