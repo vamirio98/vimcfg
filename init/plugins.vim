@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/12 10:57:46
+" Last Modified: 2021 Oct 16 17:06:50
 "-------------------------------------------------------
 
 
@@ -62,7 +62,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" strip whitespace
 	"-------------------------------------------------------
-	Plug 'thirtythreeforty/lessspace.vim'
+	"Plug 'thirtythreeforty/lessspace.vim'
 
 	"-------------------------------------------------------
 	" float terminal
@@ -289,8 +289,9 @@ endif
 "-------------------------------------------------------
 if index(g:plugin_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'honza/vim-snippets'
 
+	Plug 'honza/vim-snippets'
+	Plug 'SirVer/ultisnips'
 
 	"-------------------------------------------------------
 	" coc.nvim
@@ -325,18 +326,6 @@ if index(g:plugin_group, 'coc') >= 0
 		let col = col('.') - 1
 		return !col || getline('.')[col - 1] =~# '\s'
 	endfunction
-
-	" make <Alt-m> to auto-select the first completion item and notify
-	" coc.nvim, to format on enter, <Alt-m> could be remapped by other
-	" vim plugin
-	inoremap <silent><expr> <M-m> pumvisible() ? coc#_select_confirm()
-				\: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-
-	" use <Alt-k> for jump to next placeholder
-	let g:coc_snippet_next = '<M-k>'
-
-	" use <Alt-j> for jump to previous placeholder
-	let g:coc_snippet_prev = '<M-j>'
 
 	" Remap key for gotos
 	nmap <silent> gd <Plug>(coc-definition)
@@ -426,6 +415,15 @@ if index(g:plugin_group, 'coc') >= 0
 	nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
 	" resume last coc list
 	nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
+
+    "-------------------------------------------------------
+    " snippets
+    "-------------------------------------------------------
+	let g:UltiSnipsSnippetDirectories = ["UltiSnips", "plugcfg/UltiSnips"]
+	let g:UltiSnipsExpandTrigger = '<C-l>'
+	let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+	let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
 endif
 
 
