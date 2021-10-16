@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 16 17:06:50
+" Last Modified: 2021 Oct 16 17:39:06
 "-------------------------------------------------------
 
 
@@ -215,7 +215,7 @@ if index(g:plugin_group, 'filetypes') >= 0
 	let g:mkdp_refresh_slow = 0
 
 	" specify browser to open preview page
-	let g:mkdp_browser = 'msedge'
+	let g:mkdp_browser = 'firefox'
 
 	" preview page title
 	" ${name} will be replace with the file name
@@ -249,18 +249,18 @@ if index(g:plugin_group, 'airline') >= 0
 
 	" quick selcet buffer
 	let g:airline#extensions#tabline#buffer_idx_mode = 1
-	nmap <Leader>1 <Plug>AirlineSelectTab1
-	nmap <Leader>2 <Plug>AirlineSelectTab2
-	nmap <Leader>3 <Plug>AirlineSelectTab3
-	nmap <Leader>4 <Plug>AirlineSelectTab4
-	nmap <Leader>5 <Plug>AirlineSelectTab5
-	nmap <Leader>6 <Plug>AirlineSelectTab6
-	nmap <Leader>7 <Plug>AirlineSelectTab7
-	nmap <Leader>8 <Plug>AirlineSelectTab8
-	nmap <Leader>9 <Plug>AirlineSelectTab9
-	nmap <Leader>0 <Plug>AirlineSelectTab0
-	nmap <Leader>- <Plug>AirlineSelectPrevTab
-	nmap <Leader>+ <Plug>AirlineSelectNextTab
+	nmap <space>1<space> <Plug>AirlineSelectTab1
+	nmap <space>2<space> <Plug>AirlineSelectTab2
+	nmap <space>3<space> <Plug>AirlineSelectTab3
+	nmap <space>4<space> <Plug>AirlineSelectTab4
+	nmap <space>5<space> <Plug>AirlineSelectTab5
+	nmap <space>6<space> <Plug>AirlineSelectTab6
+	nmap <space>7<space> <Plug>AirlineSelectTab7
+	nmap <space>8<space> <Plug>AirlineSelectTab8
+	nmap <space>9<space> <Plug>AirlineSelectTab9
+	nmap <space>0<space> <Plug>AirlineSelectTab0
+	nmap <space>-<space> <Plug>AirlineSelectPrevTab
+	nmap <space>+<space> <Plug>AirlineSelectNextTab
 endif
 
 
@@ -276,7 +276,7 @@ if index(g:plugin_group, 'nerdtree') >= 0
 	" nerdtree
 	"-------------------------------------------------------
 	" open NERDTree
-	nnoremap <silent> <leader>od :NERDTreeToggle<CR>
+	nnoremap <silent> <space>od<space> :NERDTreeToggle<CR>
 
 	" colse Vim if the only window left open is a NERDTree
 	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
@@ -329,7 +329,7 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Remap key for gotos
 	nmap <silent> gd <Plug>(coc-definition)
-	nmap <silent> gc <Plug>(coc-declaration)
+	nmap <silent> gD <Plug>(coc-declaration)
 	nmap <silent> gy <Plug>(coc-type-definition)
 	nmap <silent> gi <Plug>(coc-implemention)
 	nmap <silent> gr <Plug>(coc-references)
@@ -360,21 +360,21 @@ if index(g:plugin_group, 'coc') >= 0
 	augroup END
 
 	" symbol renaming
-	nmap <leader>rn <Plug>(coc-rename)
+	nmap <space>rn<space> <Plug>(coc-rename)
 
 	" apply AutoFix to problem on the current line
-	nmap <leader>qf <Plug>(coc-fix-current)
+	nmap <space>qf<space> <Plug>(coc-fix-current)
 
 	" translation
 	" popup
-	nmap <Leader>tt <Plug>(coc-translator-p)
-	vmap <Leader>tt <Plug>(coc-translator-pv)
+	nmap <space>tt<space> <Plug>(coc-translator-p)
+	vmap <space>tt<space> <Plug>(coc-translator-pv)
 	" echo
-	nmap <Leader>te <Plug>(coc-translator-e)
-	vmap <Leader>te <Plug>(coc-translator-ev)
+	nmap <space>te<space> <Plug>(coc-translator-e)
+	vmap <space>te<space> <Plug>(coc-translator-ev)
 	" replace
-	nmap <Leader>tr <Plug>(coc-translator-r)
-	vmap <Leader>tr <Plug>(coc-translator-rv)
+	nmap <space>tr<space> <Plug>(coc-translator-r)
+	vmap <space>tr<space> <Plug>(coc-translator-rv)
 
 	" remap <C-j> and <C-k> for scroll float window/popups
 	if has('nvim-0.4.0') || has('patch-8.2.0750')
@@ -400,21 +400,21 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" mapping for CocList
 	" show all diagnostics
-	nnoremap <silent><nowait> <space>a :<C-u>CocList diagnostics<CR>
+	nnoremap <silent><nowait> <space>a<space> :<C-u>CocList diagnostics<CR>
 	" manage extensions
-	nnoremap <silent><nowait> <space>e :<C-u>CocList extensions<CR>
+	nnoremap <silent><nowait> <space>e<space> :<C-u>CocList extensions<CR>
 	" show commands
-	nnoremap <silent><nowait> <space>c :<C-u>CocList commands<CR>
+	nnoremap <silent><nowait> <space>c<space> :<C-u>CocList commands<CR>
 	" find symbol of current document
-	nnoremap <silent><nowait> <space>o :<C-u>CocList outline<CR>
+	nnoremap <silent><nowait> <space>o<space> :<C-u>CocList outline<CR>
 	" search workspace symbols
-	nnoremap <silent><nowait> <space>s :<C-u>CocList -I symbols<CR>
+	nnoremap <silent><nowait> <space>s<space> :<C-u>CocList -I symbols<CR>
 	" do default action for next item
-	nnoremap <silent><nowait> <space>j :<C-u>CocNext<CR>
+	nnoremap <silent><nowait> <space>j<space> :<C-u>CocNext<CR>
 	" do default action for previous item
-	nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
+	nnoremap <silent><nowait> <space>k<space> :<C-u>CocPrev<CR>
 	" resume last coc list
-	nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
+	nnoremap <silent><nowait> <space>p<space> :<C-u>CocListResume<CR>
 
     "-------------------------------------------------------
     " snippets
@@ -466,7 +466,7 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asyncrun_bell = 1
 
 	" set q to open/close the Quickficx window
-	nnoremap <silent> q :call asyncrun#quickfix_toggle(6)<cr>
+	nnoremap <silent> <space>q<space> :call asyncrun#quickfix_toggle(6)<cr>
 
 	" specify what terminal do I want to use
 	let g:asynctasks_term_pos = 'tab'
@@ -475,37 +475,37 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asynctasks_term_reuse = 1
 
 	" run the program
-	nnoremap <silent> <localleader>r :AsyncTask file-run<CR>
+	nnoremap <silent> <space>r<space> :AsyncTask file-run<CR>
 
 	" compile single file
-	nnoremap <silent> <localleader>c :AsyncTask file-build<CR>
+	nnoremap <silent> <space>c<space> :AsyncTask file-build<CR>
 
 	" complie single file with debug info
-	nnoremap <silent> <localleader>g :AsyncTask file-debug<CR>
+	nnoremap <silent> <space>cd<space> :AsyncTask file-debug<CR>
 
 	" use gdbgui to debug
-	nnoremap <silent> <localleader>d :AsyncTask file-gdbgui<CR>
+	nnoremap <silent> <space>d<space> :AsyncTask file-gdbgui<CR>
 
 	" delete the executable file generated by current file
-	nnoremap <silent> <localleader>m :AsyncTask exe-del<CR>
+	nnoremap <silent> <space>rm<space> :AsyncTask exe-del<CR>
 
 	" set root dir for make
 	let g:asyncrun_rootmarks = ['.root', '.svn', '.git', '.project']
 
 	" run current project
-	nnoremap <silent> <localleader>R :AsyncTask project-run<CR>
+	nnoremap <silent> <space>mr<space> :AsyncTask project-run<CR>
 
 	" run make
-	nnoremap <silent> <localleader>C :AsyncTask project-build<CR>
+	nnoremap <silent> <space>m<space> :AsyncTask project-build<CR>
 
 	" run make for debugging
-	nnoremap <silent> <localleader>D :AsyncTask project-debug<CR>
+	nnoremap <silent> <space>md<space> :AsyncTask project-debug<CR>
 
 	" run make for cleaning
-	nnoremap <silent> <localleader>M :AsyncTask project-clean<CR>
+	nnoremap <silent> <space>mc<space> :AsyncTask project-clean<CR>
 
 	" query available tasks
-	nnoremap <silent> <leader>l :AsyncTaskList<CR>
+	nnoremap <silent> <space>qat<space> :AsyncTaskList<CR>
 endif
 
 

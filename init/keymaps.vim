@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/12 10:57:57
+" Last Modified: 2021 Oct 16 17:29:14
 "-------------------------------------------------------
 
 
@@ -15,8 +15,6 @@ inoremap <M-q> <ESC>
 "------------------------------------------------------
 " fast move
 "------------------------------------------------------
-inoremap <C-h> <left>
-inoremap <C-l> <right>
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 
@@ -34,7 +32,6 @@ cnoremap <C-e> <end>
 "-------------------------------------------------------
 " Alt key movement enhancement
 "-------------------------------------------------------
-
 " move between words
 nnoremap <M-h> b
 nnoremap <M-l> w
@@ -90,16 +87,16 @@ nnoremap <silent> <M-w> :bdelete<CR>
 "------------------------------------------------------
 " fast add quotes and brackets
 "------------------------------------------------------
-nnoremap <Leader>' bi'<ESC>ea'<ESC>
-nnoremap <Leader>" bi"<ESC>ea"<ESC>
-vnoremap <Leader>' c''<ESC>hp
-vnoremap <Leader>" c""<ESC>hp
-nnoremap <Leader>( bi(<ESC>ea)<ESC>
-nnoremap <Leader>[ bi[<ESC>ea]<ESC>
-nnoremap <Leader>{ bi{<ESC>ea}<ESC>
-vnoremap <Leader>( c()<ESC>hpe
-vnoremap <Leader>[ c[]<ESC>hpe
-vnoremap <Leader>{ c{}<ESC>hpe
+nnoremap <space>'<space> bi'<ESC>ea'<ESC>
+nnoremap <space>"<space> bi"<ESC>ea"<ESC>
+vnoremap <space>'<space> c''<ESC>hp
+vnoremap <space>"<space> c""<ESC>hp
+nnoremap <space>(<space> bi(<ESC>ea)<ESC>
+nnoremap <space>[<space> bi[<ESC>ea]<ESC>
+nnoremap <space>{<space> bi{<ESC>ea}<ESC>
+vnoremap <space>(<space> c()<ESC>hpe
+vnoremap <space>[<space> c[]<ESC>hpe
+vnoremap <space>{<space> c{}<ESC>hpe
 
 
 "------------------------------------------------------
@@ -111,12 +108,12 @@ function EditProfile(filename)
 endfunction
 
 " fast edit Vim profile
-nnoremap <silent> <leader>evb :call EditProfile('basic.vim')<CR>
-nnoremap <silent> <leader>evt :call EditProfile('terminal.vim')<CR>
-nnoremap <silent> <leader>evs :call EditProfile('style.vim')<CR>
-nnoremap <silent> <leader>evf :call EditProfile('ft.vim')<CR>
-nnoremap <silent> <leader>evp :call EditProfile('plugins.vim')<CR>
-nnoremap <silent> <leader>evk :call EditProfile('keymaps.vim')<CR>
+nnoremap <silent> <space>evb<space> :call EditProfile('basic.vim')<CR>
+nnoremap <silent> <space>evt<space> :call EditProfile('terminal.vim')<CR>
+nnoremap <silent> <space>evs<space> :call EditProfile('style.vim')<CR>
+nnoremap <silent> <space>evf<space> :call EditProfile('ft.vim')<CR>
+nnoremap <silent> <space>evp<space> :call EditProfile('plugins.vim')<CR>
+nnoremap <silent> <space>evk<space> :call EditProfile('keymaps.vim')<CR>
 
 function SaveProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
@@ -126,4 +123,4 @@ function SaveProfile()
 endfunction
 
 " reload Vim profile
-nnoremap <silent> <leader>sv :call SaveProfile()<CR>
+nnoremap <silent> <space>sv<space> :call SaveProfile()<CR>
