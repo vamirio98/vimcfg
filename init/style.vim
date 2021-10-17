@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 15 11:13:17
+" Last Modified: 2021 Oct 17 09:58:06
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -13,9 +13,14 @@ let g:solarized_termcolors = 256
 set background=light
 colorscheme solarized
 
-" set font in GUI
-if has('win32') && has('gui_running')
-	set guifont=DejaVu_Sans_Mono:h12
+" set navigation and font in GUI
+if has('gui_running')
+	set guioptions-=m  " remove menu bar
+	set guioptions-=T  " remove toolbar
+	set guioptions-=r  " remove scrollbar
+	if has('win32')
+		set guifont=DejaVu_Sans_Mono:h12
+	endif
 endif
 
 " set line number
