@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 16 17:39:06
+" Last Modified: 2021 Oct 17 23:35:54
 "-------------------------------------------------------
 
 
@@ -62,7 +62,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" strip whitespace
 	"-------------------------------------------------------
-	"Plug 'thirtythreeforty/lessspace.vim'
+	Plug 'axelf4/vim-strip-trailing-whitespace'
 
 	"-------------------------------------------------------
 	" float terminal
@@ -106,17 +106,11 @@ if index(g:plugin_group, 'enhanced') >= 0
 	let g:rbpt_max = 16
 	let g:rbpt_loadcmd_toggle = 0
 
+
 	autocmd VimEnter * RainbowParenthesesToggle
 	autocmd Syntax * RainbowParenthesesLoadRound
 	autocmd Syntax * RainbowParenthesesLoadSquare
 	autocmd Syntax * RainbowParenthesesLoadBraces
-
-
-	"-------------------------------------------------------
-	" lessspace
-	"-------------------------------------------------------
-	" operate on everything but files in blacklist
-	let g:lessspace_blacklist = ['diff', 'markdown']
 
 	"-------------------------------------------------------
 	" float terminal
