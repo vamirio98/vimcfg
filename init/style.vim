@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 17 09:58:06
+" Last Modified: 2021 Oct 18 12:28:48
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -36,8 +36,8 @@ set nofoldenable
 " use vim-airline to view status, so turn off this option
 set noshowmode
 
-" show a column line in width 80
-set colorcolumn=80
+" show a column line in width 81
+set colorcolumn=81
 
 " when split a window vertically, display the new one on the right side
 set splitright
