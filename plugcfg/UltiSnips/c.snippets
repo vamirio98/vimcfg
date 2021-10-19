@@ -4,6 +4,14 @@ snippet cfun0 "function declaration" b
 ${1:void} ${5:function_name}(void);
 endsnippet
 
+snippet cdvfun0 "function declaration without return value with documentation" b
+/**
+ * @brief ${1:Brief function description}
+ *
+ * ${2:Detailed description of the function}
+ */
+void ${4:function_name}(void);
+endsnippet
 
 snippet cdfun0 "function declaration with documentation" b
 /**
@@ -13,9 +21,8 @@ snippet cdfun0 "function declaration with documentation" b
  *
  * @return ${3:Return parameter description}
  */
-${4:void} ${5:function_name}(void);
+${4:int} ${5:function_name}(void);
 endsnippet
-
 
 snippet dfun0 "function definition" b
 ${1:void} ${2:function_name}(void)
@@ -24,11 +31,20 @@ ${1:void} ${2:function_name}(void)
 }
 endsnippet
 
-
 snippet cfun1 "function declaration with one parameter" b
 ${1:void} ${2:function_name}(${3:Type} ${4:Parameter});
 endsnippet
 
+snippet cdvfun1 "function declaration with one parameter and none return value with documentation" b
+/**
+ * @brief ${1:Brief function description}
+ *
+ * ${2:Detailed description of the function}
+ *
+ * @param $3 ${4:Parameter description}
+ */
+void ${5:function_name}(${6:Type} ${3:Parameter});
+endsnippet
 
 snippet cdfun1 "function declaration with one parameter with documentation" b
 /**
@@ -37,12 +53,10 @@ snippet cdfun1 "function declaration with one parameter with documentation" b
  * ${2:Detailed description of the function}
  *
  * @param $3 ${4:Parameter description}
- *
  * @return ${5:Return parameter description}
  */
 ${6:void} ${7:function_name}(${8:Type} ${3:Parameter});
 endsnippet
-
 
 snippet dfun1 "function definition with one parameter" b
 ${1:void} ${2:function_name}(${3:Type} ${4:Parameter})
@@ -51,11 +65,21 @@ ${1:void} ${2:function_name}(${3:Type} ${4:Parameter})
 }
 endsnippet
 
-
 snippet cfun2 "function declaration with two parameters" b
 ${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter});
 endsnippet
 
+snippet cdvfun2 "function declaration with two parameters and none return value with documentation" b
+/**
+ * @brief ${1:Brief function description}
+ *
+ * ${2:Detailed description of the function}
+ *
+ * @param $3 ${4:Parameter description}
+ * @param $5 ${6:Parameter description}
+ */
+${7:void} ${8:function_name}(${9:Type} ${3:Parameter}, ${10:Type} ${5:Parameter});
+endsnippet
 
 snippet cdfun2 "function declaration with two parameters with documentation" b
 /**
@@ -65,12 +89,10 @@ snippet cdfun2 "function declaration with two parameters with documentation" b
  *
  * @param $3 ${4:Parameter description}
  * @param $5 ${6:Parameter description}
- *
  * @return ${7:Return parameter description}
  */
 ${8:void} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter});
 endsnippet
-
 
 snippet dfun2 "function definition with two parameters with documentation" b
 ${8:void} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter})
@@ -79,11 +101,22 @@ ${8:void} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter
 }
 endsnippet
 
-
 snippet cfun3 "function declaration with three parameters" b
 ${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter}, ${7:Type} ${8:Parameter});
 endsnippet
 
+snippet cdvfun3 "function declaration with three parameters and none return value with documentation" b
+/**
+ * @brief ${1:Brief function description}
+ *
+ * ${2:Detailed description of the function}
+ *
+ * @param $3 ${4:Parameter description}
+ * @param $5 ${6:Parameter description}
+ * @param $7 ${8:Parameter description}
+ */
+void ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter}, ${12:Type} ${7:Parameter});
+endsnippet
 
 snippet cdfun3 "function declaration with three parameters with documentation" b
 /**
@@ -94,12 +127,10 @@ snippet cdfun3 "function declaration with three parameters with documentation" b
  * @param $3 ${4:Parameter description}
  * @param $5 ${6:Parameter description}
  * @param $7 ${8:Parameter description}
- *
  * @return ${9:Return parameter description}
  */
 ${10:void} ${11:function_name}(${12:Type} ${3:Parameter}, ${13:Type} ${5:Parameter}, ${14:Type} ${7:Parameter});
 endsnippet
-
 
 snippet dfun3 "function definition with three parameters" b
 ${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter}, ${7:Type} ${8:Parameter})
