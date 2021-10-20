@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 16 21:43:42
+" Last Modified: 2021 Oct 20 18:28:02
 "-------------------------------------------------------
 
 
@@ -112,9 +112,6 @@ set lazyredraw
 " (default 8, length of a tab)
 "-------------------------------------------------------
 set shiftround
-
-" auto change to the file dir
-set autochdir
 
 " keep column when switching between buffers
 set nostartofline

@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 17 23:35:54
+" Last Modified: 2021 Oct 20 18:24:28
 "-------------------------------------------------------
 
 
@@ -11,7 +11,7 @@
 "-------------------------------------------------------
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
-	let g:plugin_group += ['airline', 'nerdtree', 'coc', 'debug']
+	let g:plugin_group += ['airline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'language_tool']
 endif
 
@@ -259,22 +259,10 @@ endif
 
 
 "-------------------------------------------------------
-" NERDTree
+" dirvish
 "-------------------------------------------------------
-if index(g:plugin_group, 'nerdtree') >= 0
-	Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeFocus',
-				\ 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
-
-
-	"-------------------------------------------------------
-	" nerdtree
-	"-------------------------------------------------------
-	" open NERDTree
-	nnoremap <silent> <space>od<space> :NERDTreeToggle<CR>
-
-	" colse Vim if the only window left open is a NERDTree
-	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
-				\ && b:NERDTree.isTabTree()) | q | endif
+if index(g:plugin_group, 'dirvish') >= 0
+	Plug 'justinmk/vim-dirvish'
 endif
 
 
