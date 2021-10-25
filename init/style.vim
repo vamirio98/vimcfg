@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 18 12:28:48
+" Last Modified: 2021 Oct 25 22:35:55
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -19,7 +19,7 @@ if has('gui_running')
 	set guioptions-=T  " remove toolbar
 	set guioptions-=r  " remove scrollbar
 	if has('win32')
-		set guifont=DejaVu_Sans_Mono:h12
+		set guifont=JetBrains_Mono:h13
 	endif
 endif
 
