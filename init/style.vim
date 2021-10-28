@@ -2,7 +2,7 @@
 " style.vim - UI setting
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 25 22:35:55
+" Last Modified: 2021 Oct 26 09:33:09
 "-------------------------------------------------------
 
 "-------------------------------------------------------
@@ -41,3 +41,6 @@ set colorcolumn=81
 
 " when split a window vertically, display the new one on the right side
 set splitright
+
+" enable italic in vim
+highlight Comment cterm=italic
