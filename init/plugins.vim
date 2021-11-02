@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Nov 02 15:18:32
+" Last Modified: 2021 Nov 02 15:53:22
 "-------------------------------------------------------
 
 
@@ -451,8 +451,8 @@ if index(g:plugin_group, 'asynctask') >= 0
 	" bell when finish the task
 	let g:asyncrun_bell = 1
 
-	" set q to open/close the Quickficx window
-	nnoremap <silent> <space>q<space> :call asyncrun#quickfix_toggle(6)<cr>
+	" set <leader>q to open/close the Quickficx window
+	nnoremap <silent> <leader>q :call asyncrun#quickfix_toggle(6)<cr>
 
 	" specify what terminal do I want to use
 	let g:asynctasks_term_pos = 'tab'
