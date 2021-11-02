@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 20 18:24:28
+" Last Modified: 2021 Nov 02 15:18:32
 "-------------------------------------------------------
 
 
@@ -115,6 +115,10 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-------------------------------------------------------
 	" float terminal
 	"-------------------------------------------------------
+	let g:floaterm_wintype = 'float'
+	let g:floaterm_width = 0.4
+	let g:floaterm_height = 0.99
+	let g:floaterm_position = 'right'
 	" toggle the terminal
 	let g:floaterm_keymap_toggle = '<F12>'
 	" close window if the job exits normally
