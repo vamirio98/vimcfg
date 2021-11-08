@@ -1,11 +1,11 @@
-"-------------------------------------------------------
+"-
 " terminal.vim - Terminal key extension config
 "
 " Configure Alt and Backspace
 "
-" Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021/09/12 10:58:38
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:52:31
+"-
 
 function! Terminal_MetaMode(mode)
 	set ttimeout

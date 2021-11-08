@@ -1,9 +1,9 @@
-"-------------------------------------------------------
+"-
 " init.vim - Initialize config
 "
-" Created by hyl on 2021/02/16
-" Last Modified: 2021/09/12 10:45:52
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:52:48
+"-
 
 " prevent reload
 if get(s:, 'loaded', 0) != 0
@@ -32,9 +32,9 @@ elseif has('win32')
 endif
 
 
-"-------------------------------------------------------
+"-
 " load modules
-"-------------------------------------------------------
+"-
 " load basic config
 LoadScript init/basic.vim
 

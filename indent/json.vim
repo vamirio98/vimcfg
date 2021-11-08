@@ -1,10 +1,9 @@
-"-------------------------------------------------------
-" json.vim -
+"-
+" json.vim
 "
-" Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021/09/12 10:45:35
-"-------------------------------------------------------
-
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:50:03
+"-
 
 setlocal shiftwidth=4
 setlocal tabstop=4

@@ -1,26 +1,22 @@
-"-------------------------------------------------------
+"-
 " keymaps.vim - Keymaps
 "
-" Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 16 17:29:14
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:51:29
+"-
 
-
-"-------------------------------------------------------
 " set <M-q> as <ESC>
-"-------------------------------------------------------
 inoremap <M-q> <ESC>
 
-
-"------------------------------------------------------
+"-
 " fast move
-"------------------------------------------------------
+"-
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 
-"-------------------------------------------------------
+"-
 " fast move in command mode
-"-------------------------------------------------------
+"-
 cnoremap <C-h> <left>
 cnoremap <C-j> <down>
 cnoremap <C-k> <up>
@@ -29,9 +25,9 @@ cnoremap <C-a> <home>
 cnoremap <C-e> <end>
 
 
-"-------------------------------------------------------
+"-
 " Alt key movement enhancement
-"-------------------------------------------------------
+"-
 " move between words
 nnoremap <M-h> b
 nnoremap <M-l> w
@@ -62,31 +58,31 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 endif
 
 
-"------------------------------------------------------
+"-
 " fast save
-"------------------------------------------------------
+"-
 nnoremap <M-s> :w<CR>
 inoremap <M-s> <ESC>:w<CR>a
 
 
-"------------------------------------------------------
+"-
 " change case
-"------------------------------------------------------
+"-
 nnoremap <C-u> viw~
 
 " switch letters to uppercase
 inoremap <C-u> <ESC>viwgUea
 
 
-"------------------------------------------------------
+"-
 " easily deal with buffers
-"------------------------------------------------------
+"-
 nnoremap <silent> <M-w> :bdelete<CR>
 
 
-"------------------------------------------------------
+"-
 " fast add quotes and brackets
-"------------------------------------------------------
+"-
 nnoremap <space>'<space> bi'<ESC>ea'<ESC>
 nnoremap <space>"<space> bi"<ESC>ea"<ESC>
 vnoremap <space>'<space> c''<ESC>hp
@@ -99,9 +95,9 @@ vnoremap <space>[<space> c[]<ESC>hpe
 vnoremap <space>{<space> c{}<ESC>hpe
 
 
-"------------------------------------------------------
+"-
 " fast edit and reload vimrc
-"------------------------------------------------------
+"-
 function EditProfile(filename)
 	" get the directory where this file is located
 	execute "e " . g:cfg_init_dir . a:filename

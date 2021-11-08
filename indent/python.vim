@@ -1,9 +1,9 @@
-"-------------------------------------------------------
-"  python.vim -
-" 
-"  Created by Vamirio on 2021 Nov 08
-"  Last Modified: 2021 Nov 08 12:20:09
-"-------------------------------------------------------
+"-
+" python.vim
+"
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:50:12
+"-
 
 setlocal shiftwidth=4
 setlocal tabstop=4

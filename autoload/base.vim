@@ -1,13 +1,13 @@
-"-------------------------------------------------------
+"-
 " base.vim - some base function
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 16 22:16:19
-"-------------------------------------------------------
+" Last Modified: 2021 Nov 08 16:47:52
+"-
 
-"-------------------------------------------------------
+"-
 " auto modify the Last Modified Time
-"-------------------------------------------------------
+"-
 function! g:base#ModifyTime(prefix, suffix)
 	let l:cur_pos = getcurpos()
 	call cursor(1, 1)
@@ -23,13 +23,13 @@ function! g:base#ModifyTime(prefix, suffix)
 endfunction
 
 
-"-------------------------------------------------------
+"-
 " add file header
-"-------------------------------------------------------
+"-
 function! g:base#AddFileHead(head, suffix, tail, line)
 	call setline(a:line, a:head)
 	call cursor(a:line, 0)
-	call append(a:line, a:suffix . ' ' . expand("%:t") . ' -')
+	call append(a:line, a:suffix . ' ' . expand("%:t"))
 	call append(a:line + 1, a:suffix)
 	call append(a:line + 2, a:suffix . ' Created by Vamirio on ' . strftime("%Y %b %d"))
 	call append(a:line + 3, a:suffix . ' Last Modified: ' . strftime("%Y %b %d %T"))
@@ -39,9 +39,9 @@ function! g:base#AddFileHead(head, suffix, tail, line)
 endfunction
 
 
-"-------------------------------------------------------
+"-
 " jump to comment
-"-------------------------------------------------------
+"-
 function! g:base#JumpToComment(mode, dir, id)
     let l:cur_pos = getcurpos()[1]
     let l:next_pos = search(a:id, a:dir . 'cn')

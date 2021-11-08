@@ -1,17 +1,17 @@
-"-------------------------------------------------------
-" sh.vim -
+"-
+" sh.vim
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 15 10:27:06
-"-------------------------------------------------------
+" Last Modified: 2021 Nov 08 16:49:17
+"-
 
 if line('$') == 1 && getline(1) == ''
 	call setline(1, "#!/bin/bash")
 	call append(1, "")
 	call base#AddFileHead(
-				\ "#-------------------------------------------------------",
-				\ "#",
-				\ "#-------------------------------------------------------",
+				\ '#-',
+				\ '#',
+				\ '#-',
 				\ 3)
 endif
 
@@ -22,9 +22,9 @@ augroup SHELL
 augroup END
 
 
-"-------------------------------------------------------
+"-
 " jump out comments
-"-------------------------------------------------------
+"-
 nnoremap <buffer> <silent> <M-g> :call base#JumpToComment('n', '', '#-')<CR>
 nnoremap <buffer> <silent> <M-G> :call base#JumpToComment('n', 'b', '#-')<CR>
 inoremap <buffer> <silent> <M-g> <ESC>:call base#JumpToComment('i', '', '#-')<CR>

@@ -1,9 +1,9 @@
-"-------------------------------------------------------
-" c.vim -
+"-
+" c.vim
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Oct 16 22:21:00
-"-------------------------------------------------------
+" Last Modified: 2021 Nov 08 16:48:37
+"-
 
 " quickly comment single line
 nnoremap <buffer> <localleader>/ I//<ESC>
@@ -14,9 +14,9 @@ iabbrev <buffer> incldue include
 iabbrev <buffer> inculde include
 
 
-"-------------------------------------------------------
+"-
 " add comment
-"-------------------------------------------------------
+"-
 nnoremap <buffer> <silent> <M-c> :call base#AddComment('n',
 			\ ['/**', ' * ', ' */'])<CR>
 inoremap <buffer> <silent> <M-c> <ESC>:call base#AddComment('i',
@@ -35,9 +35,9 @@ augroup C
 augroup END
 
 
-"-------------------------------------------------------
+"-
 " jump to comments
-"-------------------------------------------------------
+"-
 nnoremap <buffer> <silent> <M-g> :call base#JumpToComment('n', '', '\(\/\*\\|\*\/\)')<CR>
 nnoremap <buffer> <silent> <M-G> :call base#JumpToComment('n', 'b', '\(\/\*\\|\*\/\)')<CR>
 inoremap <buffer> <silent> <M-g> <ESC>:call base#JumpToComment('i', '', '\(\/\*\\|\*\/\)')<CR>

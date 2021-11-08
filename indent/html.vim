@@ -1,9 +1,9 @@
-"-------------------------------------------------------
-" html.vim -
+"-
+" html.vim
 "
-" Created by Haoyuan Li on 2021/07/04
-" Last Modified: 2021 Nov 08 12:17:44
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:49:59
+"-
 
 setlocal shiftwidth=4
 setlocal tabstop=4

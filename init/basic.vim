@@ -1,21 +1,19 @@
-"-------------------------------------------------------
+"-
 " basic.vim - Basic config for Vim
 "
-" Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 20 18:28:02
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:51:04
+"-
 
-
-"-------------------------------------------------------
+"-
 " set <leader> key
-"-------------------------------------------------------
+"-
 let mapleader = "\\"
 let maplocalleader = "\<tab>"
 
-
-"-------------------------------------------------------
+"-
 " jump to the last position when reopening a file
-"-------------------------------------------------------
+"-
 autocmd BufReadPost * call s:ReturnLastPos()
 function s:ReturnLastPos()
 	let l:last_pos = [line("'\""), col("'\"")]
@@ -25,16 +23,10 @@ function s:ReturnLastPos()
 	endif
 endfunction
 
-
-"-------------------------------------------------------
 " incompatible with Vi
-"-------------------------------------------------------
 set nocompatible
 
-
-"-------------------------------------------------------
 " make backspace work like most other programs
-"-------------------------------------------------------
 set backspace=2
 
 
@@ -49,9 +41,9 @@ set ttimeout
 set ttimeoutlen=50
 
 
-"-------------------------------------------------------
+"-
 " search setting
-"-------------------------------------------------------
+"-
 " case is ignored by default, unless the search content contains
 " uppercase letters
 set ignorecase
@@ -64,9 +56,9 @@ set hlsearch
 set incsearch
 
 
-"-------------------------------------------------------
+"-
 " encoding setting
-"-------------------------------------------------------
+"-
 if has('multi_byte')
 	" termenal encoding
 	set termencoding=utf-8
@@ -82,10 +74,10 @@ if has('multi_byte')
 endif
 
 
-"-------------------------------------------------------
+"-
 " syntax highlighting, filetype, filetype-plugin and
 " filetype-indent setting
-"-------------------------------------------------------
+"-
 if has('autocmd')
 	filetype plugin indent on
 endif
@@ -95,9 +87,9 @@ if has('syntax')
 endif
 
 
-"-------------------------------------------------------
+"-
 " other config
-"-------------------------------------------------------
+"-
 " show the matching brackets
 set showmatch
 
@@ -107,10 +99,10 @@ set matchtime=2
 " delay drawing(improve performance)
 set lazyredraw
 
-"-------------------------------------------------------
+"-
 " round indent to multiple of 'shiftwidth'
 " (default 8, length of a tab)
-"-------------------------------------------------------
+"-
 set shiftround
 
 " keep column when switching between buffers

@@ -1,78 +1,73 @@
-"-------------------------------------------------------
+"-
 " plugins.vim - plugins config
 "
-" Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Nov 02 15:53:22
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:52:15
+"-
 
-
-"-------------------------------------------------------
+"-
 " default groups
-"-------------------------------------------------------
+"-
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
 	let g:plugin_group += ['airline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'language_tool']
 endif
 
-
-"-------------------------------------------------------
+"-
 " use vim-plug to manager all plunins
 " specify a directory for plugins
-"-------------------------------------------------------
+"-
 if has('unix')
 	call plug#begin('~/.vim/plugged')
 elseif has('win32')
 	call plug#begin('~/vimfiles/plugged')
 endif
 
-
-"-------------------------------------------------------
+"-
 " basic plugins
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'basic') >= 0
-	"-------------------------------------------------------
+	"-
 	" show the start screen, display the recently edited files
-	"-------------------------------------------------------
+	"-
 	Plug 'mhinz/vim-startify'
 
-
-	"-------------------------------------------------------
+	"-
 	" vim-startify
-	"-------------------------------------------------------
+	"-
 	" the dir to save/load sessions to/from
 	let g:startify_session_dir = '~/.vim/session'
 endif
 
-
-"-------------------------------------------------------
+"-
 " enhanced plugins
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'enhanced') >= 0
-	"-------------------------------------------------------
+	"-
 	" insert or delete brackets, parens, quotes in pair
-	"-------------------------------------------------------
+	"-
 	Plug 'jiangmiao/auto-pairs'
 
-	"-------------------------------------------------------
+	"-
 	" better rainbow paretheses
-	"-------------------------------------------------------
+	"-
 	Plug 'kien/rainbow_parentheses.vim'
 
-	"-------------------------------------------------------
+	"-
 	" strip whitespace
-	"-------------------------------------------------------
+	"-
 	Plug 'axelf4/vim-strip-trailing-whitespace'
 
-	"-------------------------------------------------------
+	"-
 	" float terminal
-	"-------------------------------------------------------
+	"-
 	Plug 'voldikss/vim-floaterm'
 
 
-	"-------------------------------------------------------
+	"-
 	" auto-pairs
-	"-------------------------------------------------------
+	"-
 	" open fly mode
 	let g:AutoPairsFlayMode = 1
 
@@ -80,9 +75,9 @@ if index(g:plugin_group, 'enhanced') >= 0
 	let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 
-	"-------------------------------------------------------
+	"-
 	" rainbow_parentheses
-	"-------------------------------------------------------
+	"-
 	" set color of parentheses
 	let g:rbpt_colorpairs = [
 		\ ['brown',		  'RoyalBlue3'],
@@ -112,9 +107,9 @@ if index(g:plugin_group, 'enhanced') >= 0
 	autocmd Syntax * RainbowParenthesesLoadSquare
 	autocmd Syntax * RainbowParenthesesLoadBraces
 
-	"-------------------------------------------------------
+	"-
 	" float terminal
-	"-------------------------------------------------------
+	"-
 	let g:floaterm_wintype = 'float'
 	let g:floaterm_width = 0.4
 	let g:floaterm_height = 0.99
@@ -131,19 +126,19 @@ if index(g:plugin_group, 'enhanced') >= 0
 endif
 
 
-"-------------------------------------------------------
+"-
 " auto generate ctags/gtags and provide auto indexing function
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'tags') >= 0
-	"---------------------------------------------------------
+	"-
 	" asynchronous generate tag file
-	"---------------------------------------------------------
+	"-
 	Plug 'ludovicchabant/vim-gutentags'
 
 
-	"-------------------------------------------------------
+	"-
 	" vim-gutentags
-	"-------------------------------------------------------
+	"-
 	" set root dir of a project
 	let g:gutentags_project_root = ['.root', '.svn', '.git',
 				\ '.project']
@@ -181,25 +176,25 @@ if index(g:plugin_group, 'tags') >= 0
 endif
 
 
-"-------------------------------------------------------
+"-
 " filetypes plugin
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'filetypes') >= 0
-	"-------------------------------------------------------
+	"-
 	" additional Vim sytax highlight for C++
-	"-------------------------------------------------------
+	"-
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 
-	"-------------------------------------------------------
+	"-
 	" preview markdown
-	"-------------------------------------------------------
+	"-
 	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app &&
 				\ npm install', 'for': ['markdown'] }
 
 
-	"-------------------------------------------------------
+	"-
 	" markdown-preview
-	"-------------------------------------------------------
+	"-
 	" auto open the preview window after entering the markdown buffer
 	let g:mkdp_auto_start = 1
 
@@ -225,17 +220,17 @@ if index(g:plugin_group, 'filetypes') >= 0
 endif
 
 
-"-------------------------------------------------------
+"-
 " airline
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'airline') >= 0
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 
 
-	"-------------------------------------------------------
+	"-
 	" airline & airline-themes
-	"-------------------------------------------------------
+	"-
 	" set color scheme of airline
 	let g:airline_theme = 'solarized'
 
@@ -262,26 +257,27 @@ if index(g:plugin_group, 'airline') >= 0
 endif
 
 
-"-------------------------------------------------------
+"-
 " dirvish
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'dirvish') >= 0
 	Plug 'justinmk/vim-dirvish'
 endif
 
 
-"-------------------------------------------------------
+"-
 " coc
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 	Plug 'honza/vim-snippets'
 	Plug 'SirVer/ultisnips'
 
-	"-------------------------------------------------------
+
+	"-
 	" coc.nvim
-	"-------------------------------------------------------
+	"-
 	" if hidden is not set, TextEdit might fail
 	set hidden
 
@@ -402,42 +398,41 @@ if index(g:plugin_group, 'coc') >= 0
 	" resume last coc list
 	nnoremap <silent><nowait> <space>p<space> :<C-u>CocListResume<CR>
 
-    "-------------------------------------------------------
+    "-
     " snippets
-    "-------------------------------------------------------
+    "-
 	let g:UltiSnipsSnippetDirectories = ["UltiSnips", "plugcfg/UltiSnips"]
 	let g:UltiSnipsExpandTrigger = '<C-l>'
 	let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 	let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-
 endif
 
 
-"-------------------------------------------------------
+"-
 " debug
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'debug') >= 0
 	"Plug 'puremourning/vimspector'
 
 
-	"-------------------------------------------------------
+	"-
 	" vimspector
-	"-------------------------------------------------------
+	"-
 	"let g:vimspector_enable_mappings = 'HUMAN'
 endif
 
 
 if index(g:plugin_group, 'asynctask') >= 0
-	"-------------------------------------------------------
+	"-
 	" run asynchronous tasks
-	"-------------------------------------------------------
+	"-
 	Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
 	Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
 
 
-	"-------------------------------------------------------
+	"-
 	" AsyncTasks, AsyncRun
-	"-------------------------------------------------------
+	"-
 	" extra config file
 	if has('unix')
 		let g:asynctasks_extra_config = ['~/.vim/vimcfg/plugcfg/tasks.ini']
@@ -495,16 +490,15 @@ if index(g:plugin_group, 'asynctask') >= 0
 endif
 
 
-"-------------------------------------------------------
+"-
 " language tool - translator and grammar check
-"-------------------------------------------------------
+"-
 if index(g:plugin_group, 'language_tool') >= 0
 endif
 
-"-------------------------------------------------------
+"-
 " initialize plugin system
-"-------------------------------------------------------
+"-
 call plug#end()
-
 
 "Plug 'Yggdroot/LeaderF'

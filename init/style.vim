@@ -1,13 +1,13 @@
-"-------------------------------------------------------
-" style.vim - UI setting
+"-
+" style.vim - UI config
 "
-" Created by Haoyuan Li on 2021/02/15
-" Last Modified: 2021 Oct 26 09:33:09
-"-------------------------------------------------------
+" Created by Vamirio on 2021 Nov 08
+" Last Modified: 2021 Nov 08 16:52:23
+"-
 
-"-------------------------------------------------------
+"-
 " color scheme
-"-------------------------------------------------------
+"-
 set t_Co=256
 let g:solarized_termcolors = 256
 set background=light
