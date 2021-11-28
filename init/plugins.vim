@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:52:15
+" Last Modified: 2021 Nov 28 09:54:27
 "-
 
 "-
@@ -64,7 +64,10 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-
 	Plug 'voldikss/vim-floaterm'
 
-
+	"-
+	" indent line
+	"-
+	Plug 'Yggdroot/indentLine', { 'for': 'python' }
 	"-
 	" auto-pairs
 	"-
