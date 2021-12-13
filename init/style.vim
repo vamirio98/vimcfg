@@ -2,7 +2,7 @@
 " style.vim - UI config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:52:23
+" Last Modified: 2021 Dec 13 16:37:27
 "-
 
 "-
@@ -33,8 +33,9 @@ set cursorline
 set foldmethod=indent
 set nofoldenable
 
-" use vim-airline to view status, so turn off this option
+" use plugin lightline to view status line
 set noshowmode
+set laststatus=2
 
 " show a column line in width 81
 set colorcolumn=81
@@ -42,5 +43,5 @@ set colorcolumn=81
 " when split a window vertically, display the new one on the right side
 set splitright
 
-" enable italic in vim
+" enable italic comment
 highlight Comment cterm=italic

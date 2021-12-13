@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 13 14:59:22
+" Last Modified: 2021 Dec 13 16:58:37
 "-
 
 "-
@@ -10,7 +10,7 @@
 "-
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
-	let g:plugin_group += ['airline', 'dirvish', 'coc', 'debug']
+	let g:plugin_group += ['lightline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'language_tool']
 endif
 
@@ -224,42 +224,74 @@ endif
 
 
 "-
-" airline
+" lightline
 "-
-if index(g:plugin_group, 'airline') >= 0
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+if index(g:plugin_group, 'lightline') >= 0
+	Plug 'itchyny/lightline.vim'
+	Plug 'mengelbrecht/lightline-bufferline'
 
+	let g:lightline = {
+		\ 'colorscheme': 'solarized',
+		\ 'active': {
+			\ 'left': [ [ 'mode', 'paste' ],
+		    \           [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+		\ },
+		\ 'component_function': {
+			\ 'cocstatus': 'coc#status'
+		\ },
+		\ 'tabline': {
+			\ 'left': [ [ 'buffers' ] ],
+			\ 'right': [ [ 'close' ] ]
+		\ },
+		\ 'component_expand': {
+			\ 'buffers': 'lightline#bufferline#buffers'
+		\ },
+		\ 'component_type': {
+			\ 'buffers': 'tabsel'
+		\ }
+	\ }
 
-	"-
-	" airline & airline-themes
-	"-
-	" set color scheme of airline
-	let g:airline_theme = 'solarized'
+	" force lightline update
+	augroup lightline
+		au!
+		au User CocStatusChange,CocDiagnosticChange call lightline#update()
+	augroup END
 
-	" automatically displays all buffers when there's only one tab open
-	let g:airline#extensions#tabline#enabled = 1
+	" always show tabline
+	set showtabline=2
 
-	" select path formatter ariline use
-	let g:airline#extensions#tabline#formatter = 'unique_tail'
+	" add the ordinal buffer number to the buffer name
+	let g:lightline#bufferline#show_number = 2
 
-	" quick selcet buffer
-	let g:airline#extensions#tabline#buffer_idx_mode = 1
-	nmap <space>1<space> <Plug>AirlineSelectTab1
-	nmap <space>2<space> <Plug>AirlineSelectTab2
-	nmap <space>3<space> <Plug>AirlineSelectTab3
-	nmap <space>4<space> <Plug>AirlineSelectTab4
-	nmap <space>5<space> <Plug>AirlineSelectTab5
-	nmap <space>6<space> <Plug>AirlineSelectTab6
-	nmap <space>7<space> <Plug>AirlineSelectTab7
-	nmap <space>8<space> <Plug>AirlineSelectTab8
-	nmap <space>9<space> <Plug>AirlineSelectTab9
-	nmap <space>0<space> <Plug>AirlineSelectTab0
-	nmap <space>-<space> <Plug>AirlineSelectPrevTab
-	nmap <space>+<space> <Plug>AirlineSelectNextTab
+	" use unicode superscipt numerals as buffer number
+	let g:lightline#bufferline#composed_number_map = {
+		\ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+		\ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'}
 
+	" quick switch to buffers using their ordinal number
+	nmap <space>1<space> <Plug>lightline#bufferline#go(1)
+	nmap <space>2<space> <Plug>lightline#bufferline#go(2)
+	nmap <space>3<space> <Plug>lightline#bufferline#go(3)
+	nmap <space>4<space> <Plug>lightline#bufferline#go(4)
+	nmap <space>5<space> <Plug>lightline#bufferline#go(5)
+	nmap <space>6<space> <Plug>lightline#bufferline#go(6)
+	nmap <space>7<space> <Plug>lightline#bufferline#go(7)
+	nmap <space>8<space> <Plug>lightline#bufferline#go(8)
+	nmap <space>9<space> <Plug>lightline#bufferline#go(9)
+	nmap <space>0<space> <Plug>lightline#bufferline#go(10)
+
+	" quick delete buffers by their ordinal number
+	nmap <space>c1<space> <Plug>lightline#bufferline#delete(1)
+	nmap <space>c2<space> <Plug>lightline#bufferline#delete(2)
+	nmap <space>c3<space> <Plug>lightline#bufferline#delete(3)
+	nmap <space>c4<space> <Plug>lightline#bufferline#delete(4)
+	nmap <space>c5<space> <Plug>lightline#bufferline#delete(5)
+	nmap <space>c6<space> <Plug>lightline#bufferline#delete(6)
+	nmap <space>c7<space> <Plug>lightline#bufferline#delete(7)
+	nmap <space>c8<space> <Plug>lightline#bufferline#delete(8)
+	nmap <space>c9<space> <Plug>lightline#bufferline#delete(9)
+	nmap <space>c0<space> <Plug>lightline#bufferline#delete(10)
 endif
-"	Plug 'itchyny/lightline.vim'
 
 
 "-
@@ -499,10 +531,11 @@ endif
 
 
 "-
-" language tool - translator and grammar check
+" language tool - grammar check
 "-
 if index(g:plugin_group, 'language_tool') >= 0
 endif
+
 
 "-
 " initialize plugin system
