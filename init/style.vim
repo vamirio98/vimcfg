@@ -2,7 +2,7 @@
 " style.vim - UI config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 13 16:37:27
+" Last Modified: 2021 Dec 13 17:12:28
 "-
 
 "-
@@ -18,6 +18,7 @@ if has('gui_running')
 	set guioptions-=m  " remove menu bar
 	set guioptions-=T  " remove toolbar
 	set guioptions-=r  " remove scrollbar
+	set guioptions-=e  " use a non-GUI tab pages line
 	if has('win32')
 		set guifont=JetBrains_Mono:h13
 	endif
