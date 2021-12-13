@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 28 09:54:27
+" Last Modified: 2021 Dec 13 14:59:22
 "-
 
 "-
@@ -257,7 +257,9 @@ if index(g:plugin_group, 'airline') >= 0
 	nmap <space>0<space> <Plug>AirlineSelectTab0
 	nmap <space>-<space> <Plug>AirlineSelectPrevTab
 	nmap <space>+<space> <Plug>AirlineSelectNextTab
+
 endif
+"	Plug 'itchyny/lightline.vim'
 
 
 "-
@@ -290,17 +292,18 @@ if index(g:plugin_group, 'coc') >= 0
 	" for better diagnostic messages experience
 	set updatetime=300
 
-	" don't give |ins-completion-menu| messages
+	" don't pass messages to |ins-completion-menu|
 	set shortmess+=c
 
-	" show signcolumns
+	" always show the signcolumn, otherwise it would shift the text each
+	" time diagnostics appear/become resolved
 	if has("patch-8.1-1564")
 		set signcolumn=number
 	else
 		set signcolumn=yes
 	endif
 
-	" use tab for trigger completion and snippet expand
+	" use tab for trigger completion with characters ahead and navigate
 	inoremap <silent><expr> <tab>
 				\ pumvisible() ? "\<C-n>" :
 				\ <SID>check_back_space() ? "\<tab>" :
@@ -312,15 +315,13 @@ if index(g:plugin_group, 'coc') >= 0
 		return !col || getline('.')[col - 1] =~# '\s'
 	endfunction
 
-	" Remap key for gotos
+	" goto code navigation
 	nmap <silent> gd <Plug>(coc-definition)
 	nmap <silent> gD <Plug>(coc-declaration)
 	nmap <silent> gy <Plug>(coc-type-definition)
 	nmap <silent> gi <Plug>(coc-implemention)
 	nmap <silent> gr <Plug>(coc-references)
 
-	" display error messages at the current position:w
-	nmap <silent> <M-e> <Plug>(coc-diagnostic-info)
 	" jump to previous error
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
 	" jump to next error
@@ -338,7 +339,7 @@ if index(g:plugin_group, 'coc') >= 0
 		endif
 	endfunction
 
-	" highlight symbol under cursor on CursorHold
+	" highlight symbol and its references when holding the cursor
 	augroup coc_hightligt
 		autocmd!
 		autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -346,6 +347,10 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" symbol renaming
 	nmap <space>rn<space> <Plug>(coc-rename)
+
+	" formating selected code
+	xmap <space>f<space> <Plug>(coc-format-selected)
+	nmap <space>f<space> <Plug>(coc-format-selected)
 
 	" apply AutoFix to problem on the current line
 	nmap <space>qf<space> <Plug>(coc-fix-current)
@@ -361,24 +366,24 @@ if index(g:plugin_group, 'coc') >= 0
 	nmap <space>tr<space> <Plug>(coc-translator-r)
 	vmap <space>tr<space> <Plug>(coc-translator-rv)
 
-	" remap <C-j> and <C-k> for scroll float window/popups
+	" remap <C-f> and <C-b> for scroll float window/popups
 	if has('nvim-0.4.0') || has('patch-8.2.0750')
-		nnoremap <silent><nowait><expr> <C-j>
+		nnoremap <silent><nowait><expr> <C-f>
 					\ coc#float#has_scroll() ?
 					\ coc#float#scroll(1) : "\<C-f>"
-		nnoremap <silent><nowait><expr> <C-k>
+		nnoremap <silent><nowait><expr> <C-b>
 					\ coc#float#has_scroll() ?
 					\ coc#float#scroll(0) : "\<C-b>"
-		inoremap <silent><nowait><expr> <C-j>
+		inoremap <silent><nowait><expr> <C-f>
 					\ coc#float#has_scroll() ?
 					\ "\<C-r>=coc#float#scroll(1)\<CR>" : "\<right>"
-		inoremap <silent><nowait><expr> <C-k>
+		inoremap <silent><nowait><expr> <C-b>
 					\ coc#float#has_scroll() ?
 					\ "\<C-r>=coc#float#scroll(0)\<CR>" : "\<left>"
-		vnoremap <silent><nowait><expr> <C-j>
+		vnoremap <silent><nowait><expr> <C-f>
 					\ coc#float#has_scroll() ?
 					\ coc#float#scroll(1) : "\<C-f>"
-		vnoremap <silent><nowait><expr> <C-k>
+		vnoremap <silent><nowait><expr> <C-b>
 					\ coc#float#has_scroll() ?
 					\ coc#float#scroll(0) : "\<C-b>"
 	endif
@@ -398,7 +403,7 @@ if index(g:plugin_group, 'coc') >= 0
 	nnoremap <silent><nowait> <space>j<space> :<C-u>CocNext<CR>
 	" do default action for previous item
 	nnoremap <silent><nowait> <space>k<space> :<C-u>CocPrev<CR>
-	" resume last coc list
+	" resume lastest coc list
 	nnoremap <silent><nowait> <space>p<space> :<C-u>CocListResume<CR>
 
     "-
