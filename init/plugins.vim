@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 20 17:00:21
+" Last Modified: 2021 Dec 20 19:30:24
 "-
 
 "-
@@ -123,7 +123,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	" close window if the job exits normally
 	let g:floaterm_autoclose = 1
 	" Kill all floaterm instance when quit vim.
-	augroup Floaterm
+	augroup MyFloaterm
 		au!
 		au QuitPre * execute "FloatermKill!"
 	augroup END
@@ -251,7 +251,7 @@ if index(g:plugin_group, 'lightline') >= 0
 	\ }
 
 	" Force lightline update.
-	augroup lightline
+	augroup MyLightline
 		au!
 		au User CocStatusChange,CocDiagnosticChange call lightline#update()
 	augroup END
@@ -368,7 +368,7 @@ if index(g:plugin_group, 'coc') >= 0
 	endfunction
 
 	" Highlight symbol and its references when holding the cursor.
-	augroup coc_hightligt
+	augroup MyCocNvim
 		autocmd!
 		autocmd CursorHold * silent call CocActionAsync('highlight')
 	augroup END
@@ -448,11 +448,52 @@ endif
 "-
 if index(g:plugin_group, 'debug') >= 0
 	"Plug 'puremourning/vimspector'
+	Plug 'sillybun/vim-repl'
 
 	"-
 	" vimspector
 	"-
 	"let g:vimspector_enable_mappings = 'HUMAN'
+
+	"-
+	" vim-repl
+	"-
+	" Let REPL windows appears in right.
+	let g:repl_position = 3
+
+	" Specify which program will be run for certain file type.
+	let g:repl_program = {
+				\ 'python': ['python'],
+				\ 'default': ['bash']
+				\ }
+
+	" Specify the command to exit different repl program correctly.
+	let g:repl_exit_commands = {
+				\ 'python': 'quit()',
+				\ 'bash': 'exit',
+				\ 'default': 'exit'
+				\ }
+
+	" Specify the name of REPL console.
+	let g:repl_console_name = 'REPL'
+
+	augroup MyVimRepl
+		au!
+		" Open and exit REPL environment.
+		au FileType python nnoremap <silent><buffer> <leader>r
+					\ :REPLToggle<CR>
+		" Hide and show REPL environment.
+		au FileType python nnoremap <silent><buffer> <leader>h
+					\ :REPLHide<CR>
+		" Send code to REPL environment.
+		au FileType python nnoremap <silent><buffer> <leader>e
+					\ :REPLSendSession<CR>
+		" Debug, need ipdb module.
+		" Run and stop at current line.
+		au FileType python nnoremap <F9> :REPLDebugStopAtCurrentLine<CR>
+		au FileType python nnoremap <F10> :REPLPDBN<CR>
+		au FileType python nnoremap <F11> :REPLPDBS<CR>
+	augroup END
 endif
 
 "-
@@ -544,7 +585,7 @@ if index(g:plugin_group, 'quickui') >= 0
 	let g:quickui_preview_h = 10
 
 	" Preview quickfix.
-	augroup QuickfixPreview
+	augroup MyQuickfixPreview
 		au!
 		au FileType qf nnoremap <silent><buffer> p
 					\ :call quickui#tools#preview_quickfix()<CR>
