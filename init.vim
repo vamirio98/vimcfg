@@ -2,50 +2,49 @@
 " init.vim - Initialize config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:52:48
+" Last Modified: 2021 Dec 21 10:36:05
 "-
 
-" prevent reload
+" Prevent reload.
 if get(s:, 'loaded', 0) != 0
 	finish
 else
 	let s:loaded = 1
 end
 
-" get the directory where this file is located
+" Get the directory where this file is located.
 let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-" use in init/keymaps.vim
+" Use in init/keymaps.vim.
 let g:cfg_init_dir = s:home . '/init/'
 
-" define a command to load the file
+" Define a command to load the file.
 command! -nargs=1 LoadScript exec 'source ' . s:home . '/' . '<args>'
 
-" add dir vimcfg to runtimepath
+" Add dir vimcfg to runtimepath.
 execute 'set runtimepath+=' . s:home
 
-" add dir ~/.vim or ~/vimfile to runtimepath(sometimes vim will not add it
-" automatically for you)
+" Add dir ~/.vim or ~/vimfile to runtimepath(sometimes vim will not add it
+" automatically for you).
 if has('unix')
 	set runtimepath+=~/.vim
 elseif has('win32')
 	set runtimepath+=~/vimfiles
 endif
 
-
 "-
-" load modules
+" Load modules.
 "-
-" load basic config
+" Load basic config.
 LoadScript init/basic.vim
 
-" load terminal key extention config
+" Load terminal key extention config.
 LoadScript init/terminal.vim
 
-" load plugins config
+" Load plugins config.
 LoadScript init/plugins.vim
 
-" load UI style
-LoadScript init/style.vim
+" Load UI style.
+LoadScript init/ui.vim
 
-" load keymaps
+" Load keymaps.
 LoadScript init/keymaps.vim

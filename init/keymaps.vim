@@ -2,20 +2,20 @@
 " keymaps.vim - Keymaps
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:51:29
+" Last Modified: 2021 Dec 21 10:51:48
 "-
 
-" set <M-q> as <ESC>
+" Set <M-q> as <ESC>.
 inoremap <M-q> <ESC>
 
 "-
-" fast move
+" Fast move in insert mode.
 "-
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 
 "-
-" fast move in command mode
+" Fast move in command mode.
 "-
 cnoremap <C-h> <left>
 cnoremap <C-j> <down>
@@ -26,9 +26,9 @@ cnoremap <C-e> <end>
 
 
 "-
-" Alt key movement enhancement
+" Alt key movement enhancement.
 "-
-" move between words
+" Move between words.
 nnoremap <M-h> b
 nnoremap <M-l> w
 inoremap <M-h> <C-left>
@@ -36,13 +36,13 @@ inoremap <M-l> <C-right>
 cnoremap <M-h> <C-left>
 cnoremap <M-l> <C-right>
 
-" logic jump to the next/previous line(press wrap logic)
+" Logic jump to the next/previous line(press wrap logic).
 nnoremap <M-j> gj
 nnoremap <M-k> gk
 inoremap <M-j> <C-\><C-o>gj
 inoremap <M-k> <C-\><C-o>gk
 
-" move between windows
+" Move between windows.
 nnoremap <M-H> <C-w>h
 nnoremap <M-J> <C-w>j
 nnoremap <M-K> <C-w>k
@@ -59,64 +59,56 @@ endif
 
 
 "-
-" fast save
+" Fast save.
 "-
-nnoremap <M-s> :w<CR>
-inoremap <M-s> <ESC>:w<CR>a
+nnoremap <silent> <C-s> :update<CR>
+inoremap <silent> <C-s> <C-o>:update<CR>
+vnoremap <silent> <C-s> <C-c>:update<CR>
 
-
-"-
-" change case
-"-
-nnoremap <C-u> viw~
-
-" switch letters to uppercase
+" Switch all letters to uppercase.
 inoremap <C-u> <ESC>viwgUea
 
+"-
+" Easily deal with buffers.
+"-
+nnoremap <silent> <M-x> :bdelete<CR>
 
 "-
-" easily deal with buffers
+" Fast add quotes and brackets.
 "-
-nnoremap <silent> <M-w> :bdelete<CR>
-
-
-"-
-" fast add quotes and brackets
-"-
-nnoremap <space>'<space> bi'<ESC>ea'<ESC>
-nnoremap <space>"<space> bi"<ESC>ea"<ESC>
-vnoremap <space>'<space> c''<ESC>hp
-vnoremap <space>"<space> c""<ESC>hp
-nnoremap <space>(<space> bi(<ESC>ea)<ESC>
-nnoremap <space>[<space> bi[<ESC>ea]<ESC>
-nnoremap <space>{<space> bi{<ESC>ea}<ESC>
-vnoremap <space>(<space> c()<ESC>hpe
-vnoremap <space>[<space> c[]<ESC>hpe
-vnoremap <space>{<space> c{}<ESC>hpe
-
+nnoremap <leader>' bi'<ESC>ea'<ESC>
+nnoremap <leader>" bi"<ESC>ea"<ESC>
+vnoremap <leader>' c''<ESC>hp
+vnoremap <leader>" c""<ESC>hp
+nnoremap <leader>( bi(<ESC>ea)<ESC>
+nnoremap <leader>[ bi[<ESC>ea]<ESC>
+nnoremap <leader>{ bi{<ESC>ea}<ESC>
+vnoremap <leader>( c()<ESC>hpe
+vnoremap <leader>[ c[]<ESC>hpe
+vnoremap <leader>{ c{}<ESC>hpe
 
 "-
-" fast edit and reload vimrc
+" Fast edit and reload vimrc.
 "-
 function EditProfile(filename)
 	" get the directory where this file is located
 	execute "e " . g:cfg_init_dir . a:filename
 endfunction
 
-" fast edit Vim profile
+" Fast edit Vim profile.
 nnoremap <silent> <space>evb<space> :call EditProfile('basic.vim')<CR>
 nnoremap <silent> <space>evt<space> :call EditProfile('terminal.vim')<CR>
-nnoremap <silent> <space>evs<space> :call EditProfile('style.vim')<CR>
+nnoremap <silent> <space>evu<space> :call EditProfile('ui.vim')<CR>
 nnoremap <silent> <space>evf<space> :call EditProfile('ft.vim')<CR>
 nnoremap <silent> <space>evp<space> :call EditProfile('plugins.vim')<CR>
 nnoremap <silent> <space>evk<space> :call EditProfile('keymaps.vim')<CR>
 
-function SaveProfile()
+function RoloadProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
 		if l:ft == "vim"
 			execute "source %"
 		endif
 endfunction
 
-" reload Vim profile
-nnoremap <silent> <space>sv<space> :call SaveProfile()<CR>
+" Reload Vim profile.
+nnoremap <silent> <space>sv<space> :call ReloadProfile()<CR>

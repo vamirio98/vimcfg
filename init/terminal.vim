@@ -1,10 +1,10 @@
 "-
 " terminal.vim - Terminal key extension config
 "
-" Configure Alt and Backspace
+" configure Alt and Backspace.
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:52:31
+" Last Modified: 2021 Dec 21 10:52:20
 "-
 
 function! Terminal_MetaMode(mode)

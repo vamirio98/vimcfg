@@ -2,13 +2,13 @@
 " base.vim - some base function
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Nov 08 16:47:52
+" Last Modified: 2021 Dec 21 11:49:56
 "-
 
 "-
-" auto modify the Last Modified Time
+" Auto modify the Last Modified Time.
 "-
-function! g:base#ModifyTime(prefix, suffix)
+function! s:ModifyTime(prefix, suffix)
 	let l:cur_pos = getcurpos()
 	call cursor(1, 1)
 	let l:b = searchpos(a:prefix, 'c')
@@ -22,9 +22,27 @@ function! g:base#ModifyTime(prefix, suffix)
 	call cursor(l:cur_pos[1], l:cur_pos[2])
 endfunction
 
+"-
+" Set the buffer changed flag.
+"-
+function! g:base#SetBufChangedFlag(flag)
+	let b:buf_changed = a:flag
+endfunction
 
 "-
-" add file header
+"  Modify the Last Modify time and save file.
+"-
+function! g:base#UpdateLastModifiedAndSave(prefix, suffix)
+	if !b:buf_changed
+		return
+	endif
+	call s:ModifyTime(a:prefix, a:suffix)
+	update
+	let b:buf_changed = 0
+endfunction
+
+"-
+" Add file header.
 "-
 function! g:base#AddFileHead(head, suffix, tail, line)
 	call setline(a:line, a:head)
@@ -38,9 +56,8 @@ function! g:base#AddFileHead(head, suffix, tail, line)
 	execute "startinsert!"
 endfunction
 
-
 "-
-" jump to comment
+" Jump to comment.
 "-
 function! g:base#JumpToComment(mode, dir, id)
     let l:cur_pos = getcurpos()[1]

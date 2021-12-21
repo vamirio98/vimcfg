@@ -2,17 +2,17 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:51:04
+" Last Modified: 2021 Dec 21 10:38:12
 "-
 
 "-
-" set <leader> key
+" Set <leader> key.
 "-
 let mapleader = "\\"
 let maplocalleader = "\<tab>"
 
 "-
-" jump to the last position when reopening a file
+" Jump to the last position when reopening a file.
 "-
 autocmd BufReadPost * call s:ReturnLastPos()
 function s:ReturnLastPos()
@@ -23,60 +23,56 @@ function s:ReturnLastPos()
 	endif
 endfunction
 
-" incompatible with Vi
+" Incompatible with Vi.
 set nocompatible
 
-" make backspace work like most other programs
+" Make backspace work like most other programs.
 set backspace=2
 
-
-" turn on word wrap
+" Turn on word wrap.
 set wrap
 
-" turn on function key timeout detection(the function key in the
-" terminal is a charset starts with ESC)
+" Turn on function key timeout detection(the function key in the
+" terminal is a charset starts with ESC).
 set ttimeout
 
-" function key timeout detection: 50ms
+" Function key timeout detection: 50ms.
 set ttimeoutlen=50
 
-
 "-
-" search setting
+" Search setting.
 "-
-" case is ignored by default, unless the search content contains
-" uppercase letters
+" Case is ignored by default, unless the search content contains
+" uppercase letters.
 set ignorecase
 set smartcase
 
-" highlight the search result
+" Highlight the search result.
 set hlsearch
 
-" dynamically and incrementally display the search results during input
+" Dynamically and incrementally display the search results during input.
 set incsearch
 
-
 "-
-" encoding setting
+" Encoding setting.
 "-
 if has('multi_byte')
-	" termenal encoding
+	" Termenal encoding.
 	set termencoding=utf-8
 
-	" internal working encoding
+	" Internal working encoding.
 	set encoding=utf-8
 
-	" default file encoding
+	" Default file encoding.
 	set fileencoding=utf-8
 
-	" auto try the following encoding when opening a file
+	" Auto try the following encoding when opening a file.
 	set fileencodings=utf-8,gbk,gb18030,big5,euc-jp
 endif
 
-
 "-
-" syntax highlighting, filetype, filetype-plugin and
-" filetype-indent setting
+" Syntax highlighting, filetype, filetype-plugin and
+" filetype-indent setting.
 "-
 if has('autocmd')
 	filetype plugin indent on
@@ -86,24 +82,22 @@ if has('syntax')
 	syntax on
 endif
 
-
 "-
-" other config
+" Other config.
 "-
-" show the matching brackets
+" Show the matching brackets.
 set showmatch
 
-" how long will the matching brackets shows, unit: s
+" How long will the matching brackets shows, unit: s.
 set matchtime=2
 
-" delay drawing(improve performance)
+" Delay drawing(improve performance).
 set lazyredraw
 
 "-
-" round indent to multiple of 'shiftwidth'
-" (default 8, length of a tab)
+" Round indent to multiple of 'shiftwidth'. (default 8, length of a tab)
 "-
 set shiftround
 
-" keep column when switching between buffers
+" Keep column when switching between buffers.
 set nostartofline

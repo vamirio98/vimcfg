@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 20 19:30:24
+" Last Modified: 2021 Dec 21 11:11:43
 "-
 
 "-
@@ -128,7 +128,6 @@ if index(g:plugin_group, 'enhanced') >= 0
 		au QuitPre * execute "FloatermKill!"
 	augroup END
 endif
-
 
 "-
 " Auto generate ctags/gtags and provide auto indexing function.
@@ -369,8 +368,8 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Highlight symbol and its references when holding the cursor.
 	augroup MyCocNvim
-		autocmd!
-		autocmd CursorHold * silent call CocActionAsync('highlight')
+		au!
+		au CursorHold * silent call CocActionAsync('highlight')
 	augroup END
 
 	" Symbol renaming.

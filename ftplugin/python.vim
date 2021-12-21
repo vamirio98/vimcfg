@@ -2,7 +2,7 @@
 " python.vim
 " 
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Nov 08 16:49:01
+" Last Modified: 2021 Dec 21 12:11:50
 "-
 
 if line('$') == 1 && getline(1) == ''
@@ -12,15 +12,21 @@ if line('$') == 1 && getline(1) == ''
 	call base#AddFileHead('#-', '#', '#-', 4)
 endif
 
-augroup PYTHON
-	autocmd!
-	autocmd BufWritePre,FileWritePre *.py call base#ModifyTime('#-', '#-')
+augroup MyPython
+	au!
+	au BufEnter *.py call base#SetBufChangedFlag(0)
+	au BufWritePre,FileWritePre *.py call base#SetBufChangedFlag(1)
+	au BufLeave,BufUnload *.py call base#UpdateLastModifiedAndSave('/*', '*/')
 augroup END
 
 "-
-" jump out comments
+" Jump out comments.
 "-
-nnoremap <buffer> <silent> <M-g> :call base#JumpToComment('n', '', '#-')<CR>
-nnoremap <buffer> <silent> <M-G> :call base#JumpToComment('n', 'b', '#-')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call base#JumpToComment('i', '', '#-')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call base#JumpToComment('i', 'b', '#-')<CR>
+nnoremap <silent><buffer> <M-g>
+			\ :call base#JumpToComment('n', '', '#-')<CR>
+nnoremap <silent><buffer> <M-G>
+			\ :call base#JumpToComment('n', 'b', '#-')<CR>
+inoremap <silent><buffer> <M-g>
+			\ <ESC>:call base#JumpToComment('i', '', '#-')<CR>
+inoremap <silent><buffer> <M-G>
+			\ <ESC>:call base#JumpToComment('i', 'b', '#-')<CR>

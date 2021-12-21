@@ -2,33 +2,39 @@
 " vim.vim
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Nov 08 16:49:29
+" Last Modified: 2021 Dec 21 12:12:22
 "-
 
 let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
 			\ '"""':'"""', "'''":"'''"}
-
 
 if line('$') == 1 && getline(1) == ''
 	call base#AddFileHead('"-', '"', '"-', 1)
 endif
 
 "-
-" add comment
+" Add comment.
 "-
-nnoremap <buffer> <M-c> :call base#AddComment('n', ['"-', '" ', '"-'])<CR>
-inoremap <buffer> <M-c> <ESC>:call base#AddComment('i', ['"-', '" ', '"-'])<CR>
+nnoremap <silent><buffer> <M-c>
+			\ :call base#AddComment('n', ['"-', '" ', '"-'])<CR>
+inoremap <silent><buffer> <M-c>
+			\ <ESC>:call base#AddComment('i', ['"-', '" ', '"-'])<CR>
 
-augroup VIM
-	autocmd!
-	autocmd BufWritePre,FileWritePre *.vim call base#ModifyTime('"-', '"-')
+augroup MyVim
+	au!
+	au BufEnter *.vim call base#SetBufChangedFlag(0)
+	au BufWritePre,FileWritePre *.vim call base#SetBufChangedFlag(1)
+	au BufLeave,BufUnload *.vim call base#UpdateLastModifiedAndSave('"-', '"-')
 augroup END
 
-
 "-
-" jump out comments
+" Jump out comments.
 "-
-nnoremap <buffer> <silent> <M-g> :call base#JumpToComment('n', '', '"-')<CR>
-nnoremap <buffer> <silent> <M-G> :call base#JumpToComment('n', 'b', '"-')<CR>
-inoremap <buffer> <silent> <M-g> <ESC>:call base#JumpToComment('i', '', '"-')<CR>
-inoremap <buffer> <silent> <M-G> <ESC>:call base#JumpToComment('i', 'b',-'"-')<CR>
+nnoremap <silent><buffer> <M-g>
+			\ :call base#JumpToComment('n', '', '"-')<CR>
+nnoremap <silent><buffer> <M-G>
+			\ :call base#JumpToComment('n', 'b', '"-')<CR>
+inoremap <silent><buffer> <M-g>
+			\ <ESC>:call base#JumpToComment('i', '', '"-')<CR>
+inoremap <silent><buffer> <M-G>
+			\ <ESC>:call base#JumpToComment('i', 'b',-'"-')<CR>
