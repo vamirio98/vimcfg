@@ -2,7 +2,7 @@
 " c.vim
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Dec 21 11:54:17
+" Last Modified: 2021 Dec 21 15:05:34
 "-
 
 " Quickly comment single line.
@@ -30,7 +30,8 @@ augroup MyC
 	au!
 	au BufEnter *.c{,c,pp},*.h{,pp} call base#SetBufChangedFlag(0)
 	au BufWritePre,FileWritePre *.c{,c,pp},*.h{,pp}
-				\ call base#SetBufChangedFlag(1)
+				\ call base#SetBufChangedFlag(1) |
+				\ call base#SetLastModifiedTimeStr()
 	au BufLeave,BufUnload *.c{,c,pp},*.h{,pp}
 				\ call base#UpdateLastModifiedAndSave('/*', '*/')
 augroup END

@@ -2,24 +2,31 @@
 " base.vim - some base function
 " 
 " Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Dec 21 11:49:56
+" Last Modified: 2021 Dec 21 15:05:16
 "-
 
 "-
 " Auto modify the Last Modified Time.
 "-
 function! s:ModifyTime(prefix, suffix)
-	let l:cur_pos = getcurpos()
+	let l:curr_pos = getcurpos()
 	call cursor(1, 1)
-	let l:b = searchpos(a:prefix, 'c')
-	let l:e = searchpos(a:suffix, 'n')
-	let l:t = search('Last Modified:')
-	if l:b[0] < 5 && l:t < l:e[0]
-		echom "ha"
-		execute l:b[0] . "," . l:t . "g/Last Modified:/s/Last Modified:.*/"
-					\ . "Last Modified: " . strftime("%Y %b %d %T")
+	let l:prefix_pos = searchpos(a:prefix, 'c')
+	let l:suffix_pos = searchpos(a:suffix, 'n')
+	let l:time_pos = search('Last Modified:')
+	if l:prefix_pos[0] < 5 && l:time_pos < l:suffix_pos[0]
+		execute l:prefix_pos[0] . "," . l:time_pos
+					\ . "g/Last Modified:/s/Last Modified:.*/"
+					\ . "Last Modified: " . b:last_modified_time_str
 	endif
-	call cursor(l:cur_pos[1], l:cur_pos[2])
+	call cursor(l:curr_pos[1], l:curr_pos[2])
+endfunction
+
+"-
+" Set Last Modified Time string.
+"-
+function! g:base#SetLastModifiedTimeStr()
+	let b:last_modified_time_str = strftime("%Y %b %d %T")
 endfunction
 
 "-

@@ -23,7 +23,9 @@ inoremap <silent><buffer> <M-c>
 augroup MyVim
 	au!
 	au BufEnter *.vim call base#SetBufChangedFlag(0)
-	au BufWritePre,FileWritePre *.vim call base#SetBufChangedFlag(1)
+	au BufWritePre,FileWritePre *.vim
+				\ call base#SetBufChangedFlag(1) |
+				\ call base#SetLastModifiedTimeStr()
 	au BufLeave,BufUnload *.vim call base#UpdateLastModifiedAndSave('"-', '"-')
 augroup END
 
