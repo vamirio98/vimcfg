@@ -2,7 +2,7 @@
 " ui.vim - UI config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 10:34:44
+" Last Modified: 2021 Dec 22 09:59:01
 "-
 
 "-
@@ -17,7 +17,8 @@ colorscheme solarized
 if has('gui_running')
 	set guioptions-=m  " Remove menu bar.
 	set guioptions-=T  " Remove toolbar.
-	set guioptions-=r  " Remove scrollbar.
+	set guioptions-=r  " Remove right-hand scrollbar.
+	set guioptions-=L  " Remove left-hand scrollbar.
 	set guioptions-=e  " Use a non-GUI tab pages line.
 	set guifont=JetBrains_Mono:h12
 endif
