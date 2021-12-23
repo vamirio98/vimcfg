@@ -2,7 +2,7 @@
 " init.vim - Initialize config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 10:36:05
+" Last Modified: 2021 Dec 23 19:34:53
 "-
 
 " Prevent reload.
@@ -48,3 +48,6 @@ LoadScript init/ui.vim
 
 " Load keymaps.
 LoadScript init/keymaps.vim
+
+" Load vim-which-key map.
+LoadScript init/which_key_map.vim

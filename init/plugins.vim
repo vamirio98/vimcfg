@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 11:11:43
+" Last Modified: 2021 Dec 23 20:05:38
 "-
 
 "-
@@ -12,6 +12,7 @@ if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
 	let g:plugin_group += ['lightline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'quickui', 'language_tool']
+	let g:plugin_group += ['which_key']
 endif
 
 "-
@@ -118,9 +119,19 @@ if index(g:plugin_group, 'enhanced') >= 0
 	let g:floaterm_width = 0.4
 	let g:floaterm_height = 0.99
 	let g:floaterm_position = 'right'
-	" toggle the terminal
-	let g:floaterm_keymap_toggle = '<F12>'
-	" close window if the job exits normally
+
+	" Open or hide the floaterm window.
+	let g:floaterm_keymap_toggle = '<leader>ft'
+	" Open a new floaterm window.
+	let g:floaterm_keymap_new = '<leader>fa'
+	" Switch to the previous floaterm instance
+	let g:floaterm_keymap_prev = '<leader>fp'
+	" Switch to the next floaterm instance
+	let g:floaterm_keymap_next = '<leader>fn'
+	" Close the current terminal instance.
+	let g:floaterm_keymap_kill = '<leader>fc'
+
+	" Close window if the job exits normally.
 	let g:floaterm_autoclose = 1
 	" Kill all floaterm instance when quit vim.
 	augroup MyFloaterm
@@ -185,7 +196,7 @@ endif
 "-
 if index(g:plugin_group, 'filetypes') >= 0
 	"-
-	" Additional Vim sytax highlight for C++.
+	" Additional Vim syntax highlight for C++.
 	"-
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 
@@ -194,7 +205,6 @@ if index(g:plugin_group, 'filetypes') >= 0
 	"-
 	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app &&
 				\ npm install', 'for': ['markdown'] }
-
 
 	"-
 	" markdown-preview
@@ -267,28 +277,28 @@ if index(g:plugin_group, 'lightline') >= 0
 		\ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'}
 
 	" Quick switch to buffers using their ordinal number.
-	nmap <space>1<space> <Plug>lightline#bufferline#go(1)
-	nmap <space>2<space> <Plug>lightline#bufferline#go(2)
-	nmap <space>3<space> <Plug>lightline#bufferline#go(3)
-	nmap <space>4<space> <Plug>lightline#bufferline#go(4)
-	nmap <space>5<space> <Plug>lightline#bufferline#go(5)
-	nmap <space>6<space> <Plug>lightline#bufferline#go(6)
-	nmap <space>7<space> <Plug>lightline#bufferline#go(7)
-	nmap <space>8<space> <Plug>lightline#bufferline#go(8)
-	nmap <space>9<space> <Plug>lightline#bufferline#go(9)
-	nmap <space>0<space> <Plug>lightline#bufferline#go(10)
+	nmap <leader>1 <Plug>lightline#bufferline#go(1)
+	nmap <leader>2 <Plug>lightline#bufferline#go(2)
+	nmap <leader>3 <Plug>lightline#bufferline#go(3)
+	nmap <leader>4 <Plug>lightline#bufferline#go(4)
+	nmap <leader>5 <Plug>lightline#bufferline#go(5)
+	nmap <leader>6 <Plug>lightline#bufferline#go(6)
+	nmap <leader>7 <Plug>lightline#bufferline#go(7)
+	nmap <leader>8 <Plug>lightline#bufferline#go(8)
+	nmap <leader>9 <Plug>lightline#bufferline#go(9)
+	nmap <leader>0 <Plug>lightline#bufferline#go(10)
 
 	" Quick delete buffers by their ordinal number.
-	nmap <space>c1<space> <Plug>lightline#bufferline#delete(1)
-	nmap <space>c2<space> <Plug>lightline#bufferline#delete(2)
-	nmap <space>c3<space> <Plug>lightline#bufferline#delete(3)
-	nmap <space>c4<space> <Plug>lightline#bufferline#delete(4)
-	nmap <space>c5<space> <Plug>lightline#bufferline#delete(5)
-	nmap <space>c6<space> <Plug>lightline#bufferline#delete(6)
-	nmap <space>c7<space> <Plug>lightline#bufferline#delete(7)
-	nmap <space>c8<space> <Plug>lightline#bufferline#delete(8)
-	nmap <space>c9<space> <Plug>lightline#bufferline#delete(9)
-	nmap <space>c0<space> <Plug>lightline#bufferline#delete(10)
+	nmap <leader>c1 <Plug>lightline#bufferline#delete(1)
+	nmap <leader>c2 <Plug>lightline#bufferline#delete(2)
+	nmap <leader>c3 <Plug>lightline#bufferline#delete(3)
+	nmap <leader>c4 <Plug>lightline#bufferline#delete(4)
+	nmap <leader>c5 <Plug>lightline#bufferline#delete(5)
+	nmap <leader>c6 <Plug>lightline#bufferline#delete(6)
+	nmap <leader>c7 <Plug>lightline#bufferline#delete(7)
+	nmap <leader>c8 <Plug>lightline#bufferline#delete(8)
+	nmap <leader>c9 <Plug>lightline#bufferline#delete(9)
+	nmap <leader>c0 <Plug>lightline#bufferline#delete(10)
 endif
 
 "-
@@ -344,14 +354,14 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Goto code navigation.
 	nmap <silent> gd <Plug>(coc-definition)
-	nmap <silent> gD <Plug>(coc-declaration)
+	nmap <silent> gc <Plug>(coc-declaration)
 	nmap <silent> gy <Plug>(coc-type-definition)
-	nmap <silent> gi <Plug>(coc-implemention)
+	nmap <silent> gi <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 
-	" Jump to previous error.
+	" Jump to previous diagnostic.
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
-	" Jump to next error.
+	" Jump to next diagnostic.
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 	" Use K to show documentation in preview window.
@@ -373,25 +383,25 @@ if index(g:plugin_group, 'coc') >= 0
 	augroup END
 
 	" Symbol renaming.
-	nmap <space>rn<space> <Plug>(coc-rename)
+	nmap <leader>rn <Plug>(coc-rename)
 
 	" Formating selected code.
-	xmap <space>f<space> <Plug>(coc-format-selected)
-	nmap <space>f<space> <Plug>(coc-format-selected)
+	xmap <space>ft <Plug>(coc-format-selected)
+	nmap <space>ft <Plug>(coc-format-selected)
 
 	" Apply AutoFix to problem on the current line.
-	nmap <space>qf<space> <Plug>(coc-fix-current)
+	nmap <space>qf <Plug>(coc-fix-current)
 
 	" Translation.
 	" Popup.
-	nmap <space>tt<space> <Plug>(coc-translator-p)
-	vmap <space>tt<space> <Plug>(coc-translator-pv)
+	nmap <space>tt <Plug>(coc-translator-p)
+	vmap <space>tt <Plug>(coc-translator-pv)
 	" Echo.
-	nmap <space>te<space> <Plug>(coc-translator-e)
-	vmap <space>te<space> <Plug>(coc-translator-ev)
+	nmap <space>te <Plug>(coc-translator-e)
+	vmap <space>te <Plug>(coc-translator-ev)
 	" Replace.
-	nmap <space>tr<space> <Plug>(coc-translator-r)
-	vmap <space>tr<space> <Plug>(coc-translator-rv)
+	nmap <space>tr <Plug>(coc-translator-r)
+	vmap <space>tr <Plug>(coc-translator-rv)
 
 	" Remap <C-f> and <C-b> for scroll float window/popups.
 	if has('nvim-0.4.0') || has('patch-8.2.0750')
@@ -417,21 +427,21 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Mapping for CocList.
 	" Show all diagnostics.
-	nnoremap <silent><nowait> <space>a<space> :<C-u>CocList diagnostics<CR>
+	nnoremap <silent><nowait> <space>cld :<C-u>CocList diagnostics<CR>
 	" Manage extensions.
-	nnoremap <silent><nowait> <space>e<space> :<C-u>CocList extensions<CR>
+	nnoremap <silent><nowait> <space>cle :<C-u>CocList extensions<CR>
 	" Show commands.
-	nnoremap <silent><nowait> <space>c<space> :<C-u>CocList commands<CR>
+	nnoremap <silent><nowait> <space>clc :<C-u>CocList commands<CR>
 	" Find symbol of current document.
-	nnoremap <silent><nowait> <space>o<space> :<C-u>CocList outline<CR>
+	nnoremap <silent><nowait> <space>clo :<C-u>CocList outline<CR>
 	" Search workspace symbols.
-	nnoremap <silent><nowait> <space>s<space> :<C-u>CocList -I symbols<CR>
+	nnoremap <silent><nowait> <space>cls :<C-u>CocList -I symbols<CR>
 	" Do default action for next item.
-	nnoremap <silent><nowait> <space>j<space> :<C-u>CocNext<CR>
+	nnoremap <silent><nowait> <space>clj :<C-u>CocNext<CR>
 	" Do default action for previous item.
-	nnoremap <silent><nowait> <space>k<space> :<C-u>CocPrev<CR>
-	" Resume lastest coc list.
-	nnoremap <silent><nowait> <space>p<space> :<C-u>CocListResume<CR>
+	nnoremap <silent><nowait> <space>clk :<C-u>CocPrev<CR>
+	" Resume latest coc list.
+	nnoremap <silent><nowait> <space>clp :<C-u>CocListResume<CR>
 
     "-
     " Snippets.
@@ -479,17 +489,17 @@ if index(g:plugin_group, 'debug') >= 0
 	augroup MyVimRepl
 		au!
 		" Open and exit REPL environment.
-		au FileType python nnoremap <silent><buffer> <leader>r
+		au FileType python nnoremap <silent><buffer> <space>rt
 					\ :REPLToggle<CR>
 		" Hide and show REPL environment.
-		au FileType python nnoremap <silent><buffer> <leader>h
+		au FileType python nnoremap <silent><buffer> <space>rh
 					\ :REPLHide<CR>
 		" Send code to REPL environment.
-		au FileType python nnoremap <silent><buffer> <leader>e
+		au FileType python nnoremap <silent><buffer> <space>rs
 					\ :REPLSendSession<CR>
 		" Debug, need ipdb module.
 		" Run and stop at current line.
-		au FileType python nnoremap <F9> :REPLDebugStopAtCurrentLine<CR>
+		au FileType python nnoremap <F12> :REPLDebugStopAtCurrentLine<CR>
 		au FileType python nnoremap <F10> :REPLPDBN<CR>
 		au FileType python nnoremap <F11> :REPLPDBS<CR>
 	augroup END
@@ -521,8 +531,8 @@ if index(g:plugin_group, 'asynctask') >= 0
 	" Bell when finish the task.
 	let g:asyncrun_bell = 1
 
-	" Set <leader>q to open/close the Quickficx window.
-	nnoremap <silent> <leader>q :call asyncrun#quickfix_toggle(6)<cr>
+	" Open/close the Quickficx window.
+	nnoremap <silent> <leader>tq :call asyncrun#quickfix_toggle(6)<cr>
 
 	" Specify what terminal to use.
 	let g:asynctasks_term_pos = 'tab'
@@ -531,37 +541,37 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asynctasks_term_reuse = 1
 
 	" Run the program.
-	nnoremap <silent> <space>r<space> :AsyncTask file-run<CR>
+	nnoremap <silent> <leader>tr :AsyncTask file-run<CR>
 
 	" Compile single file.
-	nnoremap <silent> <space>c<space> :AsyncTask file-build<CR>
+	nnoremap <silent> <leader>tc :AsyncTask file-build<CR>
 
 	" Complie single file with debug info.
-	nnoremap <silent> <space>cd<space> :AsyncTask file-debug<CR>
+	nnoremap <silent> <leader>tC :AsyncTask file-debug<CR>
 
 	" Use gdbgui to debug.
-	nnoremap <silent> <space>d<space> :AsyncTask file-gdbgui<CR>
+	nnoremap <silent> <leader>td :AsyncTask file-gdbgui<CR>
 
 	" Delete the executable file generated by current file.
-	nnoremap <silent> <space>rm<space> :AsyncTask exe-del<CR>
+	nnoremap <silent> <leader>tD :AsyncTask exe-del<CR>
 
 	" Set root dir for make.
 	let g:asyncrun_rootmarks = ['.root', '.svn', '.git', '.project']
 
-	" Run current project.
-	nnoremap <silent> <space>mr<space> :AsyncTask project-run<CR>
+	" Run make run.
+	nnoremap <silent> <leader>tmr :AsyncTask project-run<CR>
 
-	" Run make.
-	nnoremap <silent> <space>m<space> :AsyncTask project-build<CR>
+	" Run make build.
+	nnoremap <silent> <leader>tmb :AsyncTask project-build<CR>
 
-	" Run make for debugging.
-	nnoremap <silent> <space>md<space> :AsyncTask project-debug<CR>
+	" Run make debug.
+	nnoremap <silent> <leader>tmd :AsyncTask project-debug<CR>
 
-	" Run make for cleaning.
-	nnoremap <silent> <space>mc<space> :AsyncTask project-clean<CR>
+	" Run make clean.
+	nnoremap <silent> <leader>tmc :AsyncTask project-clean<CR>
 
 	" Query available tasks.
-	nnoremap <silent> <space>qat<space> :AsyncTaskList<CR>
+	nnoremap <silent> <leader>tq :AsyncTaskList<CR>
 endif
 
 "-
@@ -580,7 +590,7 @@ if index(g:plugin_group, 'quickui') >= 0
 	nnoremap <F3> :call quickui#tools#preview_tag('')<CR>
 
 	" Set the size of preview window.
-	let g:quickui_preview_w = 77
+	let g:quickui_preview_w = 70
 	let g:quickui_preview_h = 10
 
 	" Preview quickfix.
@@ -599,6 +609,17 @@ endif
 " Language tool - grammar check.
 "-
 if index(g:plugin_group, 'language_tool') >= 0
+endif
+
+"-
+" Vim key mapping hint.
+"-
+if index(g:plugin_group, 'which_key') >= 0
+	Plug 'liuchengxu/vim-which-key'
+
+	set timeoutlen=300
+
+	let g:which_key_use_floating_win = 1
 endif
 
 "-

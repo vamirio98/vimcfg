@@ -2,7 +2,7 @@
 " keymaps.vim - Keymaps
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 10:51:48
+" Last Modified: 2021 Dec 23 19:54:58
 "-
 
 " Set <M-q> as <ESC>.
@@ -96,12 +96,12 @@ function EditProfile(filename)
 endfunction
 
 " Fast edit Vim profile.
-nnoremap <silent> <space>evb<space> :call EditProfile('basic.vim')<CR>
-nnoremap <silent> <space>evt<space> :call EditProfile('terminal.vim')<CR>
-nnoremap <silent> <space>evu<space> :call EditProfile('ui.vim')<CR>
-nnoremap <silent> <space>evf<space> :call EditProfile('ft.vim')<CR>
-nnoremap <silent> <space>evp<space> :call EditProfile('plugins.vim')<CR>
-nnoremap <silent> <space>evk<space> :call EditProfile('keymaps.vim')<CR>
+nnoremap <silent> <space>evb :call EditProfile('basic.vim')<CR>
+nnoremap <silent> <space>evt :call EditProfile('terminal.vim')<CR>
+nnoremap <silent> <space>evu :call EditProfile('ui.vim')<CR>
+nnoremap <silent> <space>evp :call EditProfile('plugins.vim')<CR>
+nnoremap <silent> <space>evk :call EditProfile('keymaps.vim')<CR>
+nnoremap <silent> <space>evw :call EditProfile('which_key_map.vim')<CR>
 
 function RoloadProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
@@ -111,4 +111,4 @@ function RoloadProfile()
 endfunction
 
 " Reload Vim profile.
-nnoremap <silent> <space>sv<space> :call ReloadProfile()<CR>
+nnoremap <silent> <space>sv :call ReloadProfile()<CR>
