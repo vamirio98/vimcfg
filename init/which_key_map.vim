@@ -2,7 +2,7 @@
 " which_key_map.vim
 "
 " Created by Vamirio on 2021 Dec 23
-" Last Modified: 2021 Dec 23 20:12:46
+" Last Modified: 2021 Dec 24 15:06:37
 "-
 let g:leader_map = {}
 let g:space_map = {}
@@ -53,11 +53,11 @@ let g:leader_map.r = {
 
 let g:leader_map.t = {
 			\ 'name' : '+asynctasks',
+			\ 'a' : 'query-available-tasks',
 			\ 'c' : 'compile-single-file',
 			\ 'C' : 'compile-single-file-with-debug-info',
 			\ 'd' : 'debug-program',
 			\ 'D' : 'delete-program',
-			\ 'q' : 'query-available-tasks',
 			\ 'm' : {
 				\ 'name' : '+make',
 				\ 'b' : 'make-build',
@@ -65,6 +65,7 @@ let g:leader_map.t = {
 				\ 'd' : 'make-debug',
 				\ 'r' : 'make-run',
 				\ },
+			\ 'q' : 'open/close-quickfix-window',
 			\ 'r' : 'run-program',
 			\ }
 

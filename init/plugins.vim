@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 23 20:05:38
+" Last Modified: 2021 Dec 24 15:05:14
 "-
 
 "-
@@ -571,7 +571,7 @@ if index(g:plugin_group, 'asynctask') >= 0
 	nnoremap <silent> <leader>tmc :AsyncTask project-clean<CR>
 
 	" Query available tasks.
-	nnoremap <silent> <leader>tq :AsyncTaskList<CR>
+	nnoremap <silent> <leader>ta :AsyncTaskList<CR>
 endif
 
 "-
