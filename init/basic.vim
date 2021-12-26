@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 10:38:12
+" Last Modified: 2021 Dec 26 10:07:18
 "-
 
 "-
@@ -14,7 +14,10 @@ let maplocalleader = "\<tab>"
 "-
 " Jump to the last position when reopening a file.
 "-
-autocmd BufReadPost * call s:ReturnLastPos()
+augroup MyBasicGroup
+	au!
+	au BufReadPost * call s:ReturnLastPos()
+augroup END
 function s:ReturnLastPos()
 	let l:last_pos = [line("'\""), col("'\"")]
 	if l:last_pos[0] > 1 && last_pos[1] <= line("$")

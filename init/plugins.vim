@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 24 15:05:14
+" Last Modified: 2021 Dec 26 10:09:31
 "-
 
 "-
@@ -106,11 +106,13 @@ if index(g:plugin_group, 'enhanced') >= 0
 	let g:rbpt_max = 16
 	let g:rbpt_loadcmd_toggle = 0
 
-
-	autocmd VimEnter * RainbowParenthesesToggle
-	autocmd Syntax * RainbowParenthesesLoadRound
-	autocmd Syntax * RainbowParenthesesLoadSquare
-	autocmd Syntax * RainbowParenthesesLoadBraces
+	augroup MyRainbowParentheses
+		au!
+		au VimEnter * RainbowParenthesesToggle
+		au Syntax * RainbowParenthesesLoadRound
+		au Syntax * RainbowParenthesesLoadSquare
+		au Syntax * RainbowParenthesesLoadBraces
+	augroup END
 
 	"-
 	" vim-floaterm
@@ -456,13 +458,13 @@ endif
 " Debug.
 "-
 if index(g:plugin_group, 'debug') >= 0
-	"Plug 'puremourning/vimspector'
+	Plug 'puremourning/vimspector'
 	Plug 'sillybun/vim-repl'
 
 	"-
 	" vimspector
 	"-
-	"let g:vimspector_enable_mappings = 'HUMAN'
+	let g:vimspector_enable_mappings = 'HUMAN'
 
 	"-
 	" vim-repl
