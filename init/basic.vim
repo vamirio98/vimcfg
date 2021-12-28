@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 26 10:07:18
+" Last Modified: 2021 Dec 28 11:31:54
 "-
 
 "-
@@ -104,3 +104,6 @@ set shiftround
 
 " Keep column when switching between buffers.
 set nostartofline
+
+" Enable mouse in normal mode.
+set mouse=n

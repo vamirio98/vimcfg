@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 26 10:09:31
+" Last Modified: 2021 Dec 28 11:26:14
 "-
 
 "-
@@ -465,6 +465,28 @@ if index(g:plugin_group, 'debug') >= 0
 	" vimspector
 	"-
 	let g:vimspector_enable_mappings = 'HUMAN'
+
+	" Customise UI
+	augroup MyVimspector
+		au!
+		au User VimspectorUICreated call s:CustomiseUI()
+	augroup END
+
+	function! s:CustomiseUI()
+		call win_gotoid(g:vimspector_session_windows.code)
+		" Clear the existing WinBar created by Vimspector.
+		nunmenu WinBar
+		" Create new WinBar.
+		nnoremenu WinBar.K :call vimspector#Stop()<CR>
+		nnoremenu WinBar.B :call vimspector#ToggleBreakpoint()<CR>
+		nnoremenu WinBar.C :call vimspector#Continue()<CR>
+		nnoremenu WinBar.P :call vimspector#Pause()<CR>
+		nnoremenu WinBar.N :call vimspector#StepOver()<CR>
+		nnoremenu WinBar.S :call vimspector#StepInto()<CR>
+		nnoremenu WinBar.F :call vimspector#StepOut()<CR>
+		nnoremenu WinBar.R :call vimspector#Restart()<CR>
+		nnoremenu WinBar.X :call vimspector#Reset()<CR>
+	endfunction
 
 	"-
 	" vim-repl
