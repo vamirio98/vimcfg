@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 28 11:26:14
+" Last Modified: 2021 Dec 28 15:42:10
 "-
 
 "-
@@ -521,11 +521,6 @@ if index(g:plugin_group, 'debug') >= 0
 		" Send code to REPL environment.
 		au FileType python nnoremap <silent><buffer> <space>rs
 					\ :REPLSendSession<CR>
-		" Debug, need ipdb module.
-		" Run and stop at current line.
-		au FileType python nnoremap <F12> :REPLDebugStopAtCurrentLine<CR>
-		au FileType python nnoremap <F10> :REPLPDBN<CR>
-		au FileType python nnoremap <F11> :REPLPDBS<CR>
 	augroup END
 endif
 
@@ -611,7 +606,7 @@ if index(g:plugin_group, 'quickui') >= 0
 	let g:quickui_border_style = 2
 
 	" Preview help.
-	nnoremap <F3> :call quickui#tools#preview_tag('')<CR>
+	nnoremap <F1> :call quickui#tools#preview_tag('')<CR>
 
 	" Set the size of preview window.
 	let g:quickui_preview_w = 70

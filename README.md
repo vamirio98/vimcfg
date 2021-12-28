@@ -54,8 +54,23 @@ coc-ecdict      // Offline translator.
 Optional vimspector configurations:
 
 To use configurations provided in `plugcfg/vimspector`, you can create symbolic
-links/shortcuts in `/path/to/vimspector/configurations/OS/` which have the same
+links in `/path/to/vimspector/configurations/OS/` which have the same
 name as the files in `plugcfg/vimspector`, where the `OS` is the system name.
+
+```bash
+// Example:
+// Unix:
+cd /path/to/vimspector/configurations/linux
+mkdir c
+cd c
+ln -s /path/to/plugcfg/vimspector/vscode_cpptools.json
+
+// Windows:
+cd path\to\vimspector\configurations\windows
+mkdir python
+cd python
+mklink debugpy.json path\to\plugcfg\vimspector\debugpy.json
+```
 
 ## Reference
 
