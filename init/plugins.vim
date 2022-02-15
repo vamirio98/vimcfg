@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 28 15:42:10
+" Last Modified: 2022 Feb 15 23:02:55
 "-
 
 "-
@@ -212,7 +212,7 @@ if index(g:plugin_group, 'filetypes') >= 0
 	" markdown-preview
 	"-
 	" Auto open the preview window after entering the markdown buffer.
-	let g:mkdp_auto_start = 1
+	let g:mkdp_auto_start = 0
 
 	" Auto close current preview window when change from markdown
 	" buffer to another buffer.
