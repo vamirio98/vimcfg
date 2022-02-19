@@ -2,7 +2,7 @@
 " basic.vim - Basic config for Vim
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 28 11:31:54
+" Last Modified: 2022 Feb 19 23:29:32
 "-
 
 "-
@@ -107,3 +107,17 @@ set nostartofline
 
 " Enable mouse in normal mode.
 set mouse=n
+
+" Auto load change.
+set autoread
+augroup MyAutoRead
+	au!
+	" Trigger autoread when cursor stop moving, buffer change or terminal focus.
+	au CursorHold,CursorHoldI,BufEnter,FocusGained *
+				\ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == ''
+				\ | checktime | endif
+	" Notification after file change
+	au FileChangedShellPost * echohl WarningMsg
+				\ | echo "File changed on disk. Buffer reloaded."
+				\ | echohl None
+augroup END
