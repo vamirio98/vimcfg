@@ -1,7 +1,7 @@
 "-
 " keymaps.vim - Keymaps
 "
-" Created by Vamirio on 2021 Nov 08
+" Created by vamirio on 2021 Nov 08
 " Last Modified: 2021 Dec 23 19:54:58
 "-
 

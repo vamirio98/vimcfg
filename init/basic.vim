@@ -1,7 +1,7 @@
 "-
 " basic.vim - Basic config for Vim
 "
-" Created by Vamirio on 2021 Nov 08
+" Created by vamirio on 2021 Nov 08
 " Last Modified: 2022 Feb 19 23:29:32
 "-
 

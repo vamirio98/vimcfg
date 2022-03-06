@@ -1,7 +1,7 @@
 "-
 " which_key_map.vim
 "
-" Created by Vamirio on 2021 Dec 23
+" Created by vamirio on 2021 Dec 23
 " Last Modified: 2021 Dec 24 15:06:37
 "-
 let g:leader_map = {}

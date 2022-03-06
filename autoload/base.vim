@@ -1,8 +1,8 @@
 "-
 " base.vim - some base function
 " 
-" Created by Vamirio on 2021 Oct 14
-" Last Modified: 2021 Dec 21 15:05:16
+" Created by vamirio on 2021 Oct 14
+" Last Modified: 2022 Mar 06 21:55:05
 "-
 
 "-
@@ -56,7 +56,7 @@ function! g:base#AddFileHead(head, suffix, tail, line)
 	call cursor(a:line, 0)
 	call append(a:line, a:suffix . ' ' . expand("%:t"))
 	call append(a:line + 1, a:suffix)
-	call append(a:line + 2, a:suffix . ' Created by Vamirio on ' . strftime("%Y %b %d"))
+	call append(a:line + 2, a:suffix . ' Created by vamirio on ' . strftime("%Y %b %d"))
 	call append(a:line + 3, a:suffix . ' Last Modified: ' . strftime("%Y %b %d %T"))
 	call append(a:line + 4, a:tail)
 	execute "normal! j"

@@ -1,7 +1,7 @@
 "-
 " plugins.vim - plugins config
 "
-" Created by Vamirio on 2021 Nov 08
+" Created by vamirio on 2021 Nov 08
 " Last Modified: 2022 Feb 15 23:02:55
 "-
 
