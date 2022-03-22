@@ -2,7 +2,7 @@
 " base.vim - some base function
 " 
 " Created by vamirio on 2021 Oct 14
-" Last Modified: 2022 Mar 06 21:55:05
+" Last Modified: 2022 Mar 22 21:46:02
 "-
 
 "-
@@ -11,11 +11,11 @@
 function! s:ModifyTime(prefix, suffix)
 	let l:curr_pos = getcurpos()
 	call cursor(1, 1)
-	let l:prefix_pos = searchpos(a:prefix, 'c')
-	let l:suffix_pos = searchpos(a:suffix, 'n')
+	let l:prefix_pos = search(a:prefix, 'c')
+	let l:suffix_pos = search(a:suffix, 'n')
 	let l:time_pos = search('Last Modified:')
-	if l:prefix_pos[0] < 5 && l:time_pos < l:suffix_pos[0]
-		execute l:prefix_pos[0] . "," . l:time_pos
+	if l:prefix_pos < 5 && l:prefix_pos < l:time_pos && l:time_pos < l:suffix_pos
+		execute l:prefix_pos . "," . l:time_pos
 					\ . "g/Last Modified:/s/Last Modified:.*/"
 					\ . "Last Modified: " . b:last_modified_time_str
 	endif
