@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by vamirio on 2021 Nov 08
-" Last Modified: 2022 Feb 15 23:02:55
+" Last Modified: 2022 Apr 15 22:42:47
 "-
 
 "-
@@ -29,6 +29,11 @@ endif
 " Basic plugins.
 "-
 if index(g:plugin_group, 'basic') >= 0
+	"-
+	" Color scheme.
+	"-
+	Plug 'morhetz/gruvbox'
+
 	"-
 	" Show the start screen, display the recently edited files.
 	"-
