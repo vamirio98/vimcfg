@@ -2,7 +2,7 @@
 " plugins.vim - plugins config
 "
 " Created by vamirio on 2021 Nov 08
-" Last Modified: 2022 Apr 15 22:42:47
+" Last Modified: 2022 Apr 30 10:45:58
 "-
 
 "-
@@ -11,8 +11,7 @@
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
 	let g:plugin_group += ['lightline', 'dirvish', 'coc', 'debug']
-	let g:plugin_group += ['asynctask', 'quickui', 'language_tool']
-	let g:plugin_group += ['which_key']
+	let g:plugin_group += ['asynctask', 'which_key']
 endif
 
 "-
@@ -206,36 +205,6 @@ if index(g:plugin_group, 'filetypes') >= 0
 	" Additional Vim syntax highlight for C++.
 	"-
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-
-	"-
-	" Preview markdown.
-	"-
-	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app &&
-				\ npm install', 'for': ['markdown'] }
-
-	"-
-	" markdown-preview
-	"-
-	" Auto open the preview window after entering the markdown buffer.
-	let g:mkdp_auto_start = 0
-
-	" Auto close current preview window when change from markdown
-	" buffer to another buffer.
-	let g:mkdp_auto_close = 1
-
-	" Auto refresh markdown as editing or moving the cursor.
-	let g:mkdp_refresh_slow = 0
-
-	" Specify browser to open preview page.
-	let g:mkdp_browser = 'firefox'
-
-	" Preview page title.
-	" ${name} will be replace with the file name.
-	let g:mkdp_page_title = '[${name}]'
-
-	" Recognized filetypes.
-	" These filetypes will have MarkdownPreview... commands.
-	let g:mkdp_filetype = ['markdown']
 endif
 
 "-
@@ -464,7 +433,6 @@ endif
 "-
 if index(g:plugin_group, 'debug') >= 0
 	Plug 'puremourning/vimspector'
-	Plug 'sillybun/vim-repl'
 
 	"-
 	" vimspector
@@ -492,41 +460,6 @@ if index(g:plugin_group, 'debug') >= 0
 		nnoremenu WinBar.R :call vimspector#Restart()<CR>
 		nnoremenu WinBar.X :call vimspector#Reset()<CR>
 	endfunction
-
-	"-
-	" vim-repl
-	"-
-	" Let REPL windows appears in right.
-	let g:repl_position = 3
-
-	" Specify which program will be run for certain file type.
-	let g:repl_program = {
-				\ 'python': ['python'],
-				\ 'default': ['bash']
-				\ }
-
-	" Specify the command to exit different repl program correctly.
-	let g:repl_exit_commands = {
-				\ 'python': 'quit()',
-				\ 'bash': 'exit',
-				\ 'default': 'exit'
-				\ }
-
-	" Specify the name of REPL console.
-	let g:repl_console_name = 'REPL'
-
-	augroup MyVimRepl
-		au!
-		" Open and exit REPL environment.
-		au FileType python nnoremap <silent><buffer> <space>rt
-					\ :REPLToggle<CR>
-		" Hide and show REPL environment.
-		au FileType python nnoremap <silent><buffer> <space>rh
-					\ :REPLHide<CR>
-		" Send code to REPL environment.
-		au FileType python nnoremap <silent><buffer> <space>rs
-					\ :REPLSendSession<CR>
-	augroup END
 endif
 
 "-
@@ -556,7 +489,7 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asyncrun_bell = 1
 
 	" Open/close the Quickficx window.
-	nnoremap <silent> <leader>tq :call asyncrun#quickfix_toggle(6)<cr>
+	nnoremap <silent> <space>qq :call asyncrun#quickfix_toggle(6)<cr>
 
 	" Specify what terminal to use.
 	let g:asynctasks_term_pos = 'tab'
@@ -596,43 +529,6 @@ if index(g:plugin_group, 'asynctask') >= 0
 
 	" Query available tasks.
 	nnoremap <silent> <leader>ta :AsyncTaskList<CR>
-endif
-
-"-
-" Quick UI
-"-
-if index(g:plugin_group, 'quickui') >= 0
-	Plug 'skywind3000/vim-quickui'
-
-	" Color scheme.
-	let g:quickui_color_scheme = 'papercol dark'
-
-	" Border style
-	let g:quickui_border_style = 2
-
-	" Preview help.
-	nnoremap <F1> :call quickui#tools#preview_tag('')<CR>
-
-	" Set the size of preview window.
-	let g:quickui_preview_w = 70
-	let g:quickui_preview_h = 10
-
-	" Preview quickfix.
-	augroup MyQuickfixPreview
-		au!
-		au FileType qf nnoremap <silent><buffer> p
-					\ :call quickui#tools#preview_quickfix()<CR>
-		au FileType qf nnoremap <silent><buffer> <C-f>
-					\ :call quickui#preview#scroll(g:quickui_preview_h - 1)<CR>
-		au FileType qf nnoremap <silent><buffer> <C-b>
-					\ :call quickui#preview#scroll(1 - g:quickui_preview_h)<CR>
-	augroup END
-endif
-
-"-
-" Language tool - grammar check.
-"-
-if index(g:plugin_group, 'language_tool') >= 0
 endif
 
 "-

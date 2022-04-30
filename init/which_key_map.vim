@@ -2,7 +2,7 @@
 " which_key_map.vim
 "
 " Created by vamirio on 2021 Dec 23
-" Last Modified: 2021 Dec 24 15:06:37
+" Last Modified: 2022 Apr 30 10:45:05
 "-
 let g:leader_map = {}
 let g:space_map = {}
@@ -65,7 +65,6 @@ let g:leader_map.t = {
 				\ 'd' : 'make-debug',
 				\ 'r' : 'make-run',
 				\ },
-			\ 'q' : 'open/close-quickfix-window',
 			\ 'r' : 'run-program',
 			\ }
 
@@ -105,13 +104,7 @@ let g:space_map.f = {
 let g:space_map.q = {
 			\ 'name' : '+quick-fix',
 			\ 'f' : 'quick-fix',
-			\ }
-
-let g:space_map.r = {
-			\ 'name' : '+REPL',
-			\ 't' : 'open/exit-REPL-enviroment',
-			\ 'h' : 'hide-REPL-enviroment',
-			\ 's' : 'send-code-to-REPL-enviroment',
+			\ 'q' : 'open/close-quickfix-window',
 			\ }
 
 let g:space_map.s = {
