@@ -2,7 +2,6 @@
 " vim.vim
 " 
 " Created by vamirio on 2021 Oct 14
-" Last Modified: 2021 Dec 21 12:12:22
 "-
 
 let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
@@ -19,15 +18,6 @@ nnoremap <silent><buffer> <M-c>
 			\ :call base#AddComment('n', ['"-', '" ', '"-'])<CR>
 inoremap <silent><buffer> <M-c>
 			\ <ESC>:call base#AddComment('i', ['"-', '" ', '"-'])<CR>
-
-augroup MyVim
-	au!
-	au BufEnter *.vim call base#SetBufChangedFlag(0)
-	au BufWritePre,FileWritePre *.vim
-				\ call base#SetBufChangedFlag(1) |
-				\ call base#SetLastModifiedTimeStr()
-	au BufLeave,BufUnload *.vim call base#UpdateLastModifiedAndSave('"-', '"-')
-augroup END
 
 "-
 " Jump out comments.

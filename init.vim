@@ -2,7 +2,6 @@
 " init.vim - Initialize config
 "
 " Created by Vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 23 19:34:53
 "-
 
 " Prevent reload.

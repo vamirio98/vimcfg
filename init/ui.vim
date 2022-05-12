@@ -2,7 +2,6 @@
 " ui.vim - UI config
 "
 " Created by vamirio on 2021 Nov 08
-" Last Modified: 2022 Apr 15 23:04:51
 "-
 
 "-

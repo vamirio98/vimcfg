@@ -2,7 +2,6 @@
 " sh.vim
 " 
 " Created by vamirio on 2021 Oct 14
-" Last Modified: 2021 Dec 21 15:12:07
 "-
 
 if line('$') == 1 && getline(1) == ''
@@ -10,15 +9,6 @@ if line('$') == 1 && getline(1) == ''
 	call append(1, "")
 	call base#AddFileHead('#-', '#', '#-', 3)
 endif
-
-augroup MyShell
-	au!
-	au BufEnter *.sh call base#SetBufChangedFlag(0)
-	au BufWritePre,FileWritePre *.sh
-				\ call base#SetBufChangedFlag(1) |
-				\ call base#SetLastModifiedTimeStr()
-	au BufLeave,BufUnload *.sh call base#UpdateLastModifiedAndSave('#-', '#-')
-augroup END
 
 "-
 " Jump out comments.

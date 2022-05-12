@@ -2,7 +2,6 @@
 " which_key_map.vim
 "
 " Created by vamirio on 2021 Dec 23
-" Last Modified: 2022 Apr 30 10:45:05
 "-
 let g:leader_map = {}
 let g:space_map = {}

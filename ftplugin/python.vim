@@ -2,7 +2,6 @@
 " python.vim
 " 
 " Created by vamirio on 2021 Nov 08
-" Last Modified: 2021 Dec 21 12:11:50
 "-
 
 if line('$') == 1 && getline(1) == ''
@@ -11,15 +10,6 @@ if line('$') == 1 && getline(1) == ''
 	call setline(3, '')
 	call base#AddFileHead('#-', '#', '#-', 4)
 endif
-
-augroup MyPython
-	au!
-	au BufEnter *.py call base#SetBufChangedFlag(0)
-	au BufWritePre,FileWritePre *.py
-				\ call base#SetBufChangedFlag(1) |
-				\ call base#SetLastModifiedTimeStr()
-	au BufLeave,BufUnload *.py call base#UpdateLastModifiedAndSave('/*', '*/')
-augroup END
 
 "-
 " Jump out comments.
