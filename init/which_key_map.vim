@@ -10,39 +10,40 @@ nnoremap <silent> <leader> :<C-u>WhichKey '\'<CR>
 nnoremap <silent> <space> :<C-u>WhichKey ' '<CR>
 
 let g:leader_map = { 'name' : '+Leader',
-			\ '1' : 'tab 1',
-			\ '2' : 'tab 2',
-			\ '3' : 'tab 3',
-			\ '4' : 'tab 4',
-			\ '5' : 'tab 5',
-			\ '6' : 'tab 6',
-			\ '7' : 'tab 7',
-			\ '8' : 'tab 8',
-			\ '9' : 'tab 9',
-			\ '0' : 'tab 10',
+			\ '1' : 'switch to tab 1',
+			\ '2' : 'switch to tab 2',
+			\ '3' : 'switch to tab 3',
+			\ '4' : 'switch to tab 4',
+			\ '5' : 'switch to tab 5',
+			\ '6' : 'switch to tab 6',
+			\ '7' : 'switch to tab 7',
+			\ '8' : 'switch to tab 8',
+			\ '9' : 'switch to tab 9',
+			\ '0' : 'switch to tab 10',
 			\ }
 
 let g:leader_map.c = {
-			\ 'name' : '+close-tab',
-			\ '1' : 'tab 1',
-			\ '2' : 'tab 2',
-			\ '3' : 'tab 3',
-			\ '4' : 'tab 4',
-			\ '5' : 'tab 5',
-			\ '6' : 'tab 6',
-			\ '7' : 'tab 7',
-			\ '8' : 'tab 8',
-			\ '9' : 'tab 9',
-			\ '0' : 'tab 10',
-			\ }
-
-let g:leader_map.f = {
-			\ 'name' : '+float-terminal',
-			\ 'a' : 'a-new-terminal',
-			\ 'c' : 'close-terminal',
-			\ 'n' : 'next-terminal',
-			\ 'p' : 'prev-terminal',
-			\ 't' : 'open/hide-terminal',
+			\ 'name' : '+close-tab/cscope',
+			\ '1' : 'close tab 1',
+			\ '2' : 'close tab 2',
+			\ '3' : 'close tab 3',
+			\ '4' : 'close tab 4',
+			\ '5' : 'close tab 5',
+			\ '6' : 'close tab 6',
+			\ '7' : 'close tab 7',
+			\ '8' : 'close tab 8',
+			\ '9' : 'close tab 9',
+			\ '0' : 'close tab 10',
+			\ 'a' : 'where-current-symbol-is-assiagned',
+			\ 'c' : 'functions-calling-this-function',
+			\ 'd' : 'functions-called-by-this-function',
+			\ 'e' : 'egrep-pattern-under-curosr',
+			\ 'f' : 'filename-under-cursor',
+			\ 'g' : 'symbol-definition',
+			\ 'i' : 'files-#including-the-filename-under-cursor',
+			\ 't' : 'text-string',
+			\ 's' : 'symbol-reference',
+			\ 'z' : 'current-word',
 			\ }
 
 let g:leader_map.r = {
@@ -50,7 +51,7 @@ let g:leader_map.r = {
 			\ 'n' : 'rename-symbol',
 			\ }
 
-let g:leader_map.t = {
+let g:space_map.a = {
 			\ 'name' : '+asynctasks',
 			\ 'a' : 'query-available-tasks',
 			\ 'c' : 'compile-single-file',
@@ -64,11 +65,12 @@ let g:leader_map.t = {
 				\ 'd' : 'make-debug',
 				\ 'r' : 'make-run',
 				\ },
+			\ 'q' : 'open/close-quickfix-window',
 			\ 'r' : 'run-program',
 			\ }
 
 let g:space_map.c = {
-			\ 'name': '+coc-list',
+			\ 'name': '+coc',
 			\ 'l' : {
 				\ 'name' : '+coc-list',
 				\ 'c' : 'show-commands',
@@ -100,10 +102,16 @@ let g:space_map.f = {
 			\ 't' : 'format-code',
 			\ }
 
+let g:space_map.l = {
+			\ 'name' : '+translation',
+			\ 't' : 'popup',
+			\ 'e' : 'echo',
+			\ 'r' : 'replace',
+			\ }
+
 let g:space_map.q = {
 			\ 'name' : '+quick-fix',
 			\ 'f' : 'quick-fix',
-			\ 'q' : 'open/close-quickfix-window',
 			\ }
 
 let g:space_map.s = {
@@ -112,10 +120,12 @@ let g:space_map.s = {
 			\ }
 
 let g:space_map.t = {
-			\ 'name' : '+translation',
-			\ 't' : 'popup',
-			\ 'e' : 'echo',
-			\ 'r' : 'replace',
+			\ 'name' : '+float-terminal',
+			\ 'a' : 'a-new-terminal',
+			\ 'c' : 'close-terminal',
+			\ 'n' : 'next-terminal',
+			\ 'p' : 'prev-terminal',
+			\ 't' : 'open/hide-terminal',
 			\ }
 
 call which_key#register('\', "g:leader_map")

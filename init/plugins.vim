@@ -120,21 +120,22 @@ if index(g:plugin_group, 'enhanced') >= 0
 	"-
 	" vim-floaterm
 	"-
-	let g:floaterm_wintype = 'float'
+	let g:floaterm_wintype = 'vsplit'
 	let g:floaterm_width = 0.4
-	let g:floaterm_height = 0.99
-	let g:floaterm_position = 'right'
+	let g:floaterm_height = 0.5
+	let g:floaterm_position = 'botright'
+	let g:floaterm_opener = 'vsplit'
 
 	" Open or hide the floaterm window.
-	let g:floaterm_keymap_toggle = '<leader>ft'
+	let g:floaterm_keymap_toggle = '<space>tt'
 	" Open a new floaterm window.
-	let g:floaterm_keymap_new = '<leader>fa'
-	" Switch to the previous floaterm instance
-	let g:floaterm_keymap_prev = '<leader>fp'
+	let g:floaterm_keymap_new = '<space>ta'
+	" Switch to the previous floaterm instance.
+	let g:floaterm_keymap_prev = '<space>tp'
 	" Switch to the next floaterm instance
-	let g:floaterm_keymap_next = '<leader>fn'
+	let g:floaterm_keymap_next = '<space>tn'
 	" Close the current terminal instance.
-	let g:floaterm_keymap_kill = '<leader>fc'
+	let g:floaterm_keymap_kill = '<space>tc'
 
 	" Close window if the job exits normally.
 	let g:floaterm_autoclose = 1
@@ -159,8 +160,7 @@ if index(g:plugin_group, 'tags') >= 0
 	" vim-gutentags
 	"-
 	" Set root dir of a project.
-	let g:gutentags_project_root = ['.root', '.svn', '.git',
-				\ '.project']
+	let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
 
 	" Set ctags file name.
 	let g:gutentags_ctas_tagfile = '.tags'
@@ -176,7 +176,13 @@ if index(g:plugin_group, 'tags') >= 0
 
 	" Use a ctags-compatible program to generate a tags file and
 	" GNU's gtags to generate a code database file.
-	let g:gutentags_modules = ['ctags', 'gtags_cscope']
+	let g:gutentags_modules = []
+	if executable('ctags')
+		let g:gutentags_modules += ['ctags']
+	endif
+	if executable('gtags-cscope') && executable('gtags')
+		let g:gutentags_modules += ['gtags_cscope']
+	endif
 
 	" Set ctags arguments.
 	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
@@ -187,7 +193,10 @@ if index(g:plugin_group, 'tags') >= 0
 	let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 	" Config gutentags whitelist.
-	let gutentags_exclude_filetypes = ['text']
+	let g:gutentags_exclude_filetypes = ['text']
+
+	" Prevent gutentags from autoloading gtags database.
+	let g:gutentags_auto_add_gtags_cscope = 0
 
 	"-
 	" gutentags_plus
@@ -318,14 +327,17 @@ if index(g:plugin_group, 'coc') >= 0
 	" Use tab for trigger completion with characters ahead and navigate.
 	inoremap <silent><expr> <tab>
 				\ pumvisible() ? "\<C-n>" :
-				\ <SID>check_back_space() ? "\<tab>" :
+				\ <SID>CheckBackspace() ? "\<tab>" :
 				\ coc#refresh()
 	inoremap <expr><S-tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-	function! s:check_back_space() abort
+	function! s:CheckBackspace() abort
 		let col = col('.') - 1
 		return !col || getline('.')[col - 1] =~# '\s'
 	endfunction
+
+	" Use <C-space> to trigger completion.
+	inoremap <silent><expr> <C-@> coc#refresh()
 
 	" Goto code navigation.
 	nmap <silent> gd <Plug>(coc-definition)
@@ -340,21 +352,23 @@ if index(g:plugin_group, 'coc') >= 0
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 	" Use K to show documentation in preview window.
-	nnoremap <silent> K :call <SID>show_documentation()<CR>
-	function! s:show_documentation()
-		if (index(['vim','help'], &filetype) >= 0)
-			execute 'h ' . expand('<cword>')
-		elseif (coc#rpc#ready())
+	nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
+	function! s:ShowDocumentation()
+		if CocAction('hasProvider', 'hover')
 			call CocActionAsync('doHover')
 		else
-			execute '!' . &keywordprg . " " .expand('<cword>')
+			call feedkeys('K', 'in')
 		endif
 	endfunction
 
-	" Highlight symbol and its references when holding the cursor.
 	augroup MyCocNvim
 		au!
+		" Highlight symbol and its references when holding the cursor.
 		au CursorHold * silent call CocActionAsync('highlight')
+		" Setup formatexpr specified filetype(s).
+		au FileType json setl formatexpr=CocAction('formatSelected')
+		" Update signature help on jump placeholder.
+		au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 	augroup END
 
 	" Symbol renaming.
@@ -369,17 +383,17 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Translation.
 	" Popup.
-	nmap <space>tt <Plug>(coc-translator-p)
-	vmap <space>tt <Plug>(coc-translator-pv)
+	nmap <space>lt <Plug>(coc-translator-p)
+	vmap <space>lt <Plug>(coc-translator-pv)
 	" Echo.
-	nmap <space>te <Plug>(coc-translator-e)
-	vmap <space>te <Plug>(coc-translator-ev)
+	nmap <space>le <Plug>(coc-translator-e)
+	vmap <space>le <Plug>(coc-translator-ev)
 	" Replace.
-	nmap <space>tr <Plug>(coc-translator-r)
-	vmap <space>tr <Plug>(coc-translator-rv)
+	nmap <space>lr <Plug>(coc-translator-r)
+	vmap <space>lr <Plug>(coc-translator-rv)
 
 	" Remap <C-f> and <C-b> for scroll float window/popups.
-	if has('nvim-0.4.0') || has('patch-8.2.0750')
+	if has('patch-8.2.0750')
 		nnoremap <silent><nowait><expr> <C-f>
 					\ coc#float#has_scroll() ?
 					\ coc#float#scroll(1) : "\<C-f>"
@@ -485,10 +499,10 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asyncrun_open = 6
 
 	" Bell when finish the task.
-	let g:asyncrun_bell = 1
+	let g:asyncrun_bell = 0
 
 	" Open/close the Quickficx window.
-	nnoremap <silent> <space>qq :call asyncrun#quickfix_toggle(6)<cr>
+	nnoremap <silent> <space>aq :call asyncrun#quickfix_toggle(6)<cr>
 
 	" Specify what terminal to use.
 	let g:asynctasks_term_pos = 'tab'
@@ -497,37 +511,37 @@ if index(g:plugin_group, 'asynctask') >= 0
 	let g:asynctasks_term_reuse = 1
 
 	" Run the program.
-	nnoremap <silent> <leader>tr :AsyncTask file-run<CR>
+	nnoremap <silent> <space>ar :AsyncTask file-run<CR>
 
 	" Compile single file.
-	nnoremap <silent> <leader>tc :AsyncTask file-build<CR>
+	nnoremap <silent> <space>ac :AsyncTask file-build<CR>
 
 	" Complie single file with debug info.
-	nnoremap <silent> <leader>tC :AsyncTask file-debug<CR>
+	nnoremap <silent> <space>aC :AsyncTask file-debug<CR>
 
 	" Use gdbgui to debug.
-	nnoremap <silent> <leader>td :AsyncTask file-gdbgui<CR>
+	nnoremap <silent> <space>ad :AsyncTask file-gdbgui<CR>
 
 	" Delete the executable file generated by current file.
-	nnoremap <silent> <leader>tD :AsyncTask exe-del<CR>
+	nnoremap <silent> <space>aD :AsyncTask exe-del<CR>
 
 	" Set root dir for make.
 	let g:asyncrun_rootmarks = ['.root', '.svn', '.git', '.project']
 
 	" Run make run.
-	nnoremap <silent> <leader>tmr :AsyncTask project-run<CR>
+	nnoremap <silent> <space>amr :AsyncTask project-run<CR>
 
 	" Run make build.
-	nnoremap <silent> <leader>tmb :AsyncTask project-build<CR>
+	nnoremap <silent> <space>amb :AsyncTask project-build<CR>
 
 	" Run make debug.
-	nnoremap <silent> <leader>tmd :AsyncTask project-debug<CR>
+	nnoremap <silent> <space>amd :AsyncTask project-debug<CR>
 
 	" Run make clean.
-	nnoremap <silent> <leader>tmc :AsyncTask project-clean<CR>
+	nnoremap <silent> <space>amc :AsyncTask project-clean<CR>
 
 	" Query available tasks.
-	nnoremap <silent> <leader>ta :AsyncTaskList<CR>
+	nnoremap <silent> <space>aa :AsyncTaskList<CR>
 endif
 
 "-

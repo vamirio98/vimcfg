@@ -73,20 +73,6 @@ inoremap <C-u> <ESC>viwgUea
 nnoremap <silent> <M-x> :bdelete<CR>
 
 "-
-" Fast add quotes and brackets.
-"-
-nnoremap <leader>' bi'<ESC>ea'<ESC>
-nnoremap <leader>" bi"<ESC>ea"<ESC>
-vnoremap <leader>' c''<ESC>hp
-vnoremap <leader>" c""<ESC>hp
-nnoremap <leader>( bi(<ESC>ea)<ESC>
-nnoremap <leader>[ bi[<ESC>ea]<ESC>
-nnoremap <leader>{ bi{<ESC>ea}<ESC>
-vnoremap <leader>( c()<ESC>hpe
-vnoremap <leader>[ c[]<ESC>hpe
-vnoremap <leader>{ c{}<ESC>hpe
-
-"-
 " Fast edit and reload vimrc.
 "-
 function EditProfile(filename)
@@ -102,7 +88,7 @@ nnoremap <silent> <space>evp :call EditProfile('plugins.vim')<CR>
 nnoremap <silent> <space>evk :call EditProfile('keymaps.vim')<CR>
 nnoremap <silent> <space>evw :call EditProfile('which_key_map.vim')<CR>
 
-function RoloadProfile()
+function ReloadProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
 		if l:ft == "vim"
 			execute "source %"
