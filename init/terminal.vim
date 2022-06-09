@@ -6,7 +6,7 @@
 " Created by vamirio on 2021 Nov 08
 "-
 
-function! Terminal_MetaMode(mode)
+function! TerminalMetaMode(mode)
 	set ttimeout
 	if $TMUX != ''
 		set ttimeoutlen=30
@@ -47,4 +47,4 @@ function! Terminal_MetaMode(mode)
 	endif
 endfunction
 
-call Terminal_MetaMode(0)
+call TerminalMetaMode(0)

@@ -1,143 +1,47 @@
 priority 1
 
-snippet cfun0 "function declaration" b
-${1:void} ${5:function_name}(void);
+global !p
+def GenFuncComment(snip, num, has_detail, has_return):
+	desc = "/**\n * ${1:Brief description}\n *\n"
+	param_no = 2
+	if int(has_detail) == 1:
+		desc += " * ${" + f"{param_no}" + ":Detail}\n *\n"
+		param_no += 1
+
+	func = "${" + f"{param_no}" + ":function_name}("
+	for i in range(0, int(num)):
+		param_no += 1
+		func += "${" + f"{param_no}" + ":Type} "
+		param_no += 1
+		func += "${" + f"{param_no}" + ":Param}" \
+		      + (", " if i < int(num) - 1 else ");")
+		desc += " * @param $" + f"{param_no}" + " " \
+		      + "${" + f"{param_no + 1}" + ":Description}\n"
+		param_no += 2
+
+	if int(has_return) == 1:
+		func = "${" + f"{param_no}" + ":int} " + func
+		param_no += 1
+		desc += " *\n * @return ${" + f"{param_no}" + ":Description}\n"
+	else:
+		func = "void " + func
+
+	desc += " */\n"
+	snip.expand_anon(desc + func)
+endglobal
+
+post_jump "GenFuncComment(snip, int(match.group(1)), 1, 1)"
+snippet "cfun(\d+)" "function declaration with documentation" br
 endsnippet
 
-snippet cdvfun0 "function declaration without return value with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- */
-void ${4:function_name}(void);
+post_jump "GenFuncComment(snip, int(match.group(1)), 1, 0)"
+snippet "cvfun(\d+)" "function declaration with documentation" br
 endsnippet
 
-snippet cdfun0 "function declaration with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @return ${3:Return parameter description}
- */
-${4:int} ${5:function_name}(void);
+post_jump "GenFuncComment(snip, int(match.group(1)), 0, 1)"
+snippet "vcfun(\d+)" "function declaration with documentation" br
 endsnippet
 
-snippet dfun0 "function definition" b
-${1:void} ${2:function_name}(void)
-{
-	${3}
-}
-endsnippet
-
-snippet cfun1 "function declaration with one parameter" b
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter});
-endsnippet
-
-snippet cdvfun1 "function declaration with one parameter and none return value with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- */
-void ${5:function_name}(${6:Type} ${3:Parameter});
-endsnippet
-
-snippet cdfun1 "function declaration with one parameter with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- *
- * @return ${5:Return parameter description}
- */
-${6:int} ${7:function_name}(${8:Type} ${3:Parameter});
-endsnippet
-
-snippet dfun1 "function definition with one parameter" b
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter})
-{
-	${5}
-}
-endsnippet
-
-snippet cfun2 "function declaration with two parameters" b
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter});
-endsnippet
-
-snippet cdvfun2 "function declaration with two parameters and none return value with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- * @param $5 ${6:Parameter description}
- */
-void ${7:function_name}(${8:Type} ${3:Parameter}, ${9:Type} ${5:Parameter});
-endsnippet
-
-snippet cdfun2 "function declaration with two parameters with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- * @param $5 ${6:Parameter description}
- *
- * @return ${7:Return parameter description}
- */
-${8:int} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter});
-endsnippet
-
-snippet dfun2 "function definition with two parameters with documentation" b
-${8:void} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter})
-{
-	${12}
-}
-endsnippet
-
-snippet cfun3 "function declaration with three parameters" b
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter}, ${7:Type} ${8:Parameter});
-endsnippet
-
-snippet cdvfun3 "function declaration with three parameters and none return value with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- * @param $5 ${6:Parameter description}
- * @param $7 ${8:Parameter description}
- */
-void ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter}, ${12:Type} ${7:Parameter});
-endsnippet
-
-snippet cdfun3 "function declaration with three parameters with documentation" b
-/**
- * @brief ${1:Brief function description}
- *
- * ${2:Detailed description of the function}
- *
- * @param $3 ${4:Parameter description}
- * @param $5 ${6:Parameter description}
- * @param $7 ${8:Parameter description}
- *
- * @return ${9:Return parameter description}
- */
-${10:int} ${11:function_name}(${12:Type} ${3:Parameter}, ${13:Type} ${5:Parameter}, ${14:Type} ${7:Parameter});
-endsnippet
-
-snippet dfun3 "function definition with three parameters" b
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter}, ${7:Type} ${8:Parameter})
-{
-	${9}
-}
+post_jump "GenFuncComment(snip, int(match.group(1)), 0, 0)"
+snippet "vcvfun(\d+)" "function declaration with documentation" br
 endsnippet
