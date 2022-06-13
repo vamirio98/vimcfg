@@ -6,6 +6,8 @@
 " Created by vamirio on 2021 Nov 08
 "-
 
+" Let mode = 1 to use less confusing format: <ESC>]{0}x~, but need to
+" configure the terminal sends what when pressing Alt-x.
 function! TerminalMetaMode(mode)
 	set ttimeout
 	if $TMUX != ''

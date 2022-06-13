@@ -233,7 +233,7 @@ if index(g:plugin_group, 'lightline') >= 0
 		\ },
 		\ 'tabline': {
 			\ 'left': [ [ 'buffers' ] ],
-			\ 'right': [ [ 'close' ] ]
+			\ 'right': [ [ '' ] ]
 		\ },
 		\ 'component_expand': {
 			\ 'buffers': 'lightline#bufferline#buffers'
