@@ -102,7 +102,7 @@ let g:space_map.f = {
 			\ 't' : 'format-code',
 			\ }
 
-let g:space_map.l = {
+let g:space_map.t = {
 			\ 'name' : '+translation',
 			\ 't' : 'popup',
 			\ 'e' : 'echo',
@@ -117,15 +117,6 @@ let g:space_map.q = {
 let g:space_map.s = {
 			\ 'name' : '+source-curr-vimscript',
 			\ 'v' : 'source-curr-vimscript',
-			\ }
-
-let g:space_map.t = {
-			\ 'name' : '+float-terminal',
-			\ 'a' : 'a-new-terminal',
-			\ 'c' : 'close-terminal',
-			\ 'n' : 'next-terminal',
-			\ 'p' : 'prev-terminal',
-			\ 't' : 'open/hide-terminal',
 			\ }
 
 call which_key#register('\', "g:leader_map")

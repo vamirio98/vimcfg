@@ -34,14 +34,14 @@ function! TerminalMetaMode(mode)
 		for c in [',', '.', '/', ';', '[', ']', '{', '}']
 			call s:metacode(a:mode, c)
 		endfor
-		for c in ['?', ':', '-', '_']
+		for c in ['?', ':', '-', '_', '+', '=']
 			call s:metacode(a:mode, c)
 		endfor
 	else
 		for c in [',', '.', '/', ';', '{', '}']
 			call s:metacode(a:mode, c)
 		endfor
-		for c in ['?', ':', '-', '_']
+		for c in ['?', ':', '-', '_', '+', '=']
 			call s:metacode(a:mode, c)
 		endfor
 	endif

@@ -127,15 +127,15 @@ if index(g:plugin_group, 'enhanced') >= 0
 	let g:floaterm_opener = 'vsplit'
 
 	" Open or hide the floaterm window.
-	let g:floaterm_keymap_toggle = '<space>tt'
+	let g:floaterm_keymap_toggle = '<M-=>'
 	" Open a new floaterm window.
-	let g:floaterm_keymap_new = '<space>ta'
+	let g:floaterm_keymap_new = '<M-+>'
 	" Switch to the previous floaterm instance.
-	let g:floaterm_keymap_prev = '<space>tp'
+	let g:floaterm_keymap_prev = '<M-,>'
 	" Switch to the next floaterm instance
-	let g:floaterm_keymap_next = '<space>tn'
+	let g:floaterm_keymap_next = '<M-.>'
 	" Close the current terminal instance.
-	let g:floaterm_keymap_kill = '<space>tc'
+	let g:floaterm_keymap_kill = '<M-->'
 
 	" Close window if the job exits normally.
 	let g:floaterm_autoclose = 1
@@ -383,14 +383,14 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Translation.
 	" Popup.
-	nmap <space>lt <Plug>(coc-translator-p)
-	vmap <space>lt <Plug>(coc-translator-pv)
+	nmap <space>tt <Plug>(coc-translator-p)
+	vmap <space>tt <Plug>(coc-translator-pv)
 	" Echo.
-	nmap <space>le <Plug>(coc-translator-e)
-	vmap <space>le <Plug>(coc-translator-ev)
+	nmap <space>te <Plug>(coc-translator-e)
+	vmap <space>te <Plug>(coc-translator-ev)
 	" Replace.
-	nmap <space>lr <Plug>(coc-translator-r)
-	vmap <space>lr <Plug>(coc-translator-rv)
+	nmap <space>tr <Plug>(coc-translator-r)
+	vmap <space>tr <Plug>(coc-translator-rv)
 
 	" Remap <C-f> and <C-b> for scroll float window/popups.
 	if has('patch-8.2.0750')
