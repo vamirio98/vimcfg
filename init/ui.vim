@@ -8,6 +8,7 @@
 " Color scheme.
 "-
 let g:gruvbox_italic = 1
+set background=light
 augroup MyColorScheme
 	au!
 	au vimenter * ++nested colorscheme gruvbox
