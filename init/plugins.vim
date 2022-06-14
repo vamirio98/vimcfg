@@ -186,8 +186,8 @@ if index(g:plugin_group, 'tags') >= 0
 
 	" Set ctags arguments.
 	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-	let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxl']
-	let g:gutentags_ctags_extra_args += ['--c-kinds=+pxl']
+	let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+	let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 	" Use universal-ctags.
 	let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
