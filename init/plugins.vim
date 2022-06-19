@@ -8,7 +8,7 @@
 " Default groups.
 "-
 if !exists('g:plugin_group')
-	let g:plugin_group = ['basic', 'enhanced', 'tags', 'filetypes']
+	let g:plugin_group = ['basic', 'enhanced', 'tags']
 	let g:plugin_group += ['lightline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'which_key']
 endif
@@ -72,6 +72,16 @@ if index(g:plugin_group, 'enhanced') >= 0
 	" Indent line.
 	"-
 	Plug 'Yggdroot/indentLine', { 'for': 'python' }
+
+	"-
+	" Additional Vim syntax highlight for C/C++.
+	"-
+	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
+
+	"-
+	" Git.
+	"-
+	Plug 'tpope/vim-fugitive'
 
 	"-
 	" auto-pairs
@@ -206,16 +216,6 @@ if index(g:plugin_group, 'tags') >= 0
 endif
 
 "-
-" Filetypes plugin.
-"-
-if index(g:plugin_group, 'filetypes') >= 0
-	"-
-	" Additional Vim syntax highlight for C++.
-	"-
-	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-endif
-
-"-
 " Lightline.
 "-
 if index(g:plugin_group, 'lightline') >= 0
@@ -226,9 +226,11 @@ if index(g:plugin_group, 'lightline') >= 0
 		\ 'colorscheme': 'solarized',
 		\ 'active': {
 			\ 'left': [ [ 'mode', 'paste' ],
-		    \           [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+		    \           [ 'gitstatus', 'cocstatus', 'readonly', 'filename',
+			\             'modified' ] ]
 		\ },
 		\ 'component_function': {
+			\ 'gitstatus': 'FugitiveStatusline',
 			\ 'cocstatus': 'coc#status'
 		\ },
 		\ 'tabline': {
