@@ -38,34 +38,34 @@ def GenFuncComment(snip, filetype, num, has_detail, has_return):
 	snip.expand_anon(desc + func)
 endglobal
 
-post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 1)"
-snippet "cfun(\d+)" "function declaration with documentation" br
-endsnippet
-
-post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 0)"
-snippet "cvfun(\d+)" "function declaration with documentation, no return value" br
-endsnippet
-
 post_jump "GenFuncComment(snip, 'c', match.group(1), 0, 1)"
-snippet "vcfun(\d+)" "function declaration with documentation, no detail" br
+snippet "cfun(\d+)" "function declaration with documentation, no detail" br
 endsnippet
 
 post_jump "GenFuncComment(snip, 'c', match.group(1), 0, 0)"
-snippet "vcvfun(\d+)" "function declaration with documentation, no return value and detail" br
+snippet "cvfun(\d+)" "function declaration with documentation, no return value and detail" br
 endsnippet
 
-post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 1)"
-snippet "ccfun(\d+)" "function declaration with documentation" br
+post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 1)"
+snippet "cdfun(\d+)" "function declaration with documentation" br
 endsnippet
 
-post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 0)"
-snippet "ccvfun(\d+)" "function declaration with documentation, no return value" br
+post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 0)"
+snippet "cdvfun(\d+)" "function declaration with documentation, no return value" br
 endsnippet
 
 post_jump "GenFuncComment(snip, 'cc', match.group(1), 0, 1)"
-snippet "vccfun(\d+)" "function declaration with documentation, no detail" br
+snippet "ccfun(\d+)" "function declaration with documentation, no detail" br
 endsnippet
 
 post_jump "GenFuncComment(snip, 'cc', match.group(1), 0, 0)"
-snippet "vccvfun(\d+)" "function declaration with documentation, no return value and detail" br
+snippet "ccvfun(\d+)" "function declaration with documentation, no return value and detail" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 1)"
+snippet "ccdfun(\d+)" "function declaration with documentation" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 0)"
+snippet "ccdvfun(\d+)" "function declaration with documentation, no return value" br
 endsnippet
