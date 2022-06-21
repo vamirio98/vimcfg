@@ -1,47 +1,71 @@
 priority 1
 
 global !p
-def GenFuncComment(snip, num, has_detail, has_return):
-	desc = "/**\n * ${1:Brief description}\n *\n"
+# @param filetype Filetype, c or cc/cpp
+# @param num Number of parameters
+# @param has_detail 1 means having detail and 0 means not
+# @param has_return 1 means having return value and 0 means not
+def GenFuncComment(snip, filetype, num, has_detail, has_return):
+	desc = "/**\n * @brief ${1:Brief description}"
 	param_no = 2
 	if int(has_detail) == 1:
-		desc += " * ${" + f"{param_no}" + ":Detail}\n *\n"
+		desc += "\n *\n * ${" + f"{param_no}" + ":Detail}"
 		param_no += 1
 
-	func = "${" + f"{param_no}" + ":function_name}("
+	func = ("${" + f"{param_no}" + ":function_name}("
+		+ ("" if int(num) != 0 else
+		("void)" if filetype == "c" else ")")))
 	for i in range(0, int(num)):
 		param_no += 1
 		func += "${" + f"{param_no}" + ":Type} "
 		param_no += 1
-		func += "${" + f"{param_no}" + ":Param}" \
-		      + (", " if i < int(num) - 1 else ");")
-		desc += " * @param $" + f"{param_no}" + " " \
-		      + "${" + f"{param_no + 1}" + ":Description}\n"
+		func += ("${" + f"{param_no}" + ":Param}"
+		      + (", " if i < int(num) - 1 else ");"))
+		desc += ("\n *\n * @param $" + f"{param_no}" + " "
+		      + "${" + f"{param_no + 1}" + ":Description}")
 		param_no += 2
 
 	if int(has_return) == 1:
-		func = "${" + f"{param_no}" + ":int} " + func
+		param_no += (0 if int(num) != 0 else 1)
+		func = "\n${" + f"{param_no}" + ":int} " + func
 		param_no += 1
-		desc += " *\n * @return ${" + f"{param_no}" + ":Description}\n"
+		desc += ("\n *\n * @return ${" + f"{param_no}"
+		      + ":Description}")
 	else:
-		func = "void " + func
+		func = "\nvoid " + func
 
-	desc += " */\n"
+	desc += "\n */"
 	snip.expand_anon(desc + func)
 endglobal
 
-post_jump "GenFuncComment(snip, int(match.group(1)), 1, 1)"
+post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 1)"
 snippet "cfun(\d+)" "function declaration with documentation" br
 endsnippet
 
-post_jump "GenFuncComment(snip, int(match.group(1)), 1, 0)"
-snippet "cvfun(\d+)" "function declaration with documentation" br
+post_jump "GenFuncComment(snip, 'c', match.group(1), 1, 0)"
+snippet "cvfun(\d+)" "function declaration with documentation, no return value" br
 endsnippet
 
-post_jump "GenFuncComment(snip, int(match.group(1)), 0, 1)"
-snippet "vcfun(\d+)" "function declaration with documentation" br
+post_jump "GenFuncComment(snip, 'c', match.group(1), 0, 1)"
+snippet "vcfun(\d+)" "function declaration with documentation, no detail" br
 endsnippet
 
-post_jump "GenFuncComment(snip, int(match.group(1)), 0, 0)"
-snippet "vcvfun(\d+)" "function declaration with documentation" br
+post_jump "GenFuncComment(snip, 'c', match.group(1), 0, 0)"
+snippet "vcvfun(\d+)" "function declaration with documentation, no return value and detail" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 1)"
+snippet "ccfun(\d+)" "function declaration with documentation" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 1, 0)"
+snippet "ccvfun(\d+)" "function declaration with documentation, no return value" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 0, 1)"
+snippet "vccfun(\d+)" "function declaration with documentation, no detail" br
+endsnippet
+
+post_jump "GenFuncComment(snip, 'cc', match.group(1), 0, 0)"
+snippet "vccvfun(\d+)" "function declaration with documentation, no return value and detail" br
 endsnippet
