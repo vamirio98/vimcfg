@@ -7,7 +7,7 @@
 "-
 " Color scheme.
 "-
-let g:gruvbox_italic = 1
+let g:gruvbox_italic = 0
 set background=light
 augroup MyColorScheme
 	au!
