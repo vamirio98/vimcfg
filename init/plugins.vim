@@ -306,32 +306,24 @@ if index(g:plugin_group, 'coc') >= 0
 	"-
 	" coc.nvim
 	"-
-	" If hidden is not set, TextEdit might fail.
-	set hidden
-
-	" Better display for messages.
-	set cmdheight=2
-
 	" For better diagnostic messages experience.
 	set updatetime=300
 
-	" Don't pass messages to |ins-completion-menu|.
-	set shortmess+=c
-
 	" Always show the signcolumn, otherwise it would shift the text each
 	" time diagnostics appear/become resolved.
-	if has("patch-8.1-1564")
-		set signcolumn=number
-	else
-		set signcolumn=yes
-	endif
+	set signcolumn=yes
 
 	" Use tab for trigger completion with characters ahead and navigate.
 	inoremap <silent><expr> <tab>
-				\ pumvisible() ? "\<C-n>" :
+				\ coc#pum#visible() ? coc#pum#next(1) :
 				\ <SID>CheckBackspace() ? "\<tab>" :
 				\ coc#refresh()
-	inoremap <expr><S-tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+	inoremap <expr><S-tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+	" Confirm the completion when popupmenu is visible, insert <CR> and
+	" notify coc.nvim otherwise.
+	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+				\ : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 	function! s:CheckBackspace() abort
 		let col = col('.') - 1
@@ -438,7 +430,7 @@ if index(g:plugin_group, 'coc') >= 0
     " Snippets.
     "-
 	let g:UltiSnipsSnippetDirectories = ["UltiSnips", "plugcfg/UltiSnips"]
-	let g:UltiSnipsExpandTrigger = '<C-l>'
+	let g:UltiSnipsExpandTrigger = '<CR>'
 	let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 	let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 endif
