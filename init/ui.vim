@@ -8,7 +8,7 @@
 " Color scheme.
 "-
 let g:gruvbox_italic = 0
-set background=light
+set background=dark
 augroup MyColorScheme
 	au!
 	au vimenter * ++nested colorscheme gruvbox
@@ -25,7 +25,7 @@ if has('gui_running')
 	set guioptions-=r  " Remove right-hand scrollbar.
 	set guioptions-=L  " Remove left-hand scrollbar.
 	set guioptions-=e  " Use a non-GUI tab pages line.
-	set guifont=JetBrains_Mono:h12
+	set guifont=JetBrains_Mono:h13
 endif
 
 " Set line number.

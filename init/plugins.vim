@@ -223,7 +223,7 @@ if index(g:plugin_group, 'lightline') >= 0
 	Plug 'mengelbrecht/lightline-bufferline'
 
 	let g:lightline = {
-		\ 'colorscheme': 'solarized',
+		\ 'colorscheme': 'wombat',
 		\ 'active': {
 			\ 'left': [ [ 'mode', 'paste' ],
 		    \           [ 'gitstatus', 'cocstatus', 'readonly', 'filename',
@@ -430,7 +430,7 @@ if index(g:plugin_group, 'coc') >= 0
     " Snippets.
     "-
 	let g:UltiSnipsSnippetDirectories = ["UltiSnips", "plugcfg/UltiSnips"]
-	let g:UltiSnipsExpandTrigger = '<CR>'
+	let g:UltiSnipsExpandTrigger = '<C-l>'
 	let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 	let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 endif
