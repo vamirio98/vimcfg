@@ -223,7 +223,7 @@ if index(g:plugin_group, 'lightline') >= 0
 	Plug 'mengelbrecht/lightline-bufferline'
 
 	let g:lightline = {
-		\ 'colorscheme': 'wombat',
+		\ 'colorscheme': 'one',
 		\ 'active': {
 			\ 'left': [ [ 'mode', 'paste' ],
 		    \           [ 'gitstatus', 'cocstatus', 'readonly', 'filename',
@@ -359,6 +359,8 @@ if index(g:plugin_group, 'coc') >= 0
 		au!
 		" Highlight symbol and its references when holding the cursor.
 		au CursorHold * silent call CocActionAsync('highlight')
+		" Set highlight color for completion menu.
+		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=229 guibg=#FFFFAF
 		" Setup formatexpr specified filetype(s).
 		au FileType json setl formatexpr=CocAction('formatSelected')
 		" Update signature help on jump placeholder.
