@@ -360,7 +360,7 @@ if index(g:plugin_group, 'coc') >= 0
 		" Highlight symbol and its references when holding the cursor.
 		au CursorHold * silent call CocActionAsync('highlight')
 		" Set highlight color for completion menu.
-		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=229 guibg=#FFFFAF
+		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=15 guibg=#FFFFFF
 		" Setup formatexpr specified filetype(s).
 		au FileType json setl formatexpr=CocAction('formatSelected')
 		" Update signature help on jump placeholder.
