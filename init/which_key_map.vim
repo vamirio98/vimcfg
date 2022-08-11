@@ -54,21 +54,9 @@ let g:leader_map.r = {
 let g:space_map.a = {
 			\ 'name' : '+asynctasks',
 			\ 'a' : 'query-available-tasks',
-			\ 'c' : {
-				\ 'name' : '+CMake-project',
-				\ 'b' : 'build',
-				\ 'c' : 'config',
-				\ 'C' : 'clean',
-				\ 'r' : 'run',
-				\ },
-			\ 'q' : 'open/close-quickfix-window',
-			\ 'r' : 'run-program',
 			\ 's' : {
 				\ 'name' : '+single-file',
-				\ 'c' : 'compile',
-				\ 'C' : 'compile-with-debug-info',
-				\ 'd' : 'debug-program',
-				\ 'D' : 'delete-program',
+				\ 'd' : 'delete-program',
 				\ },
 			\ }
 
