@@ -446,29 +446,91 @@ if index(g:plugin_group, 'debug') >= 0
 	"-
 	" vimspector
 	"-
-	let g:vimspector_enable_mappings = 'HUMAN'
+	nmap <silent> <F5> <Plug>VimspectorContinue
+	nmap <silent> <F9> <Plug>VimspectorToggleBreakpoint
+	nmap <silent> <S-F9> <Plug>VimspectorToggleConditionalBreakpoint
 
-	" Customise UI
 	augroup MyVimspector
 		au!
-		au User VimspectorUICreated call s:CustomiseUI()
+		au User VimspectorUICreated call s:CustomiseWinBar()
+		au User VimspectorJumpedToFrame call s:OnJumpToFrame()
+		au User VimspectorDebugEnded ++nested call s:OnDebugEnd()
 	augroup END
 
-	function! s:CustomiseUI()
+	" Customise UI {{{
+	function! s:CustomiseWinBar()
 		call win_gotoid(g:vimspector_session_windows.code)
 		" Clear the existing WinBar created by Vimspector.
 		nunmenu WinBar
 		" Create new WinBar.
-		nnoremenu WinBar.K :call vimspector#Stop()<CR>
-		nnoremenu WinBar.B :call vimspector#ToggleBreakpoint()<CR>
-		nnoremenu WinBar.C :call vimspector#Continue()<CR>
-		nnoremenu WinBar.P :call vimspector#Pause()<CR>
-		nnoremenu WinBar.N :call vimspector#StepOver()<CR>
-		nnoremenu WinBar.S :call vimspector#StepInto()<CR>
-		nnoremenu WinBar.F :call vimspector#StepOut()<CR>
-		nnoremenu WinBar.R :call vimspector#Restart()<CR>
-		nnoremenu WinBar.X :call vimspector#Reset()<CR>
+		nnoremenu WinBar.▷ :call vimspector#Continue()<CR>
+		nnoremenu WinBar.↷ :call vimspector#StepOver()<CR>
+		nnoremenu WinBar.↓ :call vimspector#StepInto()<CR>
+		nnoremenu WinBar.↑ :call vimspector#StepOut()<CR>
+		nnoremenu WinBar.❘❘ :call vimspector#Pause()<CR>
+		nnoremenu WinBar.□ :call vimspector#Stop()<CR>
+		nnoremenu WinBar.⟲ :call vimspector#Restart()<CR>
+		nnoremenu WinBar.✕ :call vimspector#Reset()<CR>
 	endfunction
+	" }}}
+
+	" Custom mappings while debuggins. {{{
+	let s:vimspector_mapped = {}
+
+	function! s:OnJumpToFrame() abort
+		if has_key(s:vimspector_mapped, string(bufnr()))
+			return
+		endif
+
+		nmap <silent><buffer> <S-F5> :VimspectorReset<CR>
+		nmap <silent><buffer> <F4> <Plug>VimspectorRestart
+		nmap <silent><buffer> <S-F4> <Plug>VimspectorStop
+		nmap <silent><buffer> <F6> <Plug>VimspectorPause
+		nmap <silent><buffer> <F8> <Plug>VimspectorRunToCursor
+		nmap <silent><buffer> <F10> <Plug>VimspectorStepOver
+		nmap <silent><buffer> <F11> <Plug>VimspectorStepInto
+		nmap <silent><buffer> <F12> <Plug>VimspectorStepOut
+
+		let s:vimspector_mapped[string(bufnr())] = { 'modifiable': &modifiable }
+
+		setlocal nomodifiable
+	endfunction
+
+	function! s:OnDebugEnd() abort
+		let original_buf = bufnr()
+		let hidden = &hidden
+		augroup MyVimspectorSwapExists
+			au!
+			au SwapExists * let v:swapchoice='o'
+		augroup END
+
+		try
+			set hidden
+			for bufnr in keys(s:vimspector_mapped)
+				try
+					execute 'buffer' bufnr
+					silent! nunmap <buffer> <S-F5>
+					silent! nunmap <buffer> <F4>
+					silent! nunmap <buffer> <S-F4>
+					silent! nunmap <buffer> <F6>
+					silent! nunmap <buffer> <F8>
+					silent! nunmap <buffer> <F10>
+					silent! nunmap <buffer> <F11>
+					silent! nunmap <buffer> <F12>
+
+					let &l:modifiable = s:vimspector_mapped[bufnr]['modifiable']
+				endtry
+			endfor
+		finally
+			execute 'noautocmd buffer' original_buf
+			let &hidden = hidden
+		endtry
+
+		au! MyVimspectorSwapExists
+
+		let s:vimspector_mapped = {}
+	endfunction
+	" }}}
 endif
 
 "-
