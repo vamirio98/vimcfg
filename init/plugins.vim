@@ -510,6 +510,7 @@ if index(g:plugin_group, 'debug') >= 0
 			for bufnr in keys(s:vimspector_mapped)
 				try
 					execute 'buffer' bufnr
+					silent! nunmap <buffer> <F5>
 					silent! nunmap <buffer> <S-F5>
 					silent! nunmap <buffer> <F4>
 					silent! nunmap <buffer> <S-F4>
