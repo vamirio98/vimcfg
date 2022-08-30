@@ -58,6 +58,10 @@ let g:space_map.a = {
 				\ 'name' : '+single-file',
 				\ 'd' : 'delete-program',
 				\ },
+			\ 'p' : {
+				\ 'name' : '+project',
+				\ 's' : 'set-code-style',
+				\ },
 			\ }
 
 let g:space_map.c = {
