@@ -12,6 +12,7 @@ AllowAllArgumentsOnNextLine: true
 AlwaysBreakTemplateDeclarations: Yes
 
 BreakStringLiterals: false
+BreakBeforeBraces: Linux
 
 ColumnLimit: 80
 
@@ -23,4 +24,5 @@ NamespaceIndentation: All
 
 PointerAlignment: Left
 
-UseTab: ForContinuationAndIndentation
+TabWidth: 4
+UseTab: ForIndentation
