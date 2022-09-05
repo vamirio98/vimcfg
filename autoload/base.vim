@@ -7,12 +7,13 @@
 "-
 " Add file header.
 "-
-function! g:base#AddFileHead(head, suffix, tail, line)
+function! g:base#add_file_head(head, suffix, tail, line)
 	call setline(a:line, a:head)
 	call cursor(a:line, 0)
 	call append(a:line, a:suffix . ' ' . expand("%:t"))
 	call append(a:line + 1, a:suffix)
-	call append(a:line + 2, a:suffix . ' Created by vamirio on ' . strftime("%Y %b %d"))
+	call append(a:line + 2, a:suffix .
+				\ ' Created by vamirio on ' . strftime("%Y %b %d"))
 	call append(a:line + 3, a:tail)
 	execute "normal! j"
 	execute "startinsert!"
@@ -21,61 +22,24 @@ endfunction
 "-
 " Jump to comment.
 "-
-function! g:base#JumpToComment(mode, dir, id)
-    let l:cur_pos = getcurpos()[1]
-    let l:next_pos = search(a:id, a:dir . 'cn')
-    if l:next_pos == 0
-        call s:RestoreMode(a:mode)
-        return
-    endif
+function! g:base#jump_out_comment(mode, dir, id)
+	let l:cur_pos = getcurpos()[1 : 2]
+	call cursor(l:cur_pos[0], a:dir ==# '' ? 1000 : 1)
+	let l:next_line = search(a:id, a:dir . 'cn')
+	if l:next_line == 0 ||
+			\ (a:dir ==# '' && l:cur_pos[0] > l:next_line) ||
+			\ (a:dir ==# 'b' && l:cur_pos[0] < l:next_line)
+		call cursor(l:cur_pos)
+		call s:RestoreMode(a:mode)
+		return
+	endif
 
-    if (a:dir ==# '' && l:cur_pos > l:next_pos) ||
-                \ (a:dir ==# 'b' && l:cur_pos < l:next_pos)
-        call s:RestoreMode(a:mode)
-        return
-    endif
-
-    call cursor(l:next_pos, 0)
-    if a:dir ==# 'b'
-        let l:op = 'k'
-    elseif a:dir ==# ''
-        let l:op = 'j'
-    endif
-    execute "normal! " . l:op
-    call s:RestoreMode(a:mode)
+	call cursor(l:next_line, 1000)
+	call s:RestoreMode(a:mode)
 endfunction
 
 function! s:RestoreMode(mode)
-    if a:mode ==? 'i'
-        startinsert!
-    endif
-endfunction
-
-function! base#AddComment(mode, comment_mark)
-	let l:cur_indent = indent('.')
-	let l:str = ''
-
-	let l:count = l:cur_indent / &tabstop
-	while l:count > 0
-		let l:str = l:str . "\t"
-		let l:count -= 1
-	endwhile
-	let l:count = l:cur_indent % &tabstop
-	while l:count > 0
-		let l:str = l:str . " "
-		let l:count -= 1
-	endwhile
-
-	let l:comment = [l:str . a:comment_mark[0],
-				\ l:str . a:comment_mark[1],
-				\ l:str . a:comment_mark[2]]
-	if a:mode == 'n'      " normal mode
-		call append(line('.'), l:comment)
-		execute "normal! 2j"
-	elseif a:mode == 'i'  " insert mode
-		call setline(line('.'), l:comment[0])
-		call append(line('.'), l:comment[1:-1])
-		execute "normal! j"
+	if a:mode ==? 'i'
+		startinsert!
 	endif
-	execute "startinsert!"
 endfunction
