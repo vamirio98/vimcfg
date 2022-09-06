@@ -75,9 +75,10 @@ nnoremap <silent> <M-x> :bdelete<CR>
 "-
 " Fast edit and reload vimrc.
 "-
+let s:cur_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 function EditProfile(filename)
 	" get the directory where this file is located
-	execute "e " . g:cfg_init_dir . a:filename
+	execute "e " . s:cur_dir . a:filename
 endfunction
 
 " Fast edit Vim profile.

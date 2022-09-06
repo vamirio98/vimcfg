@@ -1,5 +1,5 @@
 "-
-" init.vim - Initialize config
+" init.vim - Initialize config.
 "
 " Created by Vamirio on 2021 Nov 08
 "-
@@ -13,11 +13,9 @@ end
 
 " Get the directory where this file is located.
 let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-" Use in init/keymaps.vim.
-let g:cfg_init_dir = s:home . '/init/'
 
 " Define a command to load the file.
-command! -nargs=1 LoadScript exec 'source ' . s:home . '/' . '<args>'
+command! -nargs=1 LoadScript execute 'source ' . s:home . '/' . '<args>'
 
 " Add dir vimcfg to runtimepath.
 execute 'set runtimepath+=' . s:home
@@ -36,8 +34,8 @@ endif
 " Load basic config.
 LoadScript init/basic.vim
 
-" Load terminal key extention config.
-LoadScript init/terminal.vim
+" Load extended config.
+LoadScript init/extended.vim
 
 " Load plugins config.
 LoadScript init/plugins.vim
