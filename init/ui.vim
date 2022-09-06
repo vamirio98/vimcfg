@@ -1,12 +1,10 @@
 "-
-" ui.vim - UI config
+" ui.vim - UI config.
 "
 " Created by vamirio on 2021 Nov 08
 "-
 
-"-
 " Color scheme.
-"-
 let g:gruvbox_italic = 0
 set background=light
 augroup MyColorScheme
@@ -33,10 +31,6 @@ set number
 
 " Cursorline.
 set cursorline
-
-" Set folding mode.
-set foldmethod=indent
-set nofoldenable
 
 " Use plugin lightline to view status line.
 set noshowmode

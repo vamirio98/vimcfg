@@ -1,5 +1,5 @@
 "-
-" keymaps.vim - Keymaps
+" keymaps.vim - Keymaps.
 "
 " Created by vamirio on 2021 Nov 08
 "-
@@ -7,15 +7,19 @@
 " Set <M-q> as <ESC>.
 inoremap <M-q> <ESC>
 
-"-
+" Fast save.
+nnoremap <silent> <C-s> :update<CR>
+inoremap <silent> <C-s> <C-o>:update<CR>
+vnoremap <silent> <C-s> <C-c>:update<CR>
+
+" Easily deal with buffers.
+nnoremap <silent> <M-x> :bdelete<CR>
+
 " Fast move in insert mode.
-"-
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 
-"-
 " Fast move in command mode.
-"-
 cnoremap <C-h> <left>
 cnoremap <C-j> <down>
 cnoremap <C-k> <up>
@@ -23,10 +27,6 @@ cnoremap <C-l> <right>
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
 
-
-"-
-" Alt key movement enhancement.
-"-
 " Move between words.
 nnoremap <M-h> b
 nnoremap <M-l> w
@@ -41,11 +41,19 @@ nnoremap <M-k> gk
 inoremap <M-j> <C-\><C-o>gj
 inoremap <M-k> <C-\><C-o>gk
 
+" Move between buffers.
+nnoremap <silent> [b :bp<CR>
+nnoremap <silent> ]b :bn<CR>
+
 " Move between windows.
 nnoremap <M-H> <C-w>h
 nnoremap <M-J> <C-w>j
 nnoremap <M-K> <C-w>k
 nnoremap <M-L> <C-w>l
+inoremap <M-H> <ESC><C-w>h
+inoremap <M-J> <ESC><C-w>j
+inoremap <M-K> <ESC><C-w>k
+inoremap <M-L> <ESC><C-w>l
 
 if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	set termwinkey=<C-_>
@@ -57,39 +65,25 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 endif
 
 
-"-
-" Fast save.
-"-
-nnoremap <silent> <C-s> :update<CR>
-inoremap <silent> <C-s> <C-o>:update<CR>
-vnoremap <silent> <C-s> <C-c>:update<CR>
-
 " Switch all letters to uppercase.
 inoremap <C-u> <ESC>viwgUea
 
-"-
-" Easily deal with buffers.
-"-
-nnoremap <silent> <M-x> :bdelete<CR>
-
-"-
 " Fast edit and reload vimrc.
-"-
 let s:cur_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-function EditProfile(filename)
+function! s:EditProfile(filename)
 	" get the directory where this file is located
-	execute "e " . s:cur_dir . a:filename
+	execute "e " . s:cur_dir . "/" . a:filename
 endfunction
 
 " Fast edit Vim profile.
-nnoremap <silent> <space>evb :call EditProfile('basic.vim')<CR>
-nnoremap <silent> <space>evt :call EditProfile('terminal.vim')<CR>
-nnoremap <silent> <space>evu :call EditProfile('ui.vim')<CR>
-nnoremap <silent> <space>evp :call EditProfile('plugins.vim')<CR>
-nnoremap <silent> <space>evk :call EditProfile('keymaps.vim')<CR>
-nnoremap <silent> <space>evw :call EditProfile('which_key_map.vim')<CR>
+nnoremap <silent> <space>evb :call <SID>EditProfile('basic.vim')<CR>
+nnoremap <silent> <space>evt :call <SID>EditProfile('terminal.vim')<CR>
+nnoremap <silent> <space>evu :call <SID>EditProfile('ui.vim')<CR>
+nnoremap <silent> <space>evp :call <SID>EditProfile('plugins.vim')<CR>
+nnoremap <silent> <space>evk :call <SID>EditProfile('keymaps.vim')<CR>
+nnoremap <silent> <space>evw :call <SID>EditProfile('which_key_map.vim')<CR>
 
-function ReloadProfile()
+function! s:ReloadProfile()
 	let l:ft = fnamemodify(bufname("%"), ":e")
 		if l:ft == "vim"
 			execute "source %"
@@ -97,4 +91,4 @@ function ReloadProfile()
 endfunction
 
 " Reload Vim profile.
-nnoremap <silent> <space>sv :call ReloadProfile()<CR>
+nnoremap <silent> <space>sv :call <SID>ReloadProfile()<CR>

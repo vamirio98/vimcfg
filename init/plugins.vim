@@ -1,40 +1,30 @@
 "-
-" plugins.vim - plugins config
+" plugins.vim - Plugins config.
 "
 " Created by vamirio on 2021 Nov 08
 "-
 
-"-
 " Default groups.
-"-
 if !exists('g:plugin_group')
 	let g:plugin_group = ['basic', 'enhanced', 'tags']
 	let g:plugin_group += ['lightline', 'dirvish', 'coc', 'debug']
 	let g:plugin_group += ['asynctask', 'which_key']
 endif
 
-"-
 " Use vim-plug to manager all plunins.
 " Specify a directory for plugins.
-"-
 if has('unix')
 	call plug#begin('~/.vim/plugged')
 elseif has('win32')
 	call plug#begin('~/vimfiles/plugged')
 endif
 
-"-
 " Basic plugins.
-"-
 if index(g:plugin_group, 'basic') >= 0
-	"-
 	" Color scheme.
-	"-
 	Plug 'morhetz/gruvbox'
 
-	"-
 	" Show the start screen, display the recently edited files.
-	"-
 	Plug 'mhinz/vim-startify'
 
 	"-
@@ -44,43 +34,27 @@ if index(g:plugin_group, 'basic') >= 0
 	let g:startify_session_dir = '~/.vim/session'
 endif
 
-"-
-" Enhanced plugins
-"-
+" Enhanced plugins.
 if index(g:plugin_group, 'enhanced') >= 0
-	"-
 	" Insert or delete brackets, parens, quotes in pair.
-	"-
 	Plug 'jiangmiao/auto-pairs'
 
-	"-
 	" Better rainbow paretheses.
-	"-
 	Plug 'kien/rainbow_parentheses.vim'
 
-	"-
 	" Strip trailing whitespace.
-	"-
 	Plug 'axelf4/vim-strip-trailing-whitespace'
 
-	"-
 	" Float terminal.
-	"-
 	Plug 'voldikss/vim-floaterm'
 
-	"-
 	" Indent line.
-	"-
 	Plug 'Yggdroot/indentLine', { 'for': 'python' }
 
-	"-
 	" Additional Vim syntax highlight for C/C++.
-	"-
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 
-	"-
 	" Git.
-	"-
 	Plug 'tpope/vim-fugitive'
 
 	"-
@@ -156,13 +130,9 @@ if index(g:plugin_group, 'enhanced') >= 0
 	augroup END
 endif
 
-"-
 " Auto generate ctags/gtags and provide auto indexing function.
-"-
 if index(g:plugin_group, 'tags') >= 0
-	"-
 	" Asynchronous generate tag file.
-	"-
 	Plug 'ludovicchabant/vim-gutentags'
 	Plug 'skywind3000/gutentags_plus'
 
@@ -215,9 +185,7 @@ if index(g:plugin_group, 'tags') >= 0
 	let g:gutentags_plus_switch = 1
 endif
 
-"-
 " Lightline.
-"-
 if index(g:plugin_group, 'lightline') >= 0
 	Plug 'itchyny/lightline.vim'
 	Plug 'mengelbrecht/lightline-bufferline'
@@ -287,16 +255,39 @@ if index(g:plugin_group, 'lightline') >= 0
 	nmap <leader>c0 <Plug>lightline#bufferline#delete(10)
 endif
 
-"-
 " Dirvish.
-"-
 if index(g:plugin_group, 'dirvish') >= 0
 	Plug 'justinmk/vim-dirvish'
+
+	" Sort and hide files, then locate related file.
+	function! s:SetupDirvish()
+		if &buftype != 'nofile' && &filetype != 'dirvish'
+			return
+		endif
+		if has('nvim')
+			return
+		endif
+		" Get current filename.
+		let l:text = getline('.')
+		if !get(g:, 'dirvish_hide_visible', 0)
+			execute 'silent keeppatterns g@\v[\/]\.[^\/]+[\/]?$@d _'
+		endif
+		" Sort filename.
+		execute 'sort ,^.*[\/],'
+		let l:name = '^' . escape(l:text, '.*[]~\')
+				\ . '[/*|@=|\\*]\=\%($\|\s\+\)'
+		" Locate to current file.
+		call search(l:name, 'wc')
+		nnoremap <silent><buffer> ~ :Dirvish ~<CR>
+	endfunction
+
+	augroup MyDirvish
+		au!
+		au FileType dirvish call s:SetupDirvish()
+	augroup END
 endif
 
-"-
 " Coc-nvim.
-"-
 if index(g:plugin_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -436,9 +427,7 @@ if index(g:plugin_group, 'coc') >= 0
 	let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 endif
 
-"-
 " Debug.
-"-
 if index(g:plugin_group, 'debug') >= 0
 	Plug 'puremourning/vimspector'
 
@@ -534,13 +523,9 @@ if index(g:plugin_group, 'debug') >= 0
 	" }}}
 endif
 
-"-
 " Execute tasks asynchronously.
-"-
 if index(g:plugin_group, 'asynctask') >= 0
-	"-
 	" Run asynchronous tasks.
-	"-
 	Plug 'skywind3000/asyncrun.vim', { 'on': ['AsyncRun', 'AsyncStop'] }
 	Plug 'skywind3000/asynctasks.vim', { 'on': ['AsyncTask', 'AsyncTaskMacro', 'AsyncTaskList', 'AsyncTaskEdit'] }
 
@@ -600,9 +585,7 @@ if index(g:plugin_group, 'asynctask') >= 0
 	nnoremap <silent> <space>aa :AsyncTaskList<CR>
 endif
 
-"-
 " Vim key mapping hint.
-"-
 if index(g:plugin_group, 'which_key') >= 0
 	Plug 'liuchengxu/vim-which-key'
 
@@ -611,9 +594,7 @@ if index(g:plugin_group, 'which_key') >= 0
 	let g:which_key_use_floating_win = 1
 endif
 
-"-
 " Initialize plugin system.
-"-
 call plug#end()
 
 "Plug 'Yggdroot/LeaderF'
