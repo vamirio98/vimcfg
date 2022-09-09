@@ -268,16 +268,15 @@ if index(g:plugin_group, 'dirvish') >= 0
 			return
 		endif
 		" Get current filename.
-		let l:text = getline('.')
+		let text = getline('.')
 		if !get(g:, 'dirvish_hide_visible', 0)
 			execute 'silent keeppatterns g@\v[\/]\.[^\/]+[\/]?$@d _'
 		endif
 		" Sort filename.
 		execute 'sort ,^.*[\/],'
-		let l:name = '^' . escape(l:text, '.*[]~\')
-				\ . '[/*|@=|\\*]\=\%($\|\s\+\)'
+		let name = '^' . escape(text, '.*[]~\') . '[/*|@=|\\*]\=\%($\|\s\+\)'
 		" Locate to current file.
-		call search(l:name, 'wc')
+		call search(name, 'wc')
 		nnoremap <silent><buffer> ~ :Dirvish ~<CR>
 	endfunction
 
@@ -346,18 +345,6 @@ if index(g:plugin_group, 'coc') >= 0
 		endif
 	endfunction
 
-	augroup MyCocNvim
-		au!
-		" Highlight symbol and its references when holding the cursor.
-		au CursorHold * silent call CocActionAsync('highlight')
-		" Set highlight color for completion menu.
-		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=15 guibg=#FFFFFF
-		" Setup formatexpr specified filetype(s).
-		au FileType json setl formatexpr=CocAction('formatSelected')
-		" Update signature help on jump placeholder.
-		au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-	augroup END
-
 	" Symbol renaming.
 	nmap <leader>rn <Plug>(coc-rename)
 
@@ -400,6 +387,16 @@ if index(g:plugin_group, 'coc') >= 0
 					\ coc#float#scroll(0) : "\<C-b>"
 	endif
 
+	nnoremap <silent><nowait> <space>co  :call <SID>ToggleCocOutline()<CR>
+	function! s:ToggleCocOutline() abort
+		let winid = coc#window#find('cocViewId', 'OUTLINE')
+		if winid == -1
+			call CocActionAsync('showOutline', 1)
+		else
+			call coc#window#close(winid)
+		endif
+	endfunction
+
 	" Mapping for CocList.
 	" Show all diagnostics.
 	nnoremap <silent><nowait> <space>cld :<C-u>CocList diagnostics<CR>
@@ -417,6 +414,18 @@ if index(g:plugin_group, 'coc') >= 0
 	nnoremap <silent><nowait> <space>clk :<C-u>CocPrev<CR>
 	" Resume latest coc list.
 	nnoremap <silent><nowait> <space>clp :<C-u>CocListResume<CR>
+
+	augroup MyCocNvim
+		au!
+		" Highlight symbol and its references when holding the cursor.
+		au CursorHold * silent call CocActionAsync('highlight')
+		" Set highlight color for completion menu.
+		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=15 guibg=#FFFFFF
+		" Setup formatexpr specified filetype(s).
+		au FileType json setl formatexpr=CocAction('formatSelected')
+		" Update signature help on jump placeholder.
+		au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+	augroup END
 
     "-
     " Snippets.
@@ -508,7 +517,7 @@ if index(g:plugin_group, 'debug') >= 0
 					silent! nunmap <buffer> <F11>
 					silent! nunmap <buffer> <F12>
 
-					let &l:modifiable = s:vimspector_mapped[bufnr]['modifiable']
+					let &modifiable = s:vimspector_mapped[bufnr]['modifiable']
 				endtry
 			endfor
 		finally

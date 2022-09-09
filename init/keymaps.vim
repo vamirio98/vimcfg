@@ -84,8 +84,8 @@ nnoremap <silent> <space>evk :call <SID>EditProfile('keymaps.vim')<CR>
 nnoremap <silent> <space>evw :call <SID>EditProfile('which_key_map.vim')<CR>
 
 function! s:ReloadProfile()
-	let l:ft = fnamemodify(bufname("%"), ":e")
-		if l:ft == "vim"
+	let ft = fnamemodify(bufname("%"), ":e")
+		if ft == "vim"
 			execute "source %"
 		endif
 endfunction

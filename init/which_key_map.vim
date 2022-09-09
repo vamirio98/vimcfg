@@ -65,7 +65,7 @@ let g:space_map.a = {
 			\ }
 
 let g:space_map.c = {
-			\ 'name': '+coc',
+			\ 'name' : '+coc',
 			\ 'l' : {
 				\ 'name' : '+coc-list',
 				\ 'c' : 'show-commands',
@@ -77,6 +77,7 @@ let g:space_map.c = {
 				\ 'p' : 'resum-latest-coc-list',
 				\ 's' : 'search-workspace-symbol',
 				\ },
+			\ 'o' : 'outline',
 			\ }
 
 let g:space_map.e = {

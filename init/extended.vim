@@ -86,9 +86,9 @@ set noswapfile
 set noundofile
 
 function s:ReturnLastPos()
-	let l:last_pos = [line("'\""), col("'\"")]
-	if l:last_pos[0] > 1 && last_pos[1] <= line("$") && &ft !~# 'commit'
-		call cursor(l:last_pos)
+	let last_pos = [line("'\""), col("'\"")]
+	if last_pos[0] > 1 && last_pos[1] <= line("$") && &ft !~# 'commit'
+		call cursor(last_pos)
 	endif
 endfunction
 

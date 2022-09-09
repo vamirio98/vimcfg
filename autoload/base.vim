@@ -23,18 +23,18 @@ endfunction
 " Jump to comment.
 "-
 function! g:base#jump_out_comment(mode, dir, id)
-	let l:cur_pos = getcurpos()[1 : 2]
-	call cursor(l:cur_pos[0], a:dir ==# '' ? 1000 : 1)
-	let l:next_line = search(a:id, a:dir . 'cn')
-	if l:next_line == 0 ||
-			\ (a:dir ==# '' && l:cur_pos[0] > l:next_line) ||
-			\ (a:dir ==# 'b' && l:cur_pos[0] < l:next_line)
-		call cursor(l:cur_pos)
+	let cur_pos = getcurpos()[1 : 2]
+	call cursor(cur_pos[0], a:dir ==# '' ? 1000 : 1)
+	let next_line = search(a:id, a:dir . 'cn')
+	if next_line == 0 ||
+			\ (a:dir ==# '' && cur_pos[0] > next_line) ||
+			\ (a:dir ==# 'b' && cur_pos[0] < next_line)
+		call cursor(cur_pos)
 		call s:RestoreMode(a:mode)
 		return
 	endif
 
-	call cursor(l:next_line, 1000)
+	call cursor(next_line, 1000)
 	call s:RestoreMode(a:mode)
 endfunction
 
