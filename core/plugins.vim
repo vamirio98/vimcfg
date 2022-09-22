@@ -303,6 +303,8 @@ if index(g:plugin_group, 'coc') >= 0
 	" time diagnostics appear/become resolved.
 	set signcolumn=yes
 
+	" Limit completion menu height.
+	set pumheight=10
 	" Use tab for trigger completion with characters ahead and navigate.
 	inoremap <silent><expr> <tab>
 				\ coc#pum#visible() ? coc#pum#next(1) :
@@ -312,8 +314,9 @@ if index(g:plugin_group, 'coc') >= 0
 
 	" Confirm the completion when popupmenu is visible, insert <CR> and
 	" notify coc.nvim otherwise.
-	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-				\ : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+	inoremap <silent><expr> <CR> (coc#pum#visible() &&
+				\ coc#pum#info()["inserted"]) ? coc#pum#confirm() :
+				\ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 	function! s:CheckBackspace() abort
 		let col = col('.') - 1
@@ -419,8 +422,6 @@ if index(g:plugin_group, 'coc') >= 0
 		au!
 		" Highlight symbol and its references when holding the cursor.
 		au CursorHold * silent call CocActionAsync('highlight')
-		" Set highlight color for completion menu.
-		au VimEnter,ColorScheme * hi! CocMenuSel ctermbg=15 guibg=#FFFFFF
 		" Setup formatexpr specified filetype(s).
 		au FileType json setl formatexpr=CocAction('formatSelected')
 		" Update signature help on jump placeholder.

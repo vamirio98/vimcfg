@@ -10,7 +10,6 @@ Module which deal with CMake project.
 
 import os
 
-
 def is_cmake_project(project_root: str) -> bool:
     """Check if the project is a CMake project which contain a CMakeLists.txt
     in the project root directory."""

@@ -9,23 +9,27 @@ Some basic methods.
 #-
 
 import os
+import sys
+
+
+def eprint(*args, **kwargs):
+    """Print messages to stderr."""
+    print(*args, file=sys.stderr, **kwargs)
 
 
 def check_args_num(args, num: int) -> bool:
     """Check the number of function arguments."""
     if len(args) != num + 1:
-        print("Error: wrong number of arguments,", len(args) - 1,
+        eprint("Error: wrong number of arguments,", len(args) - 1,
                 "passed and exactly", num, "expected.")
         return False
     return True
 
 
 project_root_flag = (".git", ".root", ".project", ".svn")
-
-
 def find_project_root(curr_dir: str) -> str:
     """Return the absolute path of the project root directory, or "" if not
-    found. """
+    found."""
     found_project_root = False
 
     curr_dir = os.path.abspath(curr_dir)
@@ -43,5 +47,3 @@ def find_project_root(curr_dir: str) -> str:
         return ""
 
     return curr_dir
-
-

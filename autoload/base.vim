@@ -1,5 +1,5 @@
 "-
-" base.vim - some base function
+" base.vim - Some base function.
 " 
 " Created by vamirio on 2021 Oct 14
 "-

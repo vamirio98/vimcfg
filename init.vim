@@ -32,19 +32,19 @@ endif
 " Load modules.
 "-
 " Load basic config.
-LoadScript init/basic.vim
+LoadScript core/basic.vim
 
 " Load extended config.
-LoadScript init/extended.vim
+LoadScript core/extended.vim
 
 " Load plugins config.
-LoadScript init/plugins.vim
+LoadScript core/plugins.vim
 
 " Load UI style.
-LoadScript init/ui.vim
+LoadScript core/ui.vim
 
 " Load keymaps.
-LoadScript init/keymaps.vim
+LoadScript core/keymaps.vim
 
 " Load vim-which-key map.
-LoadScript init/which_key_map.vim
+LoadScript core/which_key_map.vim
