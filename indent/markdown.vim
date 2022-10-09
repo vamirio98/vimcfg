@@ -1,8 +1,10 @@
-"-
-" markdown.vim
-"
-" Created by vamirio on 2022 Jan 04
-"-
+vim9script
+#-
+# markdown.vim
+#
+# Created by vamirio on 2022 Jan 04
+#-
+
 setlocal shiftwidth=2
 setlocal tabstop=2
 setlocal softtabstop=2

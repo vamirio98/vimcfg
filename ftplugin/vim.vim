@@ -1,24 +1,25 @@
-"-
-" vim.vim
-" 
-" Created by vamirio on 2021 Oct 14
-"-
+vim9script
+#-
+# vim.vim
+#
+# Created by vamirio on 2021 Oct 14
+#-
 
-let b:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", "`":"`", '```':'```',
-			\ '"""':'"""', "'''":"'''"}
+import autoload 'base.vim' as base
 
 if line('$') == 1 && getline(1) == ''
-	call base#add_file_head('"-', '"', '"-', 1)
+	setline(1, 'vim9script')
+	base.AddFileHead('#-', '#', '#-', 2)
 endif
 
-"-
-" Jump out comments.
-"-
+#-
+# Jump out comments.
+#-
 nnoremap <silent><buffer> <M-g>
-			\ :call base#jump_out_comment('n', '', '"-')<CR>
+		\ <ScriptCmd>base.JumpOutComment('n', '', '#-')<CR>
 nnoremap <silent><buffer> <M-G>
-			\ :call base#jump_out_comment('n', 'b', '"-')<CR>
+		\ <ScriptCmd>base.JumpOutComment('n', 'b', '#-')<CR>
 inoremap <silent><buffer> <M-g>
-			\ <ESC>:call base#jump_out_comment('i', '', '"-')<CR>
+		\ <ScriptCmd>base.JumpOutComment('i', '', '#-')<CR>
 inoremap <silent><buffer> <M-G>
-			\ <ESC>:call base#jump_out_comment('i', 'b',-'"-')<CR>
+		\ <ScriptCmd>base.JumpOutComment('i', 'b', '#-')<CR>

@@ -1,66 +1,67 @@
-"-
-" basic.vim - Basic config for Vim, should be compatible with vim-tiny.
-"
-" Created by vamirio on 2021 Nov 08
-"-
+vim9script
+#-
+# basic.vim - Basic config for Vim, should be compatible with vim-tiny.
+#
+# Created by vamirio on 2021 Nov 08
+#-
 
-"-
-" Set <leader> key.
-"-
-let mapleader = "\\"
-let maplocalleader = "\<tab>"
+#-
+# Set <leader> key.
+#-
+g:mapleader = "\\"
+g:maplocalleader = "\<tab>"
 
-" Incompatible with Vi.
+# Incompatible with Vi.
 set nocompatible
 
-" Make backspace work like most other programs.
+# Make backspace work like most other programs.
 set backspace=2
 
-" Indent.
+# Indent.
 set autoindent
 set cindent
 
-" Disable ALT on GUI, make it can be used for mapping.
+# Disable ALT on GUI, make it can be used for mapping.
 set winaltkeys=no
 
-" Turn on word wrap.
+# Turn on word wrap.
 set wrap
 
-" Turn on function key timeout detection (the function key in the
-" terminal is a charset starts with ESC).
+# Turn on function key timeout detection (the function key in the
+# terminal is a charset starts with ESC).
 set ttimeout
 
-" Function key timeout detection: 50ms.
+# Function key timeout detection: 50ms.
 set ttimeoutlen=50
 
-" Show cursor position.
+# Show cursor position.
 set ruler
 
-" When search, case is ignored by default, unless the search content contains
-" uppercase letters.
+# When search, case is ignored by default, unless the search content contains
+# uppercase letters.
 set ignorecase
 set smartcase
-" Highlight the search result.
+# Highlight the search result.
 set hlsearch
-" Dynamically and incrementally display the search results during input.
+# Dynamically and incrementally display the search results during input.
 set incsearch
 
-" Encoding setting.
+# Encoding setting.
 if has('multi_byte')
-	" Termenal encoding.
+	# Termenal encoding.
 	set termencoding=utf-8
 
-	" Internal working encoding.
+	# Internal working encoding.
 	set encoding=utf-8
 
-	" Default file encoding.
+	# Default file encoding.
 	set fileencoding=utf-8
 
-	" Auto try the following encoding when opening a file.
+	# Auto try the following encoding when opening a file.
 	set fileencodings=utf-8,gbk,gb18030,big5,euc-jp
 endif
 
-" Syntax highlighting, filetype, filetype-plugin and filetype-indent setting.
+# Syntax highlighting, filetype, filetype-plugin and filetype-indent setting.
 if has('autocmd')
 	filetype plugin indent on
 endif
@@ -69,52 +70,52 @@ if has('syntax')
 	syntax on
 endif
 
-"-
-" Other config.
-"-
-" Show the matching brackets.
+#-
+# Other config.
+#-
+# Show the matching brackets.
 set showmatch
 
-" How long will the matching brackets shows, unit: s.
+# How long will the matching brackets shows, unit: s.
 set matchtime=2
 
-" Show @@@ in the last column of the last line in the screen if it is too long.
+# Show @@@ in the last column of the last line in the screen if it is too long.
 set display=lastline
 
-" Delay drawing (improve performance).
+# Delay drawing (improve performance).
 set lazyredraw
 
-" Error format.
+# Error format.
 set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
 
-" Make the delimiter visible.
+# Make the delimiter visible.
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 
 
-" Break at a multibyte character above 255, used for Asian text where every
-" character is a word on its own.
+# Break at a multibyte character above 255, used for Asian text where every
+# character is a word on its own.
 set formatoptions+=m
 
-" Don't insert a space between two multibyte characters (like Chinese) when
-" join lines.
+# Don't insert a space between two multibyte characters (like Chinese) when
+# join lines.
 set formatoptions+=B
 
-" Newline.
+# Newline.
 set fileformats=unix,dos,mac
 
-" Round indent to multiple of 'shiftwidth'. (default 8, length of a tab)
+# Round indent to multiple of 'shiftwidth'. (default 8, length of a tab)
 set shiftround
 
-" Keep column when switching between buffers.
+# Keep column when switching between buffers.
 set nostartofline
 
-" Enable mouse.
+# Enable mouse.
 set mouse=a
 
-" Fold.
+# Fold.
 if has('folding')
 	set foldenable
 	set foldmethod=marker
-	" Expand all fold by default.
+	# Expand all fold by default.
 	set foldlevel=99
 endif
