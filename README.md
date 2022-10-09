@@ -5,9 +5,8 @@ Personal **Vim** Profile.
 ## Requirements
 
 ```english
-Vim >= 8.0
-nodejs >= 12.12
-npm
+Vim >= 9.0
+nodejs >= 14.14
 ```
 
 ## Install
