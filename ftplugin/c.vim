@@ -17,15 +17,5 @@ iabbrev <buffer> inculde include
 
 # Add file head.
 if line('$') == 1 && getline(1) == ''
-	base.AddFileHead('/**', ' *', ' */', 1)
+	base.AddFileHead('//', 1)
 endif
-
-# Jump to comments.
-nnoremap <buffer> <M-g>
-		\ <ScriptCmd>base.JumpOutComment('n', '', '/*\|*/')<CR>
-nnoremap <buffer> <M-G>
-		\ <ScriptCmd>base.JumpOutComment('n', 'b', '/*\|*/')<CR>
-inoremap <buffer> <M-g>
-		\ <ScriptCmd>base.JumpOutComment('i', '', '/*\|*/')<CR>
-inoremap <buffer> <M-G>
-		\ <ScriptCmd>base.JumpOutComment('i', 'b', '/*\|*/')<CR>
