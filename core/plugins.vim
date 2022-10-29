@@ -78,8 +78,8 @@ if index(g:plugin_group, 'enhanced') >= 0
 
 	# Terminal style.
 	g:floaterm_wintype = 'vsplit'
-	g:floaterm_width = 0.4
-	g:floaterm_height = 0.5
+	g:floaterm_width = 56
+	g:floaterm_height = 30
 	g:floaterm_position = 'botright'
 	g:floaterm_opener = 'vsplit'
 
@@ -532,7 +532,8 @@ if index(g:plugin_group, 'asynctask') >= 0
 	nnoremap  <F10> <Cmd>call asyncrun#quickfix_toggle(6)<CR>
 
 	# Specify what terminal to use.
-	g:asynctasks_term_pos = 'tab'
+	g:asynctasks_term_pos = 'right'
+	g:asynctasks_term_cols = 56
 
 	# Reuse a terminal.
 	g:asynctasks_term_reuse = 1

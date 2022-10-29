@@ -12,38 +12,37 @@ import os
 import sys
 
 
-def eprint(*args, **kwargs):
+def printError(*args, **kwargs):
     """Print messages to stderr."""
     print(*args, file=sys.stderr, **kwargs)
 
 
-def check_args_num(args, num: int) -> bool:
+def checkArgsNum(args, num: int, hints: str="") -> bool:
     """Check the number of function arguments."""
     if len(args) != num + 1:
-        eprint("Error: wrong number of arguments,", len(args) - 1,
+        printError("Error: wrong number of arguments,", len(args) - 1,
                 "passed and exactly", num, "expected.")
+        if hints != "":
+            printError("Hints:", hints)
         return False
     return True
 
 
-project_root_flag = (".git", ".root", ".project", ".svn")
-def find_project_root(curr_dir: str) -> str:
+projectRootFlag = (".git", ".root", ".project", ".svn")
+def getProjectRoot(curDir: str) -> str:
     """Return the absolute path of the project root directory, or "" if not
     found."""
-    found_project_root = False
+    foundProjectRoot = False
 
-    curr_dir = os.path.abspath(curr_dir)
-    while curr_dir != os.path.abspath(os.path.join(curr_dir, "..")):
-        files = os.listdir(curr_dir)
+    curDir = os.path.abspath(curDir)
+    while curDir != os.path.abspath(os.path.join(curDir, "..")):
+        files = os.listdir(curDir)
         for file in files:
-            if file in project_root_flag:
-                found_project_root = True
+            if file in projectRootFlag:
+                foundProjectRoot = True
                 break
-        if found_project_root:
+        if foundProjectRoot:
             break
-        curr_dir = os.path.abspath(os.path.join(curr_dir, ".."))
+        curDir = os.path.abspath(os.path.join(curDir, ".."))
 
-    if not found_project_root:
-        return ""
-
-    return curr_dir
+    return curDir if foundProjectRoot else ""

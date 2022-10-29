@@ -15,21 +15,25 @@ import pylib.base as base
 import pylib.cmake as cmake
 
 
-if not base.check_args_num(sys.argv, 1):
+if not base.checkArgsNum(sys.argv, 2, "Args: curDir args"):
     exit(1)
 
-project_root = base.find_project_root(sys.argv[1])
-if project_root == "":
-    base.eprint("Error: can't find the root directory of project, check if a",
-            base.project_root_flag, "file/directory in it.")
-    exit(1)
-if not cmake.is_cmake_project(project_root):
-    base.eprint("Error:", project_root, "is not a CMake project.")
+curDir, args = sys.argv[1:]
+
+projectRoot = base.getProjectRoot(curDir)
+if projectRoot == "":
+    base.printError("Error: can't find the root directory of project, check if a",
+            base.projectRootFlag, "file/directory in it.")
     exit(1)
 
-exec_name = cmake.get_project_name(os.path.join(project_root,
-                                                "CMakeLists.txt"))
-exec_name = os.path.join(project_root, "build",
-                exec_name + (".exe" if platform.system() == "Windows" else ""))
+cmakelist = cmake.getTopCmakelist(projectRoot)
+if cmakelist == "":
+    base.printError("Error:", projectRoot, "is not a CMake project.")
+    exit(1)
 
-subprocess.run([exec_name])
+buildDir = os.path.join(os.path.dirname(cmakelist), "build")
+execName = cmake.getProjectName(cmakelist)
+execPath = os.path.join(buildDir, execName
+                        + (".exe" if platform.system() == "Windows" else ""))
+
+subprocess.run([execPath, args])
