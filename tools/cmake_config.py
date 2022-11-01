@@ -14,7 +14,7 @@ import pylib.base as base
 import pylib.cmake as cmake
 
 
-if not base.checkArgsNum(sys.argv, 3, "Args: curDir projectType['all', 'sub'] buildType"):
+if not base.checkArgsNum(sys.argv, 3, "Args: curDir projectType['top', 'sub'] buildType"):
     exit(1)
 
 curDir, projectType, buildType = sys.argv[1:]
@@ -25,10 +25,10 @@ if projectRoot == "":
                     base.projectRootFlag, "file/directory in it.")
     exit(1)
 
-if projectType not in ("all", "sub"):
-    base.printError("Error: unknown project type:", projectType, ". ['all', 'sub']")
+if projectType not in ("top", "sub"):
+    base.printError("Error: unknown project type:", projectType, ". ['top', 'sub']")
     exit(1)
-cmakelist = (cmake.getTopCmakelist(projectRoot) if projectType == "all"
+cmakelist = (cmake.getTopCmakelist(projectRoot) if projectType == "top"
                     else cmake.getSubCmakelist(curDir, projectRoot))
 if cmakelist == "":
     base.printError("Error:", projectRoot, "is not a CMake project.")

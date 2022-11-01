@@ -25,10 +25,10 @@ if projectRoot == "":
                     base.projectRootFlag, "file/directory in it.")
     exit(1)
 
-if projectType not in ("all", "sub"):
-    base.printError("Error: unknown project type:", projectType, ". ['all', 'sub']")
+if projectType not in ("top", "sub"):
+    base.printError("Error: unknown project type:", projectType, ". ['top', 'sub']")
     exit(1)
-cmakelist = (cmake.getTopCmakelist(projectRoot) if projectType == "all"
+cmakelist = (cmake.getTopCmakelist(projectRoot) if projectType == "top"
                     else cmake.getSubCmakelist(curDir, projectRoot))
 if cmakelist == "":
     base.printError("Error:", projectRoot, "is not a CMake project.")
