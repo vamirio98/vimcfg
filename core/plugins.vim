@@ -332,6 +332,10 @@ if index(g:plugin_group, 'coc') >= 0
 	# Formating code.
 	nnoremap <space>fc <Cmd>call CocActionAsync('format')<CR>
 
+	# Applying codeAction to the selected region.
+	xmap <leader>a <Plug>(coc-codeaction-selected)
+	nmap <leader>a <Plug>(coc-codeaction-selected)
+
 	# Apply AutoFix to problem on the current line.
 	nmap <space>qf <Plug>(coc-fix-current)
 

@@ -48,7 +48,7 @@ set incsearch
 
 # Encoding setting.
 if has('multi_byte')
-	# Termenal encoding.
+	# Terminal encoding.
 	set termencoding=utf-8
 
 	# Internal working encoding.
