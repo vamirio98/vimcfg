@@ -41,3 +41,29 @@ endsnippet
 post_jump "genFuncCommet(snip, match.group(1), 0)"
 snippet "vfund(\d+)" "function declaration with documentation, no return value" br
 endsnippet
+
+snippet #ifndef "#ifndef ... #define ... #endif"
+#ifndef ${1/([A-Za-z0-9_]+).*/$1/}
+#define ${1:SYMBOL} ${2:value}
+#endif // ifndef $1
+endsnippet
+
+snippet #ifu "#if unix #endif" b
+#if defined(unix) || defined(__unix__) || defined(__unix)
+${VISUAL}$0
+#endif
+endsnippet
+
+snippet #ifw "#if unix #endif" b
+#if defined(_WIN32)
+${VISUAL}$0
+#endif
+endsnippet
+
+snippet #ifuw "#if unix #else windows #endif" b
+#if defined(unix) || defined(__unix__) || defined(__unix)
+$1
+#elif defined(_WIN32)
+$2
+#endif
+endsnippet
