@@ -40,4 +40,4 @@ print(buildDir)
 if not os.path.isdir(buildDir):
     os.mkdir(buildDir, 0o755)
 
-subprocess.run(["cmake", "--build", buildDir])
+subprocess.run(["cmake", "--build", buildDir, "-j8"])
