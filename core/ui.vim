@@ -7,7 +7,7 @@ vim9script
 
 # Color scheme.
 g:gruvbox_italic = 1
-set background=dark
+set background=light
 augroup MyColorScheme
 	au!
 	au vimenter * ++nested colorscheme gruvbox
