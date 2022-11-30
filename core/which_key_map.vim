@@ -50,6 +50,7 @@ g:leader_map.c = {
 
 g:leader_map.r = {
 	'name': '+rename-symbol',
+	'f': 'refactor',
 	'n': 'rename-symbol',
 }
 

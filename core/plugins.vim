@@ -329,6 +329,9 @@ if index(g:plugin_group, 'coc') >= 0
 	# Symbol renaming.
 	nmap <leader>rn <Plug>(coc-rename)
 
+	# Refactor.
+	nmap <leader>rf <Plug>(coc-refactor)
+
 	# Formating code.
 	nnoremap <space>fc <Cmd>call CocActionAsync('format')<CR>
 
