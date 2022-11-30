@@ -65,21 +65,16 @@ if &term =~ '256color' && $TMUX != ''
 endif
 
 # Backup.
-var tmpDir = ''
-if has('unix')
-	tmpDir = expand('~/.vim/tmp')
-elseif has('win32')
-	tmpDir = expand('~/vimfiles/tmp')
-endif
-if isdirectory(tmpDir) == 0
-	call mkdir(tmpDir, 'p', 0755)
+var backupDir = expand('~/.cache/vim/backup')
+if isdirectory(backupDir) == 0
+	call mkdir(backupDir, 'p', 0755)
 endif
 
 # Allow backup.
 set backup
 # Backup when saving.
 set writebackup
-execute 'set backupdir=' .. tmpDir
+execute 'set backupdir=' .. backupDir
 # Backup file extension.
 set backupext=.bak
 # Disable swap file.
