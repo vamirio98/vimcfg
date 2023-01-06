@@ -430,13 +430,13 @@ if index(g:plugin_group, 'debug') >= 0
 
 	augroup MyVimspector
 		au!
-		au User VimspectorUICreated CustomiseWinBar()
+		au User VimspectorUICreated CustomizeWinBar()
 		au User VimspectorJumpedToFrame OnJumpToFrame()
 		au User VimspectorDebugEnded ++nested OnDebugEnd()
 	augroup END
 
-	# Customise UI {{{
-	def CustomiseWinBar(): void
+	# Customize UI {{{
+	def CustomizeWinBar(): void
 		win_gotoid(g:vimspector_session_windows.code)
 		# Clear the existing WinBar created by Vimspector.
 		aunmenu WinBar
