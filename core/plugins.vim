@@ -369,7 +369,6 @@ if index(g:plugin_group, 'coc') >= 0
 	endif
 
 	# List outline.
-	nnoremap <nowait> <space>co  <ScriptCmd>ToggleCocOutline()<CR>
 	def ToggleCocOutline(): void
 		var winid = coc#window#find('cocViewId', 'OUTLINE')
 		if winid == -1
@@ -378,6 +377,7 @@ if index(g:plugin_group, 'coc') >= 0
 			coc#window#close(winid)
 		endif
 	enddef
+	nnoremap <nowait> <space>co  <ScriptCmd>ToggleCocOutline()<CR>
 
 	# Mapping for CocList.
 	# Show all diagnostics.
