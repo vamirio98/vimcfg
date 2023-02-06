@@ -1,10 +1,8 @@
 vim9script
-#-
-# json.vim
-#
-# Created by vamirio on 2021 Nov 08
-#-
 
-setlocal shiftwidth=4
-setlocal tabstop=4
-setlocal softtabstop=4
+# json.vim
+# Author: vamirio
+
+setlocal shiftwidth=2
+setlocal tabstop=2
+setlocal softtabstop=2
