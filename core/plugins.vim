@@ -104,9 +104,11 @@ if index(g:plugin_group, 'enhanced') >= 0
 
 
 	# Indent line.
-	Plug 'Yggdroot/indentLine', {'for': 'python'}
+	Plug 'Yggdroot/indentLine', {'for': ['python', 'json']}
 
 	g:indentLine_setColors = 0
+	# Make quotation marks visible in JSON.
+	g:vim_json_conceal = 0
 
 
 	# Additional Vim syntax highlight for C/C++.
