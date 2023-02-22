@@ -292,10 +292,8 @@ if index(g:plugin_group, 'coc') >= 0
 				\ coc#refresh()
 	inoremap <expr><S-tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-	# Confirm the completion when popupmenu is visible, insert <CR> and
-	# notify coc.nvim otherwise.
-	inoremap <silent><expr> <CR> (coc#pum#visible() &&
-				\ coc#pum#info()["inserted"]) ? coc#pum#confirm() :
+	# Make <CR> to accept selected completion item.
+	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() :
 				\ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 	def CheckBackspace(): bool
@@ -337,7 +335,7 @@ if index(g:plugin_group, 'coc') >= 0
 	# Formating code.
 	nnoremap <space>fc <Cmd>call CocActionAsync('format')<CR>
 
-	# Applying codeAction to the selected region.
+	# Applying codeAction to the selected code block.
 	xmap <leader>a <Plug>(coc-codeaction-selected)
 	nmap <leader>a <Plug>(coc-codeaction-selected)
 
