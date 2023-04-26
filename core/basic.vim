@@ -82,9 +82,6 @@ set matchtime=2
 # Show @@@ in the last column of the last line in the screen if it is too long.
 set display=lastline
 
-# Delay drawing (improve performance).
-set lazyredraw
-
 # Error format.
 set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
 
@@ -108,9 +105,6 @@ set shiftround
 
 # Keep column when switching between buffers.
 set nostartofline
-
-# Enable mouse.
-set mouse=a
 
 # Fold.
 if has('folding')

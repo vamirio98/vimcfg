@@ -65,10 +65,6 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	tnoremap <M-q> <C-\><C-n>
 endif
 
-
-# Switch all letters to uppercase.
-inoremap <C-u> <ESC>viwgUea
-
 # Fast edit and reload vimrc.
 # get the directory where this file is located
 var cfgDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')

@@ -13,7 +13,7 @@ augroup MyColorScheme
 	au vimenter * ++nested colorscheme gruvbox
 augroup END
 # Use 24-bit (true-color) mode in Vim.
-if (has('termguicolors'))
+if has('termguicolors')
 	set termguicolors
 endif
 
@@ -25,7 +25,7 @@ if has('gui_running')
 	set guioptions-=L  # Remove left-hand scrollbar.
 	set guioptions-=e  # Use a non-GUI tab pages line.
 	set guifont=JetBrainsMono_Nerd_Font_Mono:h12,JetBrains_Mono:h12
-	set guifontwide=楷体:h14
+	set guifontwide=楷体:h14,Iosevka:h12
 endif
 
 # Set line number.

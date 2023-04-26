@@ -13,7 +13,7 @@ if !exists('g:plugin_group')
 endif
 
 
-# Use vim-plug to manager all plunins.
+# Use vim-plug to manager all plugins.
 # Specify a directory for plugins.
 if has('unix')
 	plug#begin('~/.vim/plugged')

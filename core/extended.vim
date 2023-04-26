@@ -56,13 +56,19 @@ if has('nvim') == 0 && has('gui_running') == 0
 	SetFunctionKey('<S-F12>', '[24;2~')
 endif
 
-# Prevent the backgroud color of Vim in tmux from displaying abnormally.
+# Prevent the background color of Vim in tmux from displaying abnormally.
 # Refer: http://sunaku.github.io/vim-256color-bce.html
 if &term =~ '256color' && $TMUX != ''
 	# Disable background color erase (BCE) so that color schemes render
 	# properly when inside 256-color tmux and GNU screen.
 	set t_ut=
 endif
+
+# Enable mouse.
+set mouse=a
+
+# Auto save.
+set autowrite
 
 # Backup.
 var backupDir = expand('~/.cache/vim/backup')
@@ -103,9 +109,3 @@ augroup MyExtendedGroup
 			\ | echo 'File changed on disk. Buffer reloaded.'
 			\ | echohl None
 augroup END
-
-# Define a command to show diff.
-if !exists(':DiffOrigin')
-	command DiffOrigin vert new | set buftype=nofile | r ++edit # | 0d_
-			\ | diffthis | wincmd p | diffthis
-endif
