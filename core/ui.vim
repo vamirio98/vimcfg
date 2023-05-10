@@ -24,8 +24,8 @@ if has('gui_running')
 	set guioptions-=r  # Remove right-hand scrollbar.
 	set guioptions-=L  # Remove left-hand scrollbar.
 	set guioptions-=e  # Use a non-GUI tab pages line.
-	set guifont=JetBrainsMono_Nerd_Font_Mono:h12,JetBrains_Mono:h12
-	set guifontwide=楷体:h14,Iosevka:h12
+	set guifont=JetBrainsMono_NFM:h12
+	set guifontwide=楷体:h14
 endif
 
 # Set line number.
