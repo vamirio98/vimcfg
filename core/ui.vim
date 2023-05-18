@@ -1,9 +1,5 @@
 vim9script
-#-
 # ui.vim - UI config.
-#
-# Created by vamirio on 2021 Nov 08
-#-
 
 # Color scheme.
 g:gruvbox_italic = 1
@@ -24,7 +20,7 @@ if has('gui_running')
 	set guioptions-=r  # Remove right-hand scrollbar.
 	set guioptions-=L  # Remove left-hand scrollbar.
 	set guioptions-=e  # Use a non-GUI tab pages line.
-	set guifont=JetBrainsMono_NFM:h12
+	set guifont=JetBrains_Mono:h12,JetBrainsMono_NFM:h12
 	set guifontwide=楷体:h14
 endif
 

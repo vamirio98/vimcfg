@@ -37,14 +37,17 @@ LoadScript core/basic.vim
 # Load extended config.
 LoadScript core/extended.vim
 
+# Load keymaps.
+LoadScript core/keymaps.vim
+
 # Load plugins config.
 LoadScript core/plugins.vim
 
 # Load UI style.
 LoadScript core/ui.vim
 
-# Load keymaps.
-LoadScript core/keymaps.vim
+# Load plugins keymaps.
+LoadScript core/plugins_keymaps.vim
 
 # Load vim-which-key map.
 LoadScript core/which_key_map.vim

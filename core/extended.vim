@@ -1,9 +1,5 @@
 vim9script
-#-
 # extended.vim - Extended config.
-#
-# Created by vamirio on 2021 Nov 08
-#-
 
 if $TMUX != ''
 	set ttimeoutlen=30
@@ -70,19 +66,6 @@ set mouse=a
 # Auto save.
 set autowrite
 
-# Backup.
-var backupDir = expand('~/.cache/vim/backup')
-if isdirectory(backupDir) == 0
-	call mkdir(backupDir, 'p', 0755)
-endif
-
-# Allow backup.
-set backup
-# Backup when saving.
-set writebackup
-execute 'set backupdir=' .. backupDir
-# Backup file extension.
-set backupext=.bak
 # Disable swap file.
 set noswapfile
 # Disable undofile.

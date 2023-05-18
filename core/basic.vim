@@ -1,9 +1,5 @@
 vim9script
-#-
 # basic.vim - Basic config for Vim, should be compatible with vim-tiny.
-#
-# Created by vamirio on 2021 Nov 08
-#-
 
 #-
 # Set <leader> key.
