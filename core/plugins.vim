@@ -5,7 +5,7 @@ vim9script
 if !exists('g:plugin_group')
 	g:plugin_group = ['basic', 'enhanced', 'tags']
 	g:plugin_group += ['lightline', 'dirvish', 'coc', 'snippets', 'debug']
-	g:plugin_group += ['asynctask', 'which_key', 'fuzzy_search']
+	g:plugin_group += ['asynctask', 'which_key', 'fuzzy_search', 'quickui']
 endif
 
 
@@ -314,6 +314,16 @@ if index(g:plugin_group, 'fuzzy_search') >= 0
 	# Popup mode.
 	g:Lf_WindowPosition = 'popup'
 	g:Lf_PreviewInPopup = 1
+endif
+
+
+# Vim quickui.
+if index(g:plugin_group, 'quickui') >= 0
+	Plug 'skywind3000/vim-quickui'
+
+	g:quickui_show_tip = 1
+	g:quickui_border_style = 2
+	g:quickui_color_scheme = 'gruvbox'
 endif
 
 

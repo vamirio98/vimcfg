@@ -278,25 +278,23 @@ endif
 
 if index(g:plugin_group, 'asynctask') >= 0
 	# Open/close the Quickfic window.
-	nnoremap  <F10> <Cmd>call asyncrun#quickfix_toggle(6)<CR>
+	nnoremap <F10> <Cmd>call asyncrun#quickfix_toggle(6)<CR>
 
 	# Shortcut for single file tasks.
 	# Compile single file.
 	nnoremap <F4> <Cmd>AsyncTask file-build<CR>
 	# Complie single file with debug info.
-	nnoremap <S-F4> <Cmd>AsyncTask file-debug<CR>
+	nnoremap <S-F4> <Cmd>AsyncTask file-debug-build<CR>
 	# Run the program.
 	nnoremap <F5> <Cmd>AsyncTask file-run<CR>
 
 	# Shortcut for CMake project tasks.
 	# Configure CMake project.
-	nnoremap <S-F7> <Cmd>AsyncTask cmake-project-config<CR>
+	nnoremap <S-F7> <Cmd>AsyncTask cmake-config<CR>
 	# Build CMake project.
-	nnoremap <F7> <Cmd>AsyncTask cmake-project-build<CR>
+	nnoremap <F7> <Cmd>AsyncTask cmake-build<CR>
 	# Run CMake project.
-	nnoremap <F6> <Cmd>AsyncTask cmake-project-run<CR>
-	# Clean CMake project.
-	nnoremap <S-F6> <Cmd>AsyncTask cmake-project-clean<CR>
+	nnoremap <F6> <Cmd>AsyncTask cmake-run<CR>
 
 	# Query available tasks.
 	nnoremap <space>a <Cmd>AsyncTaskList<CR>
@@ -312,4 +310,32 @@ if index(g:plugin_group, 'fuzzy_search') >= 0
 	g:Lf_ShortcutB = '<space>fb'
 	# Search functions.
 	nnoremap <space>fn <Cmd>LeaderfFunction<CR>
+endif
+
+if index(g:plugin_group, 'quickui') >= 0
+	noremap <space><space> <Cmd>call quickui#menu#open()<CR>
+
+	# Clear all the menus.
+	quickui#menu#reset()
+
+	# Use [text, command, tip(optional)] to represent an item.
+	quickui#menu#install('&Build', [
+		\ [ "&Build\tF4", 'AsyncTask file-build', 'build current file' ],
+		\ [ "Build &Debug\tS+F4", 'AsyncTask file-debug-build', 'build current file for debug' ],
+		\ ['--', ''],
+		\ [ "&Run\tF5", 'AsyncTask file-run', 'run the executable' ],
+		\ ['--', ''],
+		\ [ '&Clean', 'AsyncTask file-clean', 'clean the executable' ],
+	  \ ])
+
+	quickui#menu#install('&Project', [
+		\ [ "&Config\tS+F7", 'AsyncTask cmake-config', 'config cmake project' ],
+		\ [ "&Build\tF7", 'AsyncTask cmake-build', 'build cmake project' ],
+		\ [ '--', ''],
+		\ [ "&Run\tF6", 'AsyncTask cmake-run', 'run the execute' ],
+		\ [ '--', '' ],
+		\ [ "Clea&n", 'AsyncTask cmake-clean', 'clean cmake project' ],
+		\ [ '--', '' ],
+		\ [ '&Set Style', 'AsyncTask set-code-style', 'set code style' ],
+	  \ ])
 endif
