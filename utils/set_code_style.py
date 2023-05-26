@@ -6,55 +6,32 @@
 # Created by vamirio on 2022 Aug 30
 # -
 
+import pprint
 import sys
 import shutil
 import os
 
-import pylib.base as base
 
-
-def setDestFile(language: str) -> str:
-    destFile = ""
-    if language == "c" or language == "cpp":
-        destFile = ".clang-format"
-    elif language == "lua":
-        destFile = ".stylua.toml"
-    else:
-        pass
-
-    return destFile
+STYLE = {
+    "cpp": ("clang-format", ".clang-format"),
+    "lua": ("stylua.toml", ".stylua.toml"),
+}
 
 
 def main():
-    if not base.checkArgsNum(sys.argv, 3, "Args: srcFile curDir language."):
-        exit(1)
+    pp = pprint.PrettyPrinter(indent=4, width=70)
+    language, cfgDir, projectRoot = sys.argv[1:]
 
-    srcFile, curDir, language = sys.argv[1:]
-
-    projectRoot = base.getProjectRoot(curDir)
-    if projectRoot == "":
-        base.printError(
-            "Error: can't find the root directory of project, check if a",
-            base.projectRootFlag,
-            "file/directory in it.",
+    src = os.path.join(cfgDir, STYLE[language][0])
+    dest = os.path.join(projectRoot, STYLE[language][1])
+    if os.path.exists(dest):
+        pp.pprint(
+            "Warn: "
+            + dest
+            + " is already exists, remove it if you want to reset the code style"
         )
         exit(1)
-
-    fileName = setDestFile(language)
-    if fileName == "":
-        base.printError("Error: unknown language:", language)
-        exit(1)
-
-    destFile = os.path.join(projectRoot, fileName)
-    if os.path.exists(destFile):
-        base.printError(
-            "Warn:",
-            destFile,
-            "is already exists, remove it if you want to reset the code style.",
-        )
-        exit(1)
-
-    shutil.copyfile(srcFile, destFile)
+    shutil.copyfile(src, dest)
 
 
 if __name__ == '__main__':
