@@ -318,6 +318,7 @@ if index(g:plugin_group, 'quickui') >= 0
 	# Clear all the menus.
 	quickui#menu#reset()
 
+	# quickui#menu#install(section, items [, weight, [, filetypes]])
 	# Use [text, command, tip(optional)] to represent an item.
 	quickui#menu#install('&Build', [
 		\ [ "&Build\tF4", 'AsyncTask file-build', 'build current file' ],
@@ -340,7 +341,12 @@ if index(g:plugin_group, 'quickui') >= 0
 		\ [ "R&un Project\tF6", 'AsyncTask project-run', 'run project' ],
 		\ [ '--', '' ],
 		\ [ "&Debug\tS+F5", 'call vimspector#Continue()' ],
-		\ [ "&Breakpoint\tF9", 'call vimspector#ToggleBreakpoint()' ],
-		\ [ "&Conditional Breakpoint\tS+F9", 'call vimspector#ToggleAdvancedBreakpoint()' ],
+		\ [ "Toggle &Breakpoint\tF9", 'call vimspector#ToggleBreakpoint()' ],
+		\ [ "Toggle &Conditional Breakpoint\tS+F9", 'call vimspector#ToggleAdvancedBreakpoint()' ],
+	  \ ])
+
+	# Script inside %{...} will be evaluated and expanded in the string.
+	quickui#menu#install('&Tools', [
+				\ [ 'Set &Highlight Search %{&hlsearch ? "Off" : "On"}', 'set hlsearch!', 'toggle highlight search' ],
 	  \ ])
 endif
