@@ -288,13 +288,13 @@ if index(g:plugin_group, 'asynctask') >= 0
 	# Run the program.
 	nnoremap <F5> <Cmd>AsyncTask file-run<CR>
 
-	# Shortcut for CMake project tasks.
-	# Configure CMake project.
-	nnoremap <S-F7> <Cmd>AsyncTask cmake-config<CR>
-	# Build CMake project.
-	nnoremap <F7> <Cmd>AsyncTask cmake-build<CR>
-	# Run CMake project.
-	nnoremap <F6> <Cmd>AsyncTask cmake-run<CR>
+	# Shortcut for project tasks.
+	# Configure project.
+	nnoremap <S-F7> <Cmd>AsyncTask project-config<CR>
+	# Build project.
+	nnoremap <F7> <Cmd>AsyncTask project-build<CR>
+	# Run project.
+	nnoremap <F6> <Cmd>AsyncTask project-run<CR>
 
 	# Query available tasks.
 	nnoremap <space>a <Cmd>AsyncTaskList<CR>
@@ -323,19 +323,24 @@ if index(g:plugin_group, 'quickui') >= 0
 		\ [ "&Build\tF4", 'AsyncTask file-build', 'build current file' ],
 		\ [ "Build &Debug\tS+F4", 'AsyncTask file-debug-build', 'build current file for debug' ],
 		\ ['--', ''],
-		\ [ "&Run\tF5", 'AsyncTask file-run', 'run the executable' ],
-		\ ['--', ''],
 		\ [ '&Clean', 'AsyncTask file-clean', 'clean the executable' ],
 	  \ ])
 
 	quickui#menu#install('&Project', [
-		\ [ "&Config\tS+F7", 'AsyncTask cmake-config', 'config cmake project' ],
-		\ [ "&Build\tF7", 'AsyncTask cmake-build', 'build cmake project' ],
+		\ [ "&Config\tS+F7", 'AsyncTask project-config', 'config project' ],
+		\ [ "&Build\tF7", 'AsyncTask project-build', 'build project' ],
 		\ [ '--', ''],
-		\ [ "&Run\tF6", 'AsyncTask cmake-run', 'run the execute' ],
-		\ [ '--', '' ],
-		\ [ "Clea&n", 'AsyncTask cmake-clean', 'clean cmake project' ],
+		\ [ "Clea&n", 'AsyncTask project-clean', 'clean project' ],
 		\ [ '--', '' ],
 		\ [ '&Set Style', 'AsyncTask set-code-style', 'set code style' ],
+	  \ ])
+
+	quickui#menu#install('&Debug', [
+		\ [ "&Run\tF5", 'AsyncTask file-run', 'run current file' ],
+		\ [ "R&un Project\tF6", 'AsyncTask project-run', 'run project' ],
+		\ [ '--', '' ],
+		\ [ "&Debug\tS+F5", 'call vimspector#Continue()' ],
+		\ [ "&Breakpoint\tF9", 'call vimspector#ToggleBreakpoint()' ],
+		\ [ "&Conditional Breakpoint\tS+F9", 'call vimspector#ToggleAdvancedBreakpoint()' ],
 	  \ ])
 endif
