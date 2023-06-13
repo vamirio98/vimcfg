@@ -60,9 +60,6 @@ if &term =~ '256color' && $TMUX != ''
 	set t_ut=
 endif
 
-# Enable mouse.
-set mouse=a
-
 # Auto save.
 set autowrite
 

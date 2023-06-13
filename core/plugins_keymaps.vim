@@ -211,6 +211,9 @@ if index(g:plugin_group, 'debug') >= 0
 		nnoremenu WinBar.□ :call vimspector#Stop()<CR>
 		nnoremenu WinBar.⟲ :call vimspector#Restart()<CR>
 		nnoremenu WinBar.✕ :call vimspector#Reset()<CR>
+
+		# Enable mouse.
+		set mouse=a
 	enddef
 	# }}}
 
@@ -238,6 +241,9 @@ if index(g:plugin_group, 'debug') >= 0
 	enddef
 
 	def OnDebugEnd(): void
+		# Disable mouse.
+		set mouse=
+
 		var originalBuf = bufnr()
 		var bufHidden = &hidden
 		augroup MyVimspectorSwapExists
