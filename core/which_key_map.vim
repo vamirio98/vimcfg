@@ -1,6 +1,7 @@
 vim9script
 # which_key_map.vim
 # Must be loaded after plugins.vim.
+# Author: vamirio
 
 g:leader_map = {}
 g:space_map = {}

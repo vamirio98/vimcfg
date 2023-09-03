@@ -1,6 +1,7 @@
 vim9script
 # plugin_keymaps.vim - Plugins' keymaps.
 # Must be loaded after plugins.vim.
+# Author: vamirio
 
 if index(g:plugin_group, 'basic') >= 0
 	# auto-pairs

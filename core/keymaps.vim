@@ -1,5 +1,6 @@
 vim9script
 # keymaps.vim - Keymaps.
+# Author: vamirio
 
 inoremap <M-q> <ESC>
 
