@@ -5,9 +5,8 @@ Personal **Vim** Profile.
 ## Requirements
 
 ```english
-Vim >= 8.0
-nodejs >= 12.12
-npm
+Vim >= 8.1.1719
+nodejs >= 14.14
 ```
 
 ## Install
@@ -37,19 +36,6 @@ source ~/vimfiles/vimcfg/init.vim
 After the steps above in correspond OS, open Vim and use the command
 `:PlugInstall` to install all plugins. Then use the command
 `:CocInstall extension` to install the extension you want.
-
-Optional coc extensions:
-
-```text
-coc-json        // Parse and complete JSON, the coc-extensions' configure
-                // language.
-coc-clangd      // Parse and complete C/C++, need clangd.
-coc-pyright     // Parse and complete python.
-coc-snippets    // Complete snippets, need plugin vim-snippets or something 
-                // provided the same function.
-coc-translator  // Online translator.
-coc-ecdict      // Offline translator.
-```
 
 Optional vimspector configurations:
 

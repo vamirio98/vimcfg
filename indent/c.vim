@@ -1,8 +1,5 @@
-"-
 " c.vim
-"
-" Created by vamirio on 2022 May 20
-"-
+" Author: vamirio
 
 setlocal shiftwidth=4
 setlocal tabstop=4

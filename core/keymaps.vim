@@ -1,8 +1,5 @@
-"-
 " keymaps.vim - Keymaps.
-"
-" Created by vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
 " Set <M-q> as <ESC>.
 inoremap <M-q> <ESC>
@@ -50,10 +47,6 @@ nnoremap <M-H> <C-w>h
 nnoremap <M-J> <C-w>j
 nnoremap <M-K> <C-w>k
 nnoremap <M-L> <C-w>l
-inoremap <M-H> <ESC><C-w>h
-inoremap <M-J> <ESC><C-w>j
-inoremap <M-K> <ESC><C-w>k
-inoremap <M-L> <ESC><C-w>l
 
 if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	set termwinkey=<C-_>
@@ -63,32 +56,3 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	tnoremap <M-L> <C-_>l
 	tnoremap <M-q> <C-\><C-n>
 endif
-
-
-" Switch all letters to uppercase.
-inoremap <C-u> <ESC>viwgUea
-
-" Fast edit and reload vimrc.
-let s:cur_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-function! s:EditProfile(filename)
-	" get the directory where this file is located
-	execute "e " . s:cur_dir . "/" . a:filename
-endfunction
-
-" Fast edit Vim profile.
-nnoremap <silent> <space>evb :call <SID>EditProfile('basic.vim')<CR>
-nnoremap <silent> <space>evt :call <SID>EditProfile('terminal.vim')<CR>
-nnoremap <silent> <space>evu :call <SID>EditProfile('ui.vim')<CR>
-nnoremap <silent> <space>evp :call <SID>EditProfile('plugins.vim')<CR>
-nnoremap <silent> <space>evk :call <SID>EditProfile('keymaps.vim')<CR>
-nnoremap <silent> <space>evw :call <SID>EditProfile('which_key_map.vim')<CR>
-
-function! s:ReloadProfile()
-	let ft = fnamemodify(bufname("%"), ":e")
-		if ft == "vim"
-			execute "source %"
-		endif
-endfunction
-
-" Reload Vim profile.
-nnoremap <silent> <space>sv :call <SID>ReloadProfile()<CR>

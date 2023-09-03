@@ -1,119 +1,97 @@
-"-
 " which_key_map.vim
-"
-" Created by vamirio on 2021 Dec 23
-"-
+" Must be loaded after plugins.vim
+" Author: vamirio
+
 let g:leader_map = {}
 let g:space_map = {}
 
 nnoremap <silent> <leader> :<C-u>WhichKey '\'<CR>
 nnoremap <silent> <space> :<C-u>WhichKey ' '<CR>
 
-let g:leader_map = { 'name' : '+Leader',
-			\ '1' : 'switch to tab 1',
-			\ '2' : 'switch to tab 2',
-			\ '3' : 'switch to tab 3',
-			\ '4' : 'switch to tab 4',
-			\ '5' : 'switch to tab 5',
-			\ '6' : 'switch to tab 6',
-			\ '7' : 'switch to tab 7',
-			\ '8' : 'switch to tab 8',
-			\ '9' : 'switch to tab 9',
-			\ '0' : 'switch to tab 10',
+let g:leader_map = {
+			\ 'name': '+Leader',
+			\ '1': 'which_key_ignore',
+			\ '2': 'which_key_ignore',
+			\ '3': 'which_key_ignore',
+			\ '4': 'which_key_ignore',
+			\ '5': 'which_key_ignore',
+			\ '6': 'which_key_ignore',
+			\ '7': 'which_key_ignore',
+			\ '8': 'which_key_ignore',
+			\ '9': 'which_key_ignore',
+			\ '0': 'which_key_ignore',
 			\ }
+
+let g:leader_map.a = 'apply-code-action'
 
 let g:leader_map.c = {
-			\ 'name' : '+close-tab/cscope',
-			\ '1' : 'close tab 1',
-			\ '2' : 'close tab 2',
-			\ '3' : 'close tab 3',
-			\ '4' : 'close tab 4',
-			\ '5' : 'close tab 5',
-			\ '6' : 'close tab 6',
-			\ '7' : 'close tab 7',
-			\ '8' : 'close tab 8',
-			\ '9' : 'close tab 9',
-			\ '0' : 'close tab 10',
-			\ 'a' : 'where-current-symbol-is-assiagned',
-			\ 'c' : 'functions-calling-this-function',
-			\ 'd' : 'functions-called-by-this-function',
-			\ 'e' : 'egrep-pattern-under-curosr',
-			\ 'f' : 'filename-under-cursor',
-			\ 'g' : 'symbol-definition',
-			\ 'i' : 'files-#including-the-filename-under-cursor',
-			\ 't' : 'text-string',
-			\ 's' : 'symbol-reference',
-			\ 'z' : 'current-word',
+			\ 'name': '+cscope',
+			\ '1': 'which_key_ignore',
+			\ '2': 'which_key_ignore',
+			\ '3': 'which_key_ignore',
+			\ '4': 'which_key_ignore',
+			\ '5': 'which_key_ignore',
+			\ '6': 'which_key_ignore',
+			\ '7': 'which_key_ignore',
+			\ '8': 'which_key_ignore',
+			\ '9': 'which_key_ignore',
+			\ '0': 'which_key_ignore',
+			\ 'a': 'where-current-symbol-is-assigned',
+			\ 'c': 'functions-calling-this-function',
+			\ 'd': 'functions-called-by-this-function',
+			\ 'e': 'egrep-pattern-under-cursor',
+			\ 'f': 'filename-under-cursor',
+			\ 'g': 'symbol-definition',
+			\ 'i': 'files-#including-the-filename-under-cursor',
+			\ 't': 'text-string',
+			\ 's': 'symbol-reference',
+			\ 'z': 'current-word',
 			\ }
+
+let g:leader_map.f = 'search-1-char'
+
+let g:leader_map.F = 'search-2-char'
+
+let g:leader_map.o = 'toggle-outline'
 
 let g:leader_map.r = {
-			\ 'name' : '+rename-symbol',
-			\ 'n' : 'rename-symbol',
+			\ 'name': '+refactor/rename symbol',
+			\ 'f': 'refactor',
+			\ 'n': 'rename-symbol',
 			\ }
 
-let g:space_map.a = {
-			\ 'name' : '+asynctasks',
-			\ 'a' : 'query-available-tasks',
-			\ 's' : {
-				\ 'name' : '+single-file',
-				\ 'd' : 'delete-program',
-				\ },
-			\ 'p' : {
-				\ 'name' : '+project',
-				\ 's' : 'set-code-style',
-				\ },
-			\ }
+let g:leader_map.w = 'move-to-window'
 
-let g:space_map.c = {
-			\ 'name' : '+coc',
-			\ 'l' : {
-				\ 'name' : '+coc-list',
-				\ 'c' : 'show-commands',
-				\ 'd' : 'show-all-diagnostics',
-				\ 'e' : 'manage-extensions',
-				\ 'j' : 'do-default-action-for-next-item',
-				\ 'k' : 'do-default-action-for-prev-item',
-				\ 'o' : 'find-symbol-of-current-document',
-				\ 'p' : 'resum-latest-coc-list',
-				\ 's' : 'search-workspace-symbol',
-				\ },
-			\ 'o' : 'outline',
-			\ }
+let g:space_map.a = 'query-available-tasks'
 
-let g:space_map.e = {
-			\ 'name' : '+edit-vim-profile',
-			\ 'v' : {
-				\ 'name' : '+edit-vim-profile',
-				\ 'b' : 'basic',
-				\ 'k' : 'keymaps',
-				\ 'w' : 'which-key-map',
-				\ 'p' : 'plugins',
-				\ 't' : 'terminal',
-				\ 'u' : 'ui',
-				\ },
-			\ }
+let g:space_map.c = 'show-coc-commands'
+
+let g:space_map.d = "show-all-diagnostics"
 
 let g:space_map.f = {
-			\ 'name' : '+format-code',
-			\ 't' : 'format-code',
+			\ 'name': '+search/format-code',
+			\ 'b': 'search buffer',
+			\ 'c': 'format code',
+			\ 'f': 'search file',
+			\ 'n': 'search function'
 			\ }
 
-let g:space_map.t = {
-			\ 'name' : '+translation',
-			\ 't' : 'popup',
-			\ 'e' : 'echo',
-			\ 'r' : 'replace',
-			\ }
+let g:space_map.j = 'do-default-action-for-next-item'
+
+let g:space_map.k = 'do-default-action-for-prev-item'
+
+let g:space_map.p = 'resume-latest-coc-list'
 
 let g:space_map.q = {
-			\ 'name' : '+quick-fix',
-			\ 'f' : 'quick-fix',
+			\ 'name': '+quick-fix',
+			\ 'f': 'quick-fix',
 			\ }
 
-let g:space_map.s = {
-			\ 'name' : '+source-curr-vimscript',
-			\ 'v' : 'source-curr-vimscript',
-			\ }
+let g:space_map.s = 'search-document-symbols'
+
+let g:space_map.S = 'search-workspace-symbols'
+
+let g:space_map.t = 'translate'
 
 call which_key#register('\', "g:leader_map")
 call which_key#register(' ', "g:space_map")

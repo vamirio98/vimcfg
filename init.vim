@@ -1,15 +1,11 @@
-"-
 " init.vim - Initialize config.
-"
-" Created by Vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
 " Prevent reload.
-if get(s:, 'loaded', 0) != 0
+if exists('s:loaded')
 	finish
-else
-	let s:loaded = 1
-end
+endif
+let s:loaded = 1
 
 " Get the directory where this file is located.
 let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
@@ -28,14 +24,15 @@ elseif has('win32')
 	set runtimepath+=~/vimfiles
 endif
 
-"-
 " Load modules.
-"-
 " Load basic config.
 LoadScript core/basic.vim
 
 " Load extended config.
 LoadScript core/extended.vim
+
+" Load keymaps.
+LoadScript core/keymaps.vim
 
 " Load plugins config.
 LoadScript core/plugins.vim
@@ -43,8 +40,8 @@ LoadScript core/plugins.vim
 " Load UI style.
 LoadScript core/ui.vim
 
-" Load keymaps.
-LoadScript core/keymaps.vim
+" Load plugins keymaps.
+LoadScript core/plugins_keymaps.vim
 
 " Load vim-which-key map.
 LoadScript core/which_key_map.vim

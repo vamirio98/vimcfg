@@ -1,8 +1,5 @@
-"-
 " python.vim
-"
-" Created by vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
 setlocal shiftwidth=4
 setlocal tabstop=4

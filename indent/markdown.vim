@@ -1,8 +1,6 @@
-"-
 " markdown.vim
-"
-" Created by vamirio on 2022 Jan 04
-"-
+" Author: vamirio
+
 setlocal shiftwidth=2
 setlocal tabstop=2
 setlocal softtabstop=2

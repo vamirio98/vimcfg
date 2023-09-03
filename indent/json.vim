@@ -1,9 +1,7 @@
-"-
 " json.vim
-"
-" Created by vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
-setlocal shiftwidth=4
-setlocal tabstop=4
-setlocal softtabstop=4
+setlocal shiftwidth=2
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal expandtab

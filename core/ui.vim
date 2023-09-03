@@ -1,18 +1,15 @@
-"-
 " ui.vim - UI config.
-"
-" Created by vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
 " Color scheme.
-let g:gruvbox_italic = 0
+let g:gruvbox_italic = 1
 set background=light
 augroup MyColorScheme
 	au!
 	au vimenter * ++nested colorscheme gruvbox
 augroup END
 " Use 24-bit (true-color) mode in Vim.
-if (has("termguicolors"))
+if has("termguicolors")
 	set termguicolors
 endif
 
@@ -23,7 +20,8 @@ if has('gui_running')
 	set guioptions-=r  " Remove right-hand scrollbar.
 	set guioptions-=L  " Remove left-hand scrollbar.
 	set guioptions-=e  " Use a non-GUI tab pages line.
-	set guifont=JetBrains_Mono:h13
+	set guifont=JetBrains_Mono:h12,JetBrainsMono_NFM:h12
+	set guifontwide=楷体:h14
 endif
 
 " Set line number.

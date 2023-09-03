@@ -1,4 +1,4 @@
-" html.vim
+" lua.vim
 " Author: vamirio
 
 setlocal shiftwidth=4

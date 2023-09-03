@@ -1,13 +1,17 @@
+priority 1
+
+extends c
+
 # Functions.
 global !p
 
-# @param num Number of parameters.
-# @param hasReturn 1 means having return value and 0 means not.
+# @param num Number of parameters
+# @param hasReturn 1 means having return value and 0 means not
 def genFuncCommet(snip, num, hasReturn):
 	desc = "// @brief ${1:Brief description}"
 	paramNo = 2
 	func = ("${" + f"{paramNo}" + ":function_name}("
-		+ ("" if int(num) != 0 else "void);"))
+		+ ("" if int(num) != 0 else ");"))
 	for i in range(0, int(num)):
 		paramNo += 1
 		func += "${" + f"{paramNo}" + ":Type} "
@@ -32,7 +36,8 @@ def genFuncCommet(snip, num, hasReturn):
 endglobal
 
 # Snippets.
-priority 1
+# Overload the same items.
+priority 2
 
 post_jump "genFuncCommet(snip, match.group(1), 1)"
 snippet "fund(\d+)" "function declaration with documentation" br
@@ -42,28 +47,9 @@ post_jump "genFuncCommet(snip, match.group(1), 0)"
 snippet "vfund(\d+)" "function declaration with documentation, no return value" br
 endsnippet
 
-snippet #ifndef "#ifndef ... #define ... #endif"
-#ifndef ${1/([A-Za-z0-9_]+).*/$1/}
-#define ${1:SYMBOL} ${2:value}
-#endif // ifndef $1
-endsnippet
-
-snippet #ifu "#if unix #endif" b
-#if defined(unix) || defined(__unix__) || defined(__unix)
-${VISUAL}$0
-#endif
-endsnippet
-
-snippet #ifw "#if unix #endif" b
-#if defined(_WIN32)
-${VISUAL}$0
-#endif
-endsnippet
-
-snippet #ifuw "#if unix #else windows #endif" b
-#if defined(unix) || defined(__unix__) || defined(__unix)
-$1
-#elif defined(_WIN32)
-$2
-#endif
+snippet ns "namespace .. (namespace)"
+namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
+{
+	${VISUAL}$0
+}${1/.+/ \/\/ /m}namespace $1${1/.+//m}
 endsnippet

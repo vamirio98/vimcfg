@@ -1,12 +1,7 @@
-"-
 " basic.vim - Basic config for Vim, should be compatible with vim-tiny.
-"
-" Created by vamirio on 2021 Nov 08
-"-
+" Author: vamirio
 
-"-
 " Set <leader> key.
-"-
 let mapleader = "\\"
 let maplocalleader = "\<tab>"
 
@@ -69,9 +64,7 @@ if has('syntax')
 	syntax on
 endif
 
-"-
 " Other config.
-"-
 " Show the matching brackets.
 set showmatch
 
@@ -107,9 +100,6 @@ set shiftround
 
 " Keep column when switching between buffers.
 set nostartofline
-
-" Enable mouse.
-set mouse=a
 
 " Fold.
 if has('folding')
