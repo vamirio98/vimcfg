@@ -73,7 +73,7 @@ if index(g:plugin_group, 'coc') >= 0
 				\ coc#pum#visible() ? coc#pum#next(1) :
 				\ <SID>CheckBackspace() ? "\<tab>" :
 				\ coc#refresh()
-	inoremap <expr><S-tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+	inoremap <silent><expr><S-tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 	def CheckBackspace(): bool
 		var col = col('.') - 1
 		return !col || getline('.')[col - 1] =~# '\s'
