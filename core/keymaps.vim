@@ -1,5 +1,6 @@
 vim9script
 # keymaps.vim - Keymaps.
+# Author: vamirio
 
 inoremap <M-q> <ESC>
 
@@ -55,10 +56,3 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	tnoremap <C-l> <C-_>l
 	tnoremap <M-q> <C-\><C-n>
 endif
-
-# Fast edit and reload vimrc.
-# Get the directory where this file is located.
-var coreDir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-def EditProfile(filename: string): void
-	execute 'e ' .. coreDir .. '/' .. filename
-enddef

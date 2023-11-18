@@ -1,9 +1,6 @@
 vim9script
-#-
 # markdown.vim
-#
-# Created by vamirio on 2022 Jan 04
-#-
+# Author: vamirio
 
 setlocal shiftwidth=2
 setlocal tabstop=2

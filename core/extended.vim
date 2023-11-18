@@ -1,5 +1,6 @@
 vim9script
 # extended.vim - Extended config.
+# Author: vamirio
 
 if $TMUX != ''
 	set ttimeoutlen=30

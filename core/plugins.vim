@@ -1,5 +1,6 @@
 vim9script
 # plugins.vim - Plugins config.
+# Author: vamirio
 
 # Default groups.
 if !exists('g:plugin_group')

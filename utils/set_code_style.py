@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# -
+
 # set_code_style.py
-#
-# Created by vamirio on 2022 Aug 30
-# -
+# Author: vamirio
 
 import pprint
 import sys

@@ -1,5 +1,6 @@
 vim9script
 # ui.vim - UI config.
+# Author: vamirio
 
 # Color scheme.
 g:gruvbox_italic = 1

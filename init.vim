@@ -1,9 +1,6 @@
 vim9script noclear
-#-
 # init.vim - Initialize config.
-#
-# Created by Vamirio on 2021 Nov 08
-#-
+# Author: vamirio
 
 # Prevent reload.
 if exists('loaded')

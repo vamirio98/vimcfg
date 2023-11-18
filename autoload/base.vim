@@ -1,9 +1,6 @@
 vim9script
-#-
 # base.vim - Some base functions.
-#
-# Created by vamirio on 2021 Oct 14
-#-
+# Author: vamirio
 
 # Add file header.
 export def AddFileHead(commentSymbol: string, line: number): void

@@ -1,9 +1,6 @@
 vim9script
-#-
 # c.vim
-#
-# Created by vamirio on 2021 Oct 14
-#-
+# Author: vamirio
 
 import autoload 'base.vim' as base
 
