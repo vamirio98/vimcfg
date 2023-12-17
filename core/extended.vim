@@ -64,14 +64,9 @@ endif
 # Auto save.
 set autowrite
 
-# Disable swap file.
-set noswapfile
-# Disable undofile.
-set noundofile
-
 def ReturnLastPos()
 	var lastPos = [line("'\""), col("'\"")]
-	if lastPos[0] > 1 && lastPos[1] <= line('$') && &ft !~# 'commit'
+	if lastPos[0] > 1 && lastPos[0] <= line('$') && &ft !~# 'commit'
 		cursor(lastPos)
 	endif
 enddef
@@ -90,3 +85,6 @@ augroup MyExtendedGroup
 			\ | echo 'File changed on disk. Buffer reloaded.'
 			\ | echohl None
 augroup END
+
+command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+			\ | diffthis | wincmd p | diffthis

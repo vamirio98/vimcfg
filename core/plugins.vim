@@ -4,7 +4,7 @@ vim9script
 
 # Default groups.
 if !exists('g:plugin_group')
-	g:plugin_group = ['basic', 'enhanced', 'tags']
+	g:plugin_group = ['basic', 'enhanced', 'tags', 'git']
 	g:plugin_group += ['lightline', 'dirvish', 'coc', 'snippets', 'debug']
 	g:plugin_group += ['asynctask', 'which_key', 'fuzzy_search', 'quickui']
 endif
@@ -58,10 +58,6 @@ if index(g:plugin_group, 'basic') >= 0
 
 	# Additional Vim syntax highlight for C/C++.
 	Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
-
-
-	# Git.
-	Plug 'tpope/vim-fugitive'
 endif
 
 
@@ -142,6 +138,13 @@ if index(g:plugin_group, 'tags') >= 0
 
 	# Change focus to quickfix window after search.
 	g:gutentags_plus_switch = 1
+endif
+
+
+# Git.
+if index(g:plugin_group, 'git') >= 0
+	Plug 'tpope/vim-fugitive'
+	Plug 'Eliot00/git-lens.vim'
 endif
 
 

@@ -43,16 +43,16 @@ nnoremap [b <Cmd>bp<CR>
 nnoremap ]b <Cmd>bn<CR>
 
 # Move between windows.
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <M-H> <C-w>h
+nnoremap <M-J> <C-w>j
+nnoremap <M-K> <C-w>k
+nnoremap <M-L> <C-w>l
 
 if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 	set termwinkey=<C-_>
-	tnoremap <C-h> <C-_>h
-	tnoremap <C-j> <C-_>j
-	tnoremap <C-k> <C-_>k
-	tnoremap <C-l> <C-_>l
+	tnoremap <M-H> <C-_>h
+	tnoremap <M-J> <C-_>j
+	tnoremap <M-K> <C-_>k
+	tnoremap <M-L> <C-_>l
 	tnoremap <M-q> <C-\><C-n>
 endif
