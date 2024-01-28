@@ -25,9 +25,7 @@ elseif has('win32')
 	set runtimepath+=~/vimfiles
 endif
 
-#-
 # Load modules.
-#-
 # Load basic config.
 LoadScript core/basic.vim
 
@@ -39,12 +37,3 @@ LoadScript core/keymaps.vim
 
 # Load plugins config.
 LoadScript core/plugins.vim
-
-# Load UI style.
-LoadScript core/ui.vim
-
-# Load plugins keymaps.
-LoadScript core/plugins_keymaps.vim
-
-# Load vim-which-key map.
-LoadScript core/which_key_map.vim

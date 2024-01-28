@@ -1,12 +1,4 @@
 vim9script
-# basic.vim - Basic config for Vim, should be compatible with vim-tiny.
-# Author: vamirio
-
-#-
-# Set <leader> key.
-#-
-g:mapleader = "\\"
-g:maplocalleader = "\<tab>"
 
 # Incompatible with Vi.
 set nocompatible
@@ -18,22 +10,13 @@ set backspace=2
 set autoindent
 set cindent
 
-# Disable ALT on GUI, make it can be used for mapping.
-set winaltkeys=no
-
 # Turn on word wrap.
 set wrap
-
-# Turn on function key timeout detection (the function key in the
-# terminal is a charset starts with ESC).
-set ttimeout
-
-# Function key timeout detection: 50ms.
-set ttimeoutlen=50
 
 # Show cursor position.
 set ruler
 
+# {{{1 Search
 # When search, case is ignored by default, unless the search content contains
 # uppercase letters.
 set ignorecase
@@ -42,8 +25,9 @@ set smartcase
 set hlsearch
 # Dynamically and incrementally display the search results during input.
 set incsearch
+# 1}}}
 
-# Encoding setting.
+# {{{1Encoding setting.
 if has('multi_byte')
 	# Terminal encoding.
 	set termencoding=utf-8
@@ -58,6 +42,15 @@ if has('multi_byte')
 	set fileencodings=utf-8,gbk,gb18030,big5,euc-jp
 endif
 
+# Break at a multibyte character above 255, used for Asian text where every
+# character is a word on its own.
+set formatoptions+=m
+
+# Don't insert a space between two multibyte characters (like Chinese) when
+# join lines.
+set formatoptions+=B
+# 1}}}
+
 # Syntax highlighting, filetype, filetype-plugin and filetype-indent setting.
 if has('autocmd')
 	filetype plugin indent on
@@ -66,33 +59,6 @@ if has('syntax')
 	syntax enable
 	syntax on
 endif
-
-#-
-# Other config.
-#-
-# Show the matching brackets.
-set showmatch
-
-# How long will the matching brackets shows, unit: s.
-set matchtime=2
-
-# Show @@@ in the last column of the last line in the screen if it is too long.
-set display=lastline
-
-# Error format.
-set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
-
-# Make the delimiter visible.
-set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-
-
-# Break at a multibyte character above 255, used for Asian text where every
-# character is a word on its own.
-set formatoptions+=m
-
-# Don't insert a space between two multibyte characters (like Chinese) when
-# join lines.
-set formatoptions+=B
 
 # Newline.
 set fileformats=unix,dos,mac
@@ -106,7 +72,66 @@ set nostartofline
 # Fold.
 if has('folding')
 	set foldenable
-	set foldmethod=marker
+	set foldmethod=indent
 	# Expand all fold by default.
 	set foldlevel=99
 endif
+
+# {{{1 Jump to the last position when reopening a file and auto load change.
+set autoread
+
+augroup MyExtendedGroup
+	au!
+	# Trigger autoread when cursor stop moving, buffer change or terminal focus.
+	au CursorHold,CursorHoldI,BufEnter,FocusGained *
+			\ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == ''
+			\ | checktime | endif
+	# Notification after file change
+	au FileChangedShellPost * echohl WarningMsg
+			\ | echo 'File changed on disk. Buffer reloaded.'
+			\ | echohl None
+augroup END
+# 1}}}
+
+# {{{1 UI.
+# Show the matching brackets.
+set showmatch
+# How long will the matching brackets shows, unit: s.
+set matchtime=2
+
+# Show @@@ in the last column of the last line in the screen if it is too long.
+set display=lastline
+# Error format.
+set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
+
+# Make the delimiter visible.
+set list
+set listchars=tab:\|\ ,multispace:.,lead:.,trail:.,extends:>,precedes:<
+
+# Set line number.
+set number
+# Cursorline.
+set cursorline
+# Show a column line in width 81.
+set colorcolumn=81
+# 1}}}
+
+# {{{1 Set navigation and font in GUI.
+if has('gui_running')
+	set guioptions-=m  # Remove menu bar.
+	set guioptions-=T  # Remove toolbar.
+	set guioptions-=r  # Remove right-hand scrollbar.
+	set guioptions-=L  # Remove left-hand scrollbar.
+	set guioptions-=e  # Use a non-GUI tab pages line.
+	set guifont=JetBrains_Mono_NL:h13,JetBrainsMonoNL_NFM:h13
+	set guifontwide=楷体:h15
+endif
+# 1}}}
+
+# Enable mouse.
+set mouse=a
+
+# When split a window vertically, display the new one on the right side.
+set splitright
+
+set hidden

@@ -6,3 +6,10 @@ if line('$') == 1 && getline(1) == ''
 	execute ':2'
 	execute 'startinsert!'
 endif
+
+# Fold.
+if has('folding')
+	set foldenable
+	set foldmethod=marker
+	set foldlevel=99
+endif
