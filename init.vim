@@ -12,7 +12,7 @@ var loaded = 1
 var home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 # Define a command to load the file.
-command -nargs=1 LoadScript execute 'source ' .. home .. '/' .. '<args>'
+command -nargs=1 LoadCoreScript execute 'source ' .. home .. '/core/' .. '<args>'
 
 # Add dir vimcfg to runtimepath.
 execute 'set runtimepath+=' .. home
@@ -27,13 +27,13 @@ endif
 
 # Load modules.
 # Load basic config.
-LoadScript core/basic.vim
+LoadCoreScript basic.vim
 
 # Load extended config.
-LoadScript core/extended.vim
+LoadCoreScript extended.vim
 
 # Load keymaps.
-LoadScript core/keymaps.vim
+LoadCoreScript keymaps.vim
 
 # Load plugins config.
-LoadScript core/plugins.vim
+LoadCoreScript plugins.vim
