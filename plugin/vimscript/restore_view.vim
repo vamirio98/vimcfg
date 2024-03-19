@@ -1,6 +1,7 @@
 vim9script noclear
 # This script is the vim9script version of resotre_vim.vim
 # (https://www.vim.org/scripts/script.php?script_id=4021)
+# I changed the autocmd event to avoid slowing when changing buffer.
 #
 # It is recommanded to put them in your vimrc file:
 #     set viewoptions=cursor,folds,slash,unix
@@ -37,6 +38,6 @@ enddef
 augroup RestoreView
 	au!
 	# Autosave & load views.
-	au BufWritePre,BufWinLeave ?* if MakeViewCheck() | silent! mkview | endif
-	au BufWinEnter ?* if MakeViewCheck() | silent! loadview | endif
+	au BufUnload ?* if MakeViewCheck() | silent! mkview | endif
+	au BufReadPost ?* if MakeViewCheck() | silent! loadview | endif
 augroup END
