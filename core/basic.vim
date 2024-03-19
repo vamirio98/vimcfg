@@ -106,7 +106,7 @@ set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
 
 # Make the delimiter visible.
 set list
-set listchars=tab:\|\ ,multispace:.,lead:.,trail:.,extends:>,precedes:<
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 
 # Set line number.
 set number

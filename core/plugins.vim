@@ -106,7 +106,7 @@ endif
 if index(g:plugin_group, 'ui') >= 0
 	# {{{ gruvbox.
 	if index(g:ui_plugin, 'gruvbox') >= 0
-		Plug 'morhetz/gruvbox'
+		Plug 'gruvbox-community/gruvbox'
 	endif
 	# }}}
 
@@ -127,7 +127,7 @@ if index(g:plugin_group, 'ui') >= 0
 	# {{{ cpp_enhanced_highlight.
 	if index(g:ui_plugin, 'cpp_enhanced_highlight') >= 0
 		# Additional Vim syntax highlight for C/C++.
-		Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
+		Plug 'bfrg/vim-cpp-modern'
 	endif
 	# }}}
 
@@ -179,6 +179,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	if index(g:enhanced_plugin, 'git') >= 0
 		Plug 'tpope/vim-fugitive'
 		Plug 'Eliot00/git-lens.vim'
+		Plug 'airblade/vim-gitgutter'
 	endif
 	# }}}
 
@@ -206,6 +207,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 	# {{{ fuzzy_search.
 	if index(g:enhanced_plugin, 'fuzzy_search') >= 0
 		Plug 'Yggdroot/LeaderF', {'do': ':LeaderfInstallCExtension'}
+		Plug 'skywind3000/Leaderf-snippet'
 	endif
 	# }}}
 endif
@@ -840,6 +842,8 @@ if index(g:plugin_group, 'enhanced') >= 0
 		noremap <space>sl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 		# Search functions.
 		nnoremap <space>sn <Cmd>LeaderfFunction<CR>
+
+		inoremap <C-x><C-x> <C-\><C-o>:Leaderf snippet<CR>
 	endif
 	# }}}
 endif
