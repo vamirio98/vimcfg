@@ -72,7 +72,7 @@ set nostartofline
 # Fold.
 if has('folding')
 	set foldenable
-	set foldmethod=indent
+	set foldmethod=manual
 	# Expand all fold by default.
 	set foldlevel=99
 endif

@@ -19,6 +19,7 @@ if index(g:plugin_group, 'basic') >= 0
 		'auto_pairs',
 		'easy_motion',
 		'strip_whitespace',
+		'match-up'
 	]
 endif
 # }}}
@@ -97,6 +98,12 @@ if index(g:plugin_group, 'basic') >= 0
 	if index(g:basic_plugin, 'strip_whitespace') >= 0
 		# Strip trailing whitespace.
 		Plug 'axelf4/vim-strip-trailing-whitespace'
+	endif
+	# }}}
+
+	# {{{ enhance match
+	if index(g:basic_plugin, "match-up") >= 0
+		Plug 'andymass/vim-matchup'
 	endif
 	# }}}
 endif
@@ -267,6 +274,12 @@ if index(g:plugin_group, 'basic') >= 0
 
 	# {{{ strip trailing whitespace.
 	if index(g:basic_plugin, 'strip_whitespace') >= 0
+	endif
+	# }}}
+
+	# {{{ match-up
+	if index(g:basic_plugin, 'match-up') >= 0
+		g:matchup_matchparen_offscreen = {'method': 'popup'}
 	endif
 	# }}}
 endif
