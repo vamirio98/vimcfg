@@ -419,16 +419,24 @@ if index(g:plugin_group, 'ui') >= 0
 		nmap <leader>0 <Plug>lightline#bufferline#go(10)
 
 		# Quick delete buffers by their ordinal number.
-		nmap <leader>c1 <Plug>lightline#bufferline#delete(1)
-		nmap <leader>c2 <Plug>lightline#bufferline#delete(2)
-		nmap <leader>c3 <Plug>lightline#bufferline#delete(3)
-		nmap <leader>c4 <Plug>lightline#bufferline#delete(4)
-		nmap <leader>c5 <Plug>lightline#bufferline#delete(5)
-		nmap <leader>c6 <Plug>lightline#bufferline#delete(6)
-		nmap <leader>c7 <Plug>lightline#bufferline#delete(7)
-		nmap <leader>c8 <Plug>lightline#bufferline#delete(8)
-		nmap <leader>c9 <Plug>lightline#bufferline#delete(9)
-		nmap <leader>c0 <Plug>lightline#bufferline#delete(10)
+		nmap <leader>c1 <ScriptCmd>call DeleteBufferAndUpdateBufferline(1)<CR>
+		nmap <leader>c2 <ScriptCmd>call DeleteBufferAndUpdateBufferline(2)<CR>
+		nmap <leader>c3 <ScriptCmd>call DeleteBufferAndUpdateBufferline(3)<CR>
+		nmap <leader>c4 <ScriptCmd>call DeleteBufferAndUpdateBufferline(4)<CR>
+		nmap <leader>c5 <ScriptCmd>call DeleteBufferAndUpdateBufferline(5)<CR>
+		nmap <leader>c6 <ScriptCmd>call DeleteBufferAndUpdateBufferline(6)<CR>
+		nmap <leader>c7 <ScriptCmd>call DeleteBufferAndUpdateBufferline(7)<CR>
+		nmap <leader>c8 <ScriptCmd>call DeleteBufferAndUpdateBufferline(8)<CR>
+		nmap <leader>c9 <ScriptCmd>call DeleteBufferAndUpdateBufferline(9)<CR>
+		nmap <leader>c0 <ScriptCmd>call DeleteBufferAndUpdateBufferline(10)<CR>
+
+		# it's strange that sometimes filename still appear in bufferline
+		# after deleting it with lightline#bufferline#delete(), force to update
+		# bufferline after deleting a buffer to avoid it
+		def DeleteBufferAndUpdateBufferline(n: number): void
+			lightline#bufferline#delete(n)
+			lightline#bufferline#reload()
+		enddef
 		# }}}
 	endif
 	# }}}
