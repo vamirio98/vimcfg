@@ -808,7 +808,7 @@ if index(g:plugin_group, 'enhanced') >= 0
 		endif
 
 		# Automatically open Quickfix window with a height of 6.
-		g:asyncrun_open = 10
+		g:asyncrun_open = 6
 
 		# Bell when finish the task.
 		g:asyncrun_bell = 0
