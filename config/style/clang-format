@@ -21,7 +21,7 @@ Cpp11BracedListStyle: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 
-PointerAlignment: Left
+PointerAlignment: Right
 
 TabWidth: 4
 UseTab: ForIndentation

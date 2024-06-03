@@ -913,8 +913,14 @@ if index(g:plugin_group, 'lsp') >= 0
 		inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() :
 					\ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
-		# Use <C-space> to trigger completion.
-		inoremap <silent><expr> <C-@> coc#refresh()
+		if has('win32')
+			# Use <C-space> to trigger completion.
+			inoremap <silent><expr> <C-space> coc#refresh()
+			# Use <S-space> to hide completion.
+			inoremap <silent><expr> <S-space> coc#float#close_all()
+		else
+			inoremap <silent><expr> <C-@> coc#refresh()
+		endif
 
 		# Goto code navigation.
 		nmap <silent> gd <Plug>(coc-definition)
