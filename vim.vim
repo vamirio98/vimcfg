@@ -1,4 +1,4 @@
-IncScript core/basic.vim
-IncScript core/extended.vim
-IncScript core/keymaps.vim
-IncScript core/plugins.vim
+IncScript init/basic.vim
+IncScript init/extended.vim
+IncScript init/keymaps.vim
+IncScript init/plugins.vim

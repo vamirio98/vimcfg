@@ -10,3 +10,5 @@ local map = function(mode, lhs, rhs, opts)
 end
 
 map({ "i", "n", "s", "x" }, "<C-s>", "<cmd>update<CR><ESC>")
+map({ "i", "c" }, "<C-h>", "<left>")
+map({ "i", "c" }, "<C-l>", "<right>")

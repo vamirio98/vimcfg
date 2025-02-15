@@ -101,7 +101,7 @@ return {
     version = "*",
     keys = {
       {
-        "<C-l>",
+        "<C-j>",
         function()
           if require("luasnip").expandable() then
             require("luasnip").expand()
