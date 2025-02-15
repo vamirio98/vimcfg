@@ -73,11 +73,7 @@ endif
 # {{{ Load plugins.
 # Use vim-plug to manager all plugins.
 # Specify a directory for plugins.
-if has('unix')
-	plug#begin('~/.vim/plugged')
-elseif has('win32')
-	plug#begin('~/vimfiles/plugged')
-endif
+plug#begin('~/.vim/plugged')
 
 # {{{ basic.
 if index(g:plugin_group, 'basic') >= 0

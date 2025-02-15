@@ -1,39 +1,11 @@
-vim9script noclear
-# init.vim - Initialize config.
-# Author: vamirio
+let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:vimcfg_home = s:home
+command! -nargs=1 IncScript exec 'so ' . fnameescape(s:home . '/<args>')
+exec 'set rtp+=' . fnameescape(s:home)
+set rtp+=~/.vim
 
-# Prevent reload.
-if exists('loaded')
-	finish
+if !has('nvim')
+  IncScript vim.vim
+else
+  IncScript nvim.vim
 endif
-var loaded = 1
-
-# Get the directory where this file is located.
-var home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-
-# Define a command to load the file.
-command -nargs=1 LoadCoreScript execute 'source ' .. home .. '/core/' .. '<args>'
-
-# Add dir vimcfg to runtimepath.
-execute 'set runtimepath+=' .. home
-
-# Add dir ~/.vim or ~/vimfile to runtimepath (sometimes vim will not add it
-# automatically for you).
-if has('unix')
-	set runtimepath+=~/.vim
-elseif has('win32')
-	set runtimepath+=~/vimfiles
-endif
-
-# Load modules.
-# Load basic config.
-LoadCoreScript basic.vim
-
-# Load extended config.
-LoadCoreScript extended.vim
-
-# Load keymaps.
-LoadCoreScript keymaps.vim
-
-# Load plugins config.
-LoadCoreScript plugins.vim

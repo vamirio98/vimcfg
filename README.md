@@ -2,40 +2,16 @@
 
 Personal **Vim** Profile.
 
-## Requirements
-
-```english
-Vim >= 9.0
-nodejs >= 14.14
-```
-
 ## Install
 
-* In Unix
-
 ```bash
-// Clone this project.
-cd ~/.vim
-git clone https://github.com/vamirio98/vimcfg.git
-
-// Edit ~/.vimrc, add the following code:
-source ~/.vim/vimcfg/init.vim
+# Edit ~/.vimrc, add the following code:
+source path/to/vimcfg/init.vim
 ```
 
-* In Windows
-
-```bash
-// Clone this project.
-cd ~/vimfiles
-git clone https://github.com/vamirio98/vimcfg.git
-
-// Edit ~/_vimrc, add the following code:
-source ~/vimfiles/vimcfg/init.vim
-```
-
-After the steps above in correspond OS, open Vim and use the command
+After the steps above, open Vim and use the command
 `:PlugInstall` to install all plugins. Then use the command
-`:CocInstall extension` to install the extension you want.
+`:CocInstall extension` to install the extension wanted.
 
 Optional vimspector configurations:
 
@@ -44,14 +20,14 @@ links in `/path/to/vimspector/configurations/OS/` which have the same
 name as the files in `plugcfg/vimspector`, where the `OS` is the system name.
 
 ```bash
-// Example:
-// Unix:
+# Example:
+# Unix:
 cd /path/to/vimspector/configurations/linux
 mkdir c
 cd c
 ln -s /path/to/plugcfg/vimspector/vscode_cpptools.json
 
-// Windows:
+# Windows:
 cd path\to\vimspector\configurations\windows
 mkdir python
 cd python
@@ -60,4 +36,5 @@ mklink debugpy.json path\to\plugcfg\vimspector\debugpy.json
 
 ## Reference
 
-[skywind3000/vim-init](https://github.com/skywind3000/vim-init)
+[skywind3000/vim](https://github.com/skywind3000/vim)
+[LazyVim](https://github.com/LazyVim/starter)

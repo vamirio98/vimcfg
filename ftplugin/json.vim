@@ -1,4 +1,2 @@
-vim9script
-
-# Get correct comment highlighting.
+" get correct comment highlighting.
 syntax match Comment +\/\.\+$+
