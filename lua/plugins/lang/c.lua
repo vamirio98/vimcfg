@@ -7,6 +7,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
+      opts.servers.clangd = opts.servers.clangd or {}
       opts.servers.clangd.cmd = {
         "clangd",
         "--background-index",
