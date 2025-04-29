@@ -1,59 +1,29 @@
-" set to 1 after vim finish initializing
-let g:ilib#ui#init = get(g:, 'ivim_loaded', 0)
-let s:msg_queue = []
+vim9script
 
-function! ilib#ui#echo(what)
-	let l:what = type(a:what) == v:t_list ? join(a:what, '\n') : a:what
-	redraw
-	echo l:what
-endfunc
+var msg_queue = []
+export var vim_enter: bool = false
 
-function! ilib#ui#echom(what)
-	let l:what = type(a:what) == v:t_list ? join(a:what, '\n') : a:what
-	redraw
-	echom l:what
-endfunc
-
-function! ilib#ui#show(what, ...)
-	let l:what = type(a:what) == v:t_list ? join(a:what, '\n') : a:what
-  let l:color = get(a:000, 0, 'Normal')
-  if !g:ilib#ui#init
-    let s:msg_queue += [function('ilib#ui#show', [l:what, l:color])]
+def Show(what: any, color: string = 'Normal', keep: bool = false): void
+  var msg = type(what) == v:t_list ? join(what, '\n') : what
+  if !vim_enter
+    msg_queue += [function('Show', [msg, color])]
     return
   endif
 
-	redraw
-	exec 'echohl ' . l:color
-	echom l:what
-	echohl None
-endfunc
+  redraw
+  exec 'echohl ' .. color
+  exec printf('echo%s "%s"', (keep ? 'm' : ''), msg)
+  echohl None
+enddef
 
-function! ilib#ui#error(what, ...)
-	let l:title = a:0 > 0 ? a:1 : ''
-	if l:title != ''
-		call ilib#ui#show(l:title, 'Title')
-	endif
-	call ilib#ui#show(a:what, 'ErrorMsg')
-endfunc
+export def Error(what: any, keep: bool = true)
+  Show(what, 'ErrorMsg', keep)
+enddef
 
-function! ilib#ui#warn(what)
-	let l:title = a:0 > 0 ? a:1 : ''
-	if l:title != ''
-		call ilib#ui#show(l:title, 'Title')
-	endif
-	call ilib#ui#show(a:what, 'WarningMsg')
-endfunc
+export def Warn(what: any, keep: bool = true)
+  Show(what, 'WarningMsg', keep)
+enddef
 
-function! ilib#ui#info(what)
-	let l:title = a:0 > 0 ? a:1 : ''
-	if l:title != ''
-		call ilib#ui#show(l:title, 'Title')
-	endif
-	call ilib#ui#show(a:what, 'Normal')
-endfunc
-
-augroup ivim_module_ui
-  au!
-  au VimEnter * let g:ilib#ui#init = 1 | for Msg in s:msg_queue |
-        \ call Msg() | endfor | let s:msg_queue = []
-augroup END
+export def Info(what: any, keep: bool = false)
+  Show(what, 'Identifier', keep)
+enddef

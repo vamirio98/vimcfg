@@ -1,117 +1,119 @@
-"----------------------------------------------------------------------
-" string replace
-"----------------------------------------------------------------------
-function! ilib#string#replace(text, old, new)
-	let data = split(a:text, a:old, 1)
-	return join(data, a:new)
-endfunc
+vim9script
+#----------------------------------------------------------------------
+# string replace
+#----------------------------------------------------------------------
+export def Replace(text: string, old: string, new: string): string
+  var data = split(text, old, 1)
+  return join(data, new)
+enddef
 
 
-"----------------------------------------------------------------------
-" string strip
-"----------------------------------------------------------------------
-function! ilib#string#strip(text)
-	return substitute(a:text, '^\s*\(.\{-}\)[\t\r\n ]*$', '\1', '')
-endfunc
+#----------------------------------------------------------------------
+# string strip
+#----------------------------------------------------------------------
+export def Strip(text: string): string
+  return substitute(text, '^\s*\(.\{-}\)[\t\r\n ]*$', '\1', '')
+enddef
 
 
-"----------------------------------------------------------------------
-" strip left
-"----------------------------------------------------------------------
-function! ilib#string#lstrip(text)
-	return substitute(a:text, '^\s*', '', '')
-endfunc
+#----------------------------------------------------------------------
+# strip left
+#----------------------------------------------------------------------
+export def Lstrip(text: string): string
+  return substitute(text, '^\s*', '', '')
+enddef
 
 
-"----------------------------------------------------------------------
-" strip left
-"----------------------------------------------------------------------
-function! ilib#string#rstrip(text)
-	return substitute(a:text, '[\t\r\n ]*$', '', '')
-endfunc
+#----------------------------------------------------------------------
+# strip left
+#----------------------------------------------------------------------
+export def Rstrip(text: string): string
+  return substitute(text, '[\t\r\n ]*$', '', '')
+enddef
 
 
-"----------------------------------------------------------------------
-" string partition
-"----------------------------------------------------------------------
-function! ilib#string#partition(text, sep)
-	let pos = stridx(a:text, a:sep)
-	if pos < 0
-		return [a:text, '', '']
-	else
-		let size = strlen(a:sep)
-		let head = strpart(a:text, 0, pos)
-		let sep = strpart(a:text, pos, size)
-		let tail = strpart(a:text, pos + size)
-		return [head, sep, tail]
-	endif
-endfunc
+#----------------------------------------------------------------------
+# string partition
+#----------------------------------------------------------------------
+export def Partition(text: string, sep: string): tuple<string, string, string>
+  var pos = stridx(text, sep)
+  if pos < 0
+    return (text, '', '')
+  else
+    var size = strlen(sep)
+    var head = strpart(text, 0, pos)
+    var new_sep = strpart(text, pos, size)
+    var tail = strpart(text, pos + size)
+    return (head, new_sep, tail)
+  endif
+enddef
 
 
-"----------------------------------------------------------------------
-" starts with prefix
-"----------------------------------------------------------------------
-function! ilib#string#startswith(text, prefix)
-	return (empty(a:prefix) || (stridx(a:text, a:prefix) == 0))
-endfunc
+#----------------------------------------------------------------------
+# starts with prefix
+#----------------------------------------------------------------------
+export def Startswith(text: string, prefix: string): bool
+  return (empty(prefix) || (stridx(text, prefix) == 0))
+enddef
 
 
-"----------------------------------------------------------------------
-" ends with suffix
-"----------------------------------------------------------------------
-function! ilib#string#endswith(text, suffix)
-	let s1 = len(a:text)
-	let s2 = len(a:suffix)
-	let ss = s1 - s2
-	if s1 < s2
-		return 0
-	endif
-	return (empty(a:suffix) || (stridx(a:text, a:suffix, ss) == ss))
-endfunc
+#----------------------------------------------------------------------
+# ends with suffix
+#----------------------------------------------------------------------
+export def Endswith(text: string, suffix: string): bool
+  var s1 = len(text)
+  var s2 = len(suffix)
+  var ss = s1 - s2
+  if s1 < s2
+    return false
+  endif
+  return (empty(suffix) || (stridx(text, suffix, ss) == ss))
+enddef
 
 
-"----------------------------------------------------------------------
-" check if text contains part
-"----------------------------------------------------------------------
-function! ilib#string#contains(text, part)
-	return (stridx(a:text, a:part) >= 0) ? 1 : 0
-endfunc
+#----------------------------------------------------------------------
+# check if text contains part
+#----------------------------------------------------------------------
+export def Contains(text: string, part: string): bool
+  return stridx(text, part) >= 0
+enddef
 
 
-"----------------------------------------------------------------------
-" get range
-" @param text
-" @param begin The head token
-" @param endup The tail token
-" @param pos? Start search from where
-"----------------------------------------------------------------------
-function! ilib#string#between(text, begin, endup, ...)
-	let pos = (a:0 > 0)? (a:1) : 0
-	let p1 = stridx(a:text, a:begin, pos)
-	if p1 < 0
-		return [-1, -1]
-	endif
-	let p1 = p1 + len(a:begin)
-	let p2 = stridx(a:text, a:endup, p1)
-	if p2 < 0
-		return [-1, -1]
-	endif
-	return [p1, p2]
-endfunc
+#----------------------------------------------------------------------
+# get range
+# Between({text}, {begin}, {endup} [, {pos}])
+# {begin} The head token
+# {endup} The tail token
+# {pos} Start search from where
+#----------------------------------------------------------------------
+export def Between(text: string, begin: string, endup: string,
+    pos: number = 0): tuple<number, number>
+  var p1 = stridx(text, begin, pos)
+  if p1 < 0
+    return (-1, -1)
+  endif
+  p1 = p1 + len(begin)
+  var p2 = stridx(text, endup, p1)
+  if p2 < 0
+    return (-1, -1)
+  endif
+  return (p1, p2)
+enddef
 
 
-"----------------------------------------------------------------------
-" return matched text at certain position
-"----------------------------------------------------------------------
-function! ilib#string#matchat(text, pattern, position)
-	let start = match(a:text, a:pattern, 0)
-	while (start >= 0) && (start <= a:position)
-		let endup = matchend(a:text, a:pattern, start)
-		if (start <= a:position) && (endup > a:position)
-			return [start, endup, strpart(a:text, start, endup - start)]
-		else
-			let start = match(a:text, a:pattern, endup)
-		endif
-	endwhile
-	return [-1, -1, '']
-endfunc
+#----------------------------------------------------------------------
+# return matched text at certain position
+#----------------------------------------------------------------------
+export def Matchat(text: string, pattern: string,
+    pos: number): tuple<number, number, string>
+  var start = match(text, pattern, 0)
+  while (start >= 0) && (start <= pos)
+    var endup = matchend(text, pattern, start)
+    if (start <= pos) && (endup > pos)
+      return (start, endup, strpart(text, start, endup - start))
+    else
+      start = match(text, pattern, endup)
+    endif
+  endwhile
+  return (-1, -1, null_string)
+enddef
