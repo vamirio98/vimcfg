@@ -1,60 +1,52 @@
-let s:options = {}
-let g:imodule#option#options = s:options
+vim9script
 
-function! s:GenGet(name)
-  return {-> eval('&'.a:name)}
-endfunc
+import autoload "../ilib/ui.vim" as iui
 
-function! s:GenSet(name)
-  return {on -> execute('setlocal '.(on ? '' : 'no').a:name)}
-endfunc
+type GetFunc = func(): bool
+type SetFunc = func(any): void
+type ToggleFunc = func(): void
 
-function! s:ToggleAndNotify(name, opt)
-  let opt = a:opt
-  if !has_key(opt, 'on')
-    call opt.set(!opt.get())
-    call lib#ui#info((opt.get() ? 'enable' : 'disable').' '.a:name)
-  else
-    execute('setlocal '.a:name.'='.(opt.get() == opt.on ? opt.off : opt.on))
-    call lib#ui#info('set '.a:name.' = '.opt.get())
-  endif
-endfunc
+export class Option
+  var Get: GetFunc = null_function
+  var Set: SetFunc = null_function
+  var on: any = null
+  var off: any = null
+  var Toggle: ToggleFunc = null_function
 
-" imodule#option#toggle(name, opt)
-" {name}: string, option name, should be a unique identity
-" [{opt}]:
-"   [{get}]: funcref, to get option
-"   [{set}]: funcref, to set option
-"   [{on}]: any, used as true in {get}
-"   [{off}]: any, used as false in {get}
-function! imodule#option#gen(name, ...) abort
-  let opt = a:0 > 0 ? deepcopy(a:1) : {}
-  " check for unique, it not, show a warn message
-  if has_key(s:options, a:name)
-    call lib#ui#warn('already has a '.a:name)
-  endif
-  if xor(has_key(opt, 'on'), has_key(opt, 'off'))
-    throw '{on} and {off} should appear in pairs'
-  endif
+  static def _GenGet(name: string): GetFunc
+    return (): bool => eval('&' .. name)
+  enddef
 
-  let s:options[a:name] = opt
+  static def _GenSet(name: string): SetFunc
+    return (on: bool): void => {
+      exec 'setlocal' (on ? '' : 'no') .. name
+    }
+  enddef
 
-  let opt.get = get(opt, 'get', s:GenGet(a:name))
-  let opt.set = get(opt, 'set', s:GenSet(a:name))
+  static def _GenToggle(name: string, opt: Option): ToggleFunc
+    return (): void => {
+      if opt.on == null
+        opt.Set(!opt.Get())
+        iui.Info((opt.Get() ? 'enable ' : 'disable ') .. name)
+      else
+        exec 'setlocal' name .. '=' .. (opt.Get() == opt.on ? opt.off : opt.on)
+        iui.Info('set ' .. name .. ' = ' .. opt.Get())
+      endif
+    }
+  enddef
 
-  let s:options[a:name].toggle = function('s:ToggleAndNotify', [a:name, opt])
-  return s:options[a:name]
-endfunc
+  def new(name: string, this.Get = v:none, this.Set = v:none,
+      this.on = v:none, this.off = v:none)
+    if this.Get == null
+      this.Get = _GenGet(name)
+    endif
+    if this.Set == null
+      this.Set = _GenSet(name)
+    endif
+    this.Toggle = _GenToggle(name, this)
+  enddef
 
-function! imodule#option#get(name) abort
-  if has_key(s:options, a:name)
-    return s:options[a:name]
-  else
-    return {'toggle':
-          \ function('lib#ui#error', ['option '''.a:name.''' not found']) }
-  endif
-endfunc
-
-function! imodule#option#toggle(option) abort
-  call a:option.toggle()
-endfunc
+  def newOnOff(name: string, this.on, this.off)
+    Option.new(name, v:none, v:none, this.on, this.off)
+  enddef
+endclass

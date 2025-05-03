@@ -1,46 +1,46 @@
+vim9script
+
+import autoload "../autoload/ilib/ui.vim" as iui
+
 if !exists('g:ivim_bundle')
-  let g:ivim_bundle = [
-        \ 'coding',
-        \ 'debug',
-        \ 'editor',
-        \ 'ui',
-        \ 'tags',
-        \ ]
+  g:ivim_bundle = [
+    'coding',
+    'debug',
+    'editor',
+    'ui',
+    'tags',
+  ]
 endif
 
-let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-if !exists(':IncScript')
-  command! -nargs=1 IncScript exec 'so ' . fnameescape(s:home .'/<args>')
-endif
-function s:LoadConf(script)
-  exec "augroup ivim_" . a:script
+def DoLoadConf(script: string)
+  exec "augroup ivim_bundle_" .. tr(script, '/.', '__')
   exec "au!"
-  exec "au User IvimBundleLoadPost IncScript " . a:script
+  exec "au User IvimBundleLoadPost IncScript" script
   exec "augroup END"
-endfunc
-command! -nargs=1 LoadConf call s:LoadConf('<args>')
+enddef
+command! -nargs=1 LoadConf DoLoadConf('<args>')
 
-let s:bundle = {}
+var s_bundle: dict<bool> = null_dict
 for key in g:ivim_bundle
-  let s:bundle[key] = 1
+  s_bundle[key] = true
 endfor
 if !exists('g:ivim_lsp_provider')
-  let g:ivim_lsp_provider = 'ycm'
+  g:ivim_lsp_provider = 'ycm'
 endif
 
-" specify a directory for plugins
-let s:bundle_home = get(g:, 'bundle_home', '~/.vim/bundle')
-call plug#begin(s:bundle_home)
+# specify a directory for plugins
+var s_bundle_home: string = get(g:, 'ivim_bundle_home', '~/.vim/bundle')
+plug#begin(s_bundle_home)
 
-"--------------------------------------------------------------
-" coding
-"--------------------------------------------------------------
-" {{{ coding
-if has_key(s:bundle, 'coding')
+#--------------------------------------------------------------
+# coding
+#--------------------------------------------------------------
+# {{{ coding
+if has_key(s_bundle, 'coding')
   Plug 'LunarWatcher/auto-pairs'
   LoadConf site/bundle/auto_pairs.vim
 
-  Plug 'axelf4/vim-strip-trailing-whitespace'
+  Plug 'vamirio98/vim-strip-trailing-whitespace'
   LoadConf site/bundle/strip_trailing_whitespace.vim
 
   Plug 'andymass/vim-matchup'
@@ -51,12 +51,12 @@ if has_key(s:bundle, 'coding')
     Plug 'honza/vim-snippets'
     LoadConf site/bundle/ultisnips.vim
   else
-    call imodule#ui#error("no python3 support")
+    iui.Error("no python3 support")
   endif
 
   if g:ivim_lsp_provider == 'ycm'
-    Plug 'ycm-core/YouCompleteMe', {'do': 'python3 install.py --clangd-completer --cs-completer --go-completer --rust-completer --java-completer --ts-completer'}
-    " for lsp config examples
+    Plug 'ycm-core/YouCompleteMe'
+    # for lsp config examples
     Plug 'ycm-core/lsp-examples'
     LoadConf site/bundle/ycm.vim
   elseif g:ivim_lsp_provider == 'coc'
@@ -64,15 +64,15 @@ if has_key(s:bundle, 'coding')
     LoadConf site/bundle/coc.vim
   endif
 endif
-" }}}
+# }}}
 
-if has_key(s:bundle, 'debug')
+if has_key(s_bundle, 'debug')
   Plug 'puremourning/vimspector'
   LoadConf site/bundle/vimspector.vim
 endif
 
-" {{{ editor
-if has_key(s:bundle, 'editor')
+# {{{ editor
+if has_key(s_bundle, 'editor')
   Plug 'monkoose/vim9-stargate'
   LoadConf site/bundle/easy_motion.vim
 
@@ -81,7 +81,7 @@ if has_key(s:bundle, 'editor')
 
   Plug 'voldikss/vim-floaterm'
   LoadConf site/bundle/floaterm.vim
-  " TODO: use myself terminal manager
+  # TODO: use myself terminal manager
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
@@ -99,24 +99,24 @@ if has_key(s:bundle, 'editor')
   Plug 'FahimAnayet/LeaderF-map'
   LoadConf site/bundle/leaderf.vim
 
-  " text opeartor
+  # text opeartor
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-speeddating'
   Plug 'svermeulen/vim-yoink'
-  " TODO: create map
+  # TODO: create map
 endif
-" }}}
+# }}}
 
-if has_key(s:bundle, 'tags')
+if has_key(s_bundle, 'tags')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'skywind3000/gutentags_plus'
   LoadConf site/bundle/tags.vim
 endif
 
-" {{{ ui
-if has_key(s:bundle, 'ui')
+# {{{ ui
+if has_key(s_bundle, 'ui')
   Plug 'sainnhe/gruvbox-material'
   LoadConf site/bundle/gruvbox_material.vim
 
@@ -131,10 +131,13 @@ if has_key(s:bundle, 'ui')
   Plug 'itchyny/lightline.vim'
   Plug 'mengelbrecht/lightline-bufferline'
   LoadConf site/bundle/lightline.vim
-endif
-" }}}
 
-" initialize plugin system
-call plug#end()
+  Plug 'machakann/vim-highlightedyank'
+  # TODO:
+endif
+# }}}
+
+# initialize plugin system
+plug#end()
 
 doautocmd <nomodeline> User IvimBundleLoadPost

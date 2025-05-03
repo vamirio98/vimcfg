@@ -1,75 +1,76 @@
-let g:asynctasks_extra_config = get(g:, 'asynctasks_extra_config', [])
-let g:asynctasks_extra_config += [
-      \ ilib#path#abspath(ilib#path#join(g:ivim_home,
-      \   'site/third_party/asynctasks/tasks.ini'))
-      \]
+vim9script
 
-let g:asyncrun_open = 6
-let g:asyncrun_rootmarks = g:ivim_rootmarkers
+import autoload "../../autoload/ilib/path.vim" as ipath
+import autoload "../../autoload/ilib/platform.vim" as iplatform
+import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/imodule/keymap.vim" as ikeymap
 
-let g:asyncrun_shell = ilib#platform#is_win() ? 'bash' : 'pwsh'
+g:asynctasks_extra_config = get(g:, 'asynctasks_extra_config', [])
+g:asynctasks_extra_config += [
+  ipath.Abspath(ipath.Join(g:ivim_home,
+    'site/third_party/asynctasks/tasks.ini')
+  )
+]
 
-let g:asynctasks_rtp_config = "asynctasks.ini"
+g:asyncrun_open = 6
+g:asyncrun_rootmarks = g:ivim_rootmarkers
+g:asyncrun_shell = iplatform.WIN ? 'bash' : 'pwsh'
+g:asynctasks_rtp_config = "asynctasks.ini"
 
-" python will buffer everything written to stdout when running as a backgroup
-" process, this can see the realtime output without calling `flush()`
-let $PYTHONUNBUFFERED = 1
+# python will buffer everything written to stdout when running as a backgroup
+# process, this can see the realtime output without calling `flush()`
+$PYTHONUNBUFFERED = 1
 
-" {{{ LeaderF integration
-" https://github.com/skywind3000/asynctasks.vim/wiki/UI-Integration
-if imodule#plug#has('LeaderF')
+# {{{ LeaderF integration
+# https://github.com/skywind3000/asynctasks.vim/wiki/UI-Integration
+if iplug.Has('LeaderF')
   nnoremap <leader>pt <Cmd>Leaderf --nowrap task<CR>
-  call imodule#keymap#add_group('<leader>p', 'project')
-  call imodule#keymap#add_desc('<leader>pt', 'Query Tasks')
+  ikeymap.AddGroup('<leader>p', 'project')
+  ikeymap.AddDesc('<leader>pt', 'Query Tasks')
 
-  function! s:lf_task_source(...)
-    let rows = asynctasks#source(&columns * 48 / 100)
-    let source = []
+  def LfTaskSource(..._): list<string>
+    var rows: list<list<string>> = asynctasks#source(&columns * 48 / 100)
+    var source: list<string> = []
     for row in rows
-      let name = row[0]
-      let source += [name . '  ' . row[1] . '  : ' . row[2]]
+      var name: string = row[0]
+      source += [name .. '  ' .. row[1] .. '  : ' .. row[2]]
     endfor
     return source
-  endfunction
+  enddef
 
 
-  function! s:lf_task_accept(line, arg)
-    let pos = stridx(a:line, '<')
+  def LfTaskAccept(line: string, ..._): void
+    var pos: number = stridx(line, '<')
     if pos < 0
       return
     endif
-    let name = strpart(a:line, 0, pos)
-    let name = substitute(name, '^\s*\(.\{-}\)\s*$', '\1', '')
+    var name: string = strpart(line, 0, pos)
+    name = substitute(name, '^\s*\(.\{-}\)\s*$', '\1', '')
     if name != ''
-      exec "AsyncTask " . name
+      exec "AsyncTask " .. name
     endif
-  endfunction
+  enddef
 
-  function! s:lf_task_digest(line, mode)
-    let pos = stridx(a:line, '<')
+  def LfTaskDigest(line: string, ..._): list<any>
+    var pos: number = stridx(a:line, '<')
     if pos < 0
-      return [a:line, 0]
+      return [line, 0]
     endif
-    let name = strpart(a:line, 0, pos)
+    var name: string = strpart(line, 0, pos)
     return [name, 0]
-  endfunction
-
-  function! s:lf_win_init(...)
-    setlocal nonumber
-    setlocal nowrap
-  endfunction
+  enddef
 
 
-  let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
-  let g:Lf_Extensions.task = {
-        \ 'source': string(function('s:lf_task_source'))[10:-3],
-        \ 'accept': string(function('s:lf_task_accept'))[10:-3],
-        \ 'get_digest': string(function('s:lf_task_digest'))[10:-3],
-        \ 'highlights_def': {
-        \     'Lf_hl_funcScope': '^\S\+',
-        \     'Lf_hl_funcDirname': '^\S\+\s*\zs<.*>\ze\s*:',
-        \ },
-        \ 'help' : 'navigate available tasks from asynctasks.vim',
-      \ }
+  g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
+  g:Lf_Extensions.task = {
+    'source': string(function('s:LfTaskSource'))[10 : -3],
+    'accept': string(function('s:LfTaskAccept'))[10 : -3],
+    'get_digest': string(function('s:LfTaskDigest'))[10 : -3],
+    'highlights_def': {
+        'Lf_hl_funcScope': '^\S\+',
+        'Lf_hl_funcDirname': '^\S\+\s*\zs<.*>\ze\s*:',
+    },
+    'help': 'navigate available tasks from asynctasks.vim',
+  }
 endif
-" }}}
+# }}}

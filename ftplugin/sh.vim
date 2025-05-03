@@ -1,7 +1,9 @@
-if line('$') == 1 && getline(1) == ''
-	call setline(1, '#!/bin/bash')
-	call setline(2, '')
+vim9script
 
-	execute 'normal G'
-	execute 'startinsert!'
+if line('$') == 1 && getline(1) == ''
+	setline(1, '#!/bin/bash')
+	setline(2, '')
+
+	exec 'normal G'
+	exec 'startinsert!'
 endif

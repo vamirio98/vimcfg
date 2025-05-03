@@ -1,432 +1,338 @@
-let s:windows = g:ilib#platform#windows
-let s:sep = s:windows ? '\' : '/'
-let g:ilib#path#sep = s:sep
+vim9script
+
+import autoload "./platform.vim" as iplatform
+
+const WIN: bool = iplatform.WIN
+export const SEP: string = WIN ? '\' : '/'
 
 
-"----------------------------------------------------------------------
-" get CD command
-"----------------------------------------------------------------------
-function! ilib#path#getcd()
-	if has('nvim')
-		let cmd = haslocaldir() ? 'lcd' : (haslocaldir(-1, 0) ? 'tcd' : 'cd')
-	else
-		let cmd = haslocaldir() ? ((haslocaldir() == 1) ? 'lcd' : 'tcd') : 'cd'
-	endif
+#----------------------------------------------------------------------
+# get CD command
+#----------------------------------------------------------------------
+export def GetCdCmd(): string
+  var cmd: string = haslocaldir() ? ((haslocaldir() == 1) ? 'lcd' : 'tcd') : 'cd'
 	return cmd
-endfunc
+enddef
 
 
-"----------------------------------------------------------------------
-" change directory in proper way
-"----------------------------------------------------------------------
-function! ilib#path#chdir(path)
-	let cmd = ilib#path#getcd()
-	silent execute cmd . ' '. fnameescape(a:path)
-endfunc
+#----------------------------------------------------------------------
+# change directory in proper way
+#----------------------------------------------------------------------
+export def Chdir(path: string): void
+	var cmd: string = GetCdCmd()
+	silent exec cmd fnameescape(path)
+enddef
 
 
-"----------------------------------------------------------------------
-" change dir with noautocmd prefix
-"----------------------------------------------------------------------
-function! ilib#path#chdir_noautocmd(path)
-	noautocmd call ilib#path#chdir(a:path)
-endfunc
+#----------------------------------------------------------------------
+# change dir with noautocmd prefix
+#----------------------------------------------------------------------
+export def ChdirNoautocmd(path: string): void
+	noautocmd Chdir(path)
+enddef
 
 
-function! ilib#path#abspath(path)
-	let f = a:path
-	if f =~ "'."
+export def Abspath(path: string): string
+	var p: string = path
+	if p =~ "'."
 		try
+      var m: string = null_string
 			redir => m
-			silent exe ':marks' f[1]
+			silent exe ':marks' p[1]
 			redir END
-			let f = split(split(m, '\n')[-1])[-1]
-			let f = filereadable(f)? f : ''
+			p = split(split(m, '\n')[-1])[-1]
+			p = filereadable(p) ? p : null_string
 		catch
-			let f = '%'
+			p = '%'
 		endtry
 	endif
-	if f == '%'
-		let f = expand('%')
+	if p == '%'
+		p = expand('%')
 		if &bt == 'terminal'
-			let f = ''
+			p = null_string
 		elseif &bt != ''
-			let is_directory = 0
-			if f =~ '\v^fugitive\:[\\\/]{3}'
-				return ilib#path#abspath(f)
-			elseif f =~ '[\/\\]$'
-				if f =~ '^[\/\\]' || f =~ '^.:[\/\\]'
-					let is_directory = isdirectory(f)
+			var is_directory: bool = false
+			if p =~ '\v^fugitive\:[\\\/]{3}'
+				return Abspath(p)
+			elseif p =~ '[\/\\]$'
+				if p =~ '^[\/\\]' || p =~ '^.:[\/\\]'
+					is_directory = isdirectory(p)
 				endif
 			endif
-			let f = (is_directory)? f : ''
+			p = is_directory ? p : null_string
 		endif
-	elseif f =~ '^\~[\/\\]'
-		let f = expand(f)
-	elseif f =~ '\v^fugitive\:[\\\/]{3}'
-		let path = strpart(f, s:windows? 12 : 11)
-		let pos = stridx(path, '.git')
+	elseif p =~ '^\~[\/\\]'
+		p = expand(p)
+	elseif p =~ '\v^fugitive\:[\\\/]{3}'
+		p = strpart(p, WIN ? 12 : 11)
+		var pos: number = stridx(p, '.git')
 		if pos >= 0
-			let path = strpart(path, 0, pos)
+			p = strpart(p, 0, pos)
 		endif
-		let f = fnamemodify(path, ':h')
+		p = fnamemodify(p, ':h')
 	endif
-	let f = fnamemodify(f, ':p')
-	if s:windows
-		let f = tr(f, '\', '/')
-		let h = matchstr(f, '\v^[\/\\]+')
-		let b = strpart(f, strlen(h))
-		let f = h . substitute(b, '\v[\/\\]+', '/', 'g')
+	p = fnamemodify(p, ':p')
+	if WIN
+		p = tr(p, '\', '/')
+		var h: string = matchstr(p, '\v^[\/\\]+')
+		var b: string = strpart(p, strlen(h))
+		p = h .. substitute(b, '\v[\/\\]+', '/', 'g')
 	else
-		let f = substitute(f, '\v[\/\\]+', '/', 'g')
+		p = substitute(p, '\v[\/\\]+', '/', 'g')
 	endif
-	if f =~ '\/$'
-		let f = fnamemodify(f, ':h')
+	if p =~ '\/$'
+		p = fnamemodify(p, ':h')
 	endif
-	return f
-endfunc
+	return p
+enddef
 
 
-"----------------------------------------------------------------------
-" check absolute path name
-"----------------------------------------------------------------------
-function! ilib#path#isabs(path)
-	let path = a:path
+#----------------------------------------------------------------------
+# check absolute path name
+#----------------------------------------------------------------------
+export def IsAbs(path: string): bool
+  var head: string = null_string
 	if strpart(path, 0, 1) == '~'
-		return 1
+		return true
 	endif
-	if s:windows != 0
-		if path =~ '^.:[\/\\]'
-			return 1
-		endif
-		let head = strpart(path, 0, 1)
-		if head == "\\"
-			return 1
-		endif
+	if WIN
+    if path =~ '^.:[\/\\]' | return true | endif
+		head = strpart(path, 0, 1)
+    if head == '\' | return true | endif
+    return false
 	endif
-	let head = strpart(path, 0, 1)
-	if head == '/'
-		return 1
-	endif
-	return 0
-endfunc
+	head = strpart(path, 0, 1)
+  return head == '/'
+enddef
 
 
-"----------------------------------------------------------------------
-" join two path
-"----------------------------------------------------------------------
-function! s:JoinTwoPath(home, name)
-	let l:size = strlen(a:home)
-	if l:size == 0 | return a:name | endif
-	if ilib#path#isabs(a:name)
-		return a:name
+#----------------------------------------------------------------------
+# join two path
+#----------------------------------------------------------------------
+def JoinTwoPath(home: string, name: string): string
+	if empty(home) | return name | endif
+  if empty(name) | return home | endif
+
+	if IsAbs(name)
+		return name
 	endif
-	let l:last = strpart(a:home, l:size - 1, 1)
-	if ilib#platform#is_win()
-		if l:last == "/" || l:last == "\\"
-			return a:home . a:name
-		else
-			return a:home . '/' . a:name
-		endif
-	else
-		if l:last == "/"
-			return a:home . a:name
-		else
-			return a:home . '/' . a:name
-		endif
-	endif
-endfunc
+	var size: number = strlen(home)
+	var last: string = strpart(home, size - 1, 1)
+  if last == SEP || (WIN && last == '/')
+    return home .. name
+  else
+    return home .. SEP .. name
+  endif
+enddef
 
 
-"--------------------------------------------------------------
-" python: os.path.join
-"--------------------------------------------------------------
-function! ilib#path#join(...) abort
-	let t = ''
-	for p in a:000
-		let t = s:JoinTwoPath(t, p)
+#--------------------------------------------------------------
+# python: os.path.join
+#--------------------------------------------------------------
+export def Join(...paths: list<string>): string
+	var ret: string = null_string
+	for p in paths
+		ret = JoinTwoPath(ret, p)
 	endfor
-	return t
-endfunc
+	return ret
+enddef
 
 
-"----------------------------------------------------------------------
-" dirname
-"----------------------------------------------------------------------
-function! ilib#path#dirname(path)
-	return fnamemodify(a:path, ':h')
-endfunc
+#----------------------------------------------------------------------
+# dirname
+#----------------------------------------------------------------------
+export def Dirname(path: string): string
+	return fnamemodify(path, ':h')
+enddef
 
 
-"----------------------------------------------------------------------
-" basename of /foo/bar is bar
-"----------------------------------------------------------------------
-function! ilib#path#basename(path)
-	return fnamemodify(a:path, ':t')
-endfunc
+#----------------------------------------------------------------------
+# basename of /foo/bar is bar
+#----------------------------------------------------------------------
+export def Basename(path: string): string
+	return fnamemodify(path, ':t')
+enddef
 
 
-"----------------------------------------------------------------------
-" normalize, translate path to unix format absoute path
-" @param path
-" @param lower(optional) Whether to translate to uppercase to lowercase
-"                        on Windows, default: 0
-"----------------------------------------------------------------------
-function! ilib#path#normalize(path, ...)
-	let lower = (a:0 > 0)? a:1 : 0
-	let path = a:path
-	if (s:windows == 0 && path == '/') || (s:windows && path =~ '^.:[\/\\]')
-		let path = fnamemodify(path, ':p')
+#----------------------------------------------------------------------
+# Normalize({path} [, {lower}])
+# normalize, translate path to unix format absoute path
+# {lower} Whether to translate to uppercase to lowercase, useful when
+#         on Windows, default: false
+#----------------------------------------------------------------------
+export def Normalize(path: string, lower: bool = false): string
+  if empty(path) | return '' | endif
+
+	var new_path: string = path
+	if (!WIN && new_path !~ '^/') || (WIN && new_path !~ '^.:[\/\\]')
+		new_path = fnamemodify(new_path, ':p')
 	endif
-	if s:windows
-		let path = tr(path, "\\", '/')
+	if WIN
+		new_path = tr(new_path, '\', '/')
 	endif
-	if lower && (s:windows || has('win32unix'))
-		let path = tolower(path)
+	if lower && (WIN || has('win32unix'))
+		new_path = tolower(new_path)
 	endif
-	if path =~ '^[\/\\]$'
-		return path
-	elseif s:windows && path =~ '^.:[\/\\]$'
-		return path
+  new_path = substitute(new_path, '\v/+', '/', 'g')
+	if new_path =~ '^/$' || (WIN && new_path =~ '^.:/$')
+		return new_path
 	endif
-	if s:windows
-		let path = tr(path, '\', '/')
-		let h = matchstr(path, '\v^[\/\\]+')
-		let b = strpart(path, strlen(h))
-		let path = h . substitute(b, '\v[\/\\]+', '/', 'g')
-	else
-		let path = substitute(path, '\v[\/\\]+', '/', 'g')
+	if new_path[-1] == '/'
+		new_path = fnamemodify(new_path, ':h')
 	endif
-	let size = len(path)
-	if size > 1 && path[size - 1] == '/'
-		let path = fnamemodify(path, ':h')
+	return new_path
+enddef
+
+
+#----------------------------------------------------------------------
+# normal case, if on Windows and path contains uppercase letter,
+# change it to lowercase
+#----------------------------------------------------------------------
+export def Normcase(path: string): string
+  return (WIN && !has('win32unix')) ? tolower(path) : path
+enddef
+
+
+export def Equal(path1: string, path2: string): bool
+	if path1 == path2
+		return true
 	endif
-	return path
-endfunc
+	var p1: string = Normcase(Abspath(path1))
+	var p2: string = Normcase(Abspath(path2))
+	return p1 == p2
+enddef
 
 
-"----------------------------------------------------------------------
-" normal case, if on Windows and path contains uppercase letter,
-" change it to lowercase
-"----------------------------------------------------------------------
-function! ilib#path#normcase(path)
-	if s:windows == 0
-		return (has('win32unix') == 0)? (a:path) : tolower(a:path)
-	else
-		return tolower(tr(a:path, '/', '\'))
-	endif
-endfunc
+#----------------------------------------------------------------------
+# return true if base directory contains child
+#----------------------------------------------------------------------
+export def Contains(base: string, child: string): bool
+	var new_base: string = Abspath(base)
+	var new_child: string = Abspath(child)
+	new_base = Normalize(new_base)
+	new_child = Normalize(new_child)
+	new_base = Normcase(new_base)
+	new_child = Normcase(new_child)
+	return stridx(new_child, new_base) == 0
+enddef
 
 
-"----------------------------------------------------------------------
-" returns 1 for equal, 0 for not equal
-"----------------------------------------------------------------------
-function! ilib#path#equal(path1, path2)
-	if a:path1 == a:path2
-		return 1
-	endif
-	let p1 = ilib#path#normcase(ilib#path#abspath(a:path1))
-	let p2 = ilib#path#normcase(ilib#path#abspath(a:path2))
-	return (p1 == p2) ? 1 : 0
-endfunc
-
-
-"----------------------------------------------------------------------
-" return 1 if base directory contains child, 0 for not contain
-"----------------------------------------------------------------------
-function! ilib#path#contains(base, child)
-	let base = ilib#path#abspath(a:base)
-	let child = ilib#path#abspath(a:child)
-	let base = ilib#path#normalize(base)
-	let child = ilib#path#normalize(child)
-	let base = ilib#path#normcase(base)
-	let child = ilib#path#normcase(child)
-	return (stridx(child, base) == 0) ? 1 : 0
-endfunc
-
-
-"----------------------------------------------------------------------
-" return a relative version of a path
-"----------------------------------------------------------------------
-function! ilib#path#relpath(path, base) abort
-	let path = ilib#path#abspath(a:path)
-	let base = ilib#path#abspath(a:base)
-	let path = ilib#path#normalize(path)
-	let base = ilib#path#normalize(base)
-	let head = ''
-	while 1
-		if ilib#path#contains(base, path)
-			if base =~ '[\/\\]$'
-				let size = strlen(base)
-			else
-				let size = strlen(base) + 1
-			endif
-			return head . strpart(path, size)
+#----------------------------------------------------------------------
+# return a relative version of a path
+#----------------------------------------------------------------------
+export def Relpath(apath: string, abase: string): string
+	var path: string = Abspath(apath)
+	var base: string = Abspath(abase)
+	path = Normalize(path)
+	base = Normalize(base)
+	var head: string = null_string
+	while true
+		if Contains(base, path)
+      var size: number = strlen(base) + (base =~ '/$' ? 0 : 1)
+			return head .. strpart(path, size)
 		endif
-		let prev = base
-		let head = '../' . head
-		let base = fnamemodify(base, ':h')
+		var prev: string = base
+		head = '../' .. head
+		base = fnamemodify(base, ':h')
 		if base == prev
 			break
 		endif
 	endwhile
-	return ''
-endfunc
+	return null_string
+enddef
 
 
-"----------------------------------------------------------------------
-" python: os.path.split
-"----------------------------------------------------------------------
-function! ilib#path#split(path)
-	let p1 = fnamemodify(a:path, ':h')
-	let p2 = fnamemodify(a:path, ':t')
-	return [p1, p2]
-endfunc
+#----------------------------------------------------------------------
+# python: os.path.split
+#----------------------------------------------------------------------
+export def Split(path: string): tuple<string, string>
+	var p1 = fnamemodify(path, ':h')
+	var p2 = fnamemodify(path, ':t')
+	return (p1, p2)
+enddef
 
 
-"----------------------------------------------------------------------
-" split ext, return [main, ext]
-"----------------------------------------------------------------------
-function! ilib#path#splitext(path)
-	let path = a:path
-	let size = strlen(path)
-	let pos = strridx(path, '.')
-	if pos < 0
-		return [path, '']
+#----------------------------------------------------------------------
+# split externsion, return (main, ext)
+#----------------------------------------------------------------------
+export def SplitExt(path: string): tuple<string, string>
+	var pos: number = strridx(path, '.')
+	if pos <= 0
+		return (path, null_string)
 	endif
-	let p1 = strridx(path, '/')
-	if s:windows
-		let p2 = strridx(path, '\')
-		let p1 = (p1 > p2)? p1 : p2
+	var p: number = strridx(path, SEP)
+	if p > pos || p == pos - 1
+		return (path, null_string)
 	endif
-	if p1 > pos
-		return [path, '']
+	var main: string = strpart(path, 0, pos)
+	var ext: string = strpart(path, pos + 1)
+	return (main, ext)
+enddef
+
+
+#----------------------------------------------------------------------
+# strip ending slash
+#----------------------------------------------------------------------
+export def StripSlash(path: string): string
+	if path =~ '\v[\/\\]$'
+		return fnamemodify(path, ':h')
 	endif
-	let main = strpart(path, 0, pos)
-	let ext = strpart(path, pos)
-	return [main, ext]
-endfunc
+	return path
+enddef
 
 
-"----------------------------------------------------------------------
-" strip ending slash
-"----------------------------------------------------------------------
-function! ilib#path#stripslash(path)
-	if a:path =~ '\v[\/\\]$'
-		return fnamemodify(a:path, ':h')
-	endif
-	return a:path
-endfunc
+#----------------------------------------------------------------------
+# exists
+#----------------------------------------------------------------------
+export def Exists(path: string): bool
+  return isdirectory(path) || filereadable(path) || !empty(glob(path, 1))
+enddef
 
 
-"----------------------------------------------------------------------
-" find files in $PATH
-"----------------------------------------------------------------------
-function! ilib#path#which(name)
-	if has('win32') || has('win64') || has('win16') || has('win95')
-		let sep = ';'
-	else
-		let sep = ':'
-	endif
-	if ilib#path#isabs(a:name)
-		if filereadable(a:name)
-			return ilib#path#abspath(a:name)
-		endif
-	endif
-	for path in split($PATH, sep)
-		let filename = s:JoinTwoPath(path, a:name)
-		if filereadable(filename)
-			return ilib#path#abspath(filename)
-		endif
-	endfor
-	return ''
-endfunc
-
-
-"----------------------------------------------------------------------
-" find executable in $PATH
-"----------------------------------------------------------------------
-function! ilib#path#executable(name)
-	if s:windows != 0
-		for n in ['.exe', '.cmd', '.bat', '.vbs']
-			let nname = a:name . n
-			let npath = ilib#path#which(nname)
-			if npath != ''
-				return npath
-			endif
-		endfor
-	else
-		return ilib#path#which(a:name)
-	endif
-	return ''
-endfunc
-
-
-"----------------------------------------------------------------------
-" exists
-"----------------------------------------------------------------------
-function! ilib#path#exists(path)
-	if isdirectory(a:path)
-		return 1
-	elseif filereadable(a:path)
-		return 1
-	else
-		if !empty(glob(a:path, 1))
-			return 1
-		endif
-	endif
-	return 0
-endfunc
-
-
-"----------------------------------------------------------------------
-" win2unix
-" @param winpath
-" @param prefix(optional) Path prefix, will be add to `winpath`,
-"                         default: ''
-"----------------------------------------------------------------------
-function! ilib#path#win2unix(winpath, ...)
-	let prefix = a:0 > 0 ? a:1 : ''
-	let path = a:winpath
-	if path =~ '^\a:[/\\]'
-		let drive = tolower(strpart(path, 0, 1))
-		let name = strpart(path, 3)
-		let p = ilib#path#join(prefix, drive)
-		let p = ilib#path#join(p, name)
+#----------------------------------------------------------------------
+# Win2Unix({winpath} [, {prefix}])
+# {prefix} Path prefix, will be add to `winpath`,
+#          default: ''
+#----------------------------------------------------------------------
+export def Win2Unix(winpath: string, prefix: string = null_string): string
+	var p: string = null_string
+	if winpath =~ '^\a:[/\\]'
+    var drive: string = tolower(strpart(winpath, 0, 1))
+    var name: string = strpart(winpath, 3)
+    p = Join(prefix, drive, name)
 		return tr(p, '\', '/')
-	elseif path =~ '^[/\\]'
-		let drive = tolower(strpart(getcwd(), 0, 1))
-		let name = strpart(path, 1)
-		let p = ilib#path#join(prefix, drive)
-		let p = ilib#path#join(p, name)
+	elseif winpath =~ '^[/\\]'
+		var drive: string = tolower(strpart(getcwd(), 0, 1))
+		var name: string = strpart(winpath, 1)
+		p = Join(prefix, drive, name)
 		return tr(p, '\', '/')
 	else
-		return tr(a:winpath, '\', '/')
+		return tr(winpath, '\', '/')
 	endif
-endfunc
+enddef
 
 
-"----------------------------------------------------------------------
-" shorten path
-" @param path
-" @param limit(optional) The path length limit, default: 40
-"----------------------------------------------------------------------
-function! ilib#path#shorten(path, ...) abort
-	let home = expand('~')
-	let path = a:path
-	let limit = (a:0 > 0)? a:1 : 40
-	if ilib#path#contains(home, path)
-		let size = strlen(home)
-		let path = '~' . strpart(path, size)
+#----------------------------------------------------------------------
+# Shorten({path} [, {limit}])
+# shorten path
+# {limit} The path length limit, default: 40
+#----------------------------------------------------------------------
+export def Shorten(path: string, limit: number = 40): string
+	var home: string = expand('~')
+  var new_path: string = path
+  var size: number = 0
+	if Contains(home, path)
+		size = strlen(home)
+		new_path = Join('~', strpart(new_path, size + 1))
 	endif
-	let size = strlen(path)
+	size = strlen(new_path)
 	if size > limit
-		let t = pathshorten(path, 2)
-		let size = strlen(t)
+		var t: string = pathshorten(new_path, 2)
+		size = strlen(t)
 		if size > limit
-			return pathshorten(path)
+			return pathshorten(new_path)
 		endif
 		return t
 	endif
-	return path
-endfunc
+	return new_path
+enddef

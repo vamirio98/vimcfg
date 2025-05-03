@@ -1,46 +1,51 @@
-let g:gruvbox_material_enable_italic = 1
+vim9script
 
-" for better performance
-let g:gruvbox_material_better_performance = 1
+import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/ilib/path.vim" as ipath
 
-" set contrast
-let g:gruvbox_material_background = "medium"
+g:gruvbox_material_enable_italic = 1
 
-" highlight diagnostic virtual text
-let g:gruvbox_material_diagnostic_virtual_text = "colored"
+# for better performance
+g:gruvbox_material_better_performance = 1
 
-let g:gruvbox_material_enable_bold = 1
+# set contrast
+g:gruvbox_material_background = "medium"
 
-let g:gruvbox_material_visual = "reverse"
+# highlight diagnostic virtual text
+g:gruvbox_material_diagnostic_virtual_text = "colored"
 
-let g:gruvbox_material_ui_contrast = "high"
+g:gruvbox_material_enable_bold = 1
 
-let g:gruvbox_material_current_word = "high contrast background"
+g:gruvbox_material_visual = "reverse"
+
+g:gruvbox_material_ui_contrast = "high"
+
+g:gruvbox_material_current_word = "high contrast background"
 
 if has('termguicolors')
   set termguicolors
 endif
 
-" {{{ update colortheme for lightline
-function! s:UpdateTheme() abort
-  if imodule#plug#has('lightline.vim')
-    let dst_dir = ilib#path#abspath('~/.vim/autoload/lightline/colorscheme/')
+# {{{ update colortheme for lightline
+def UpdateTheme()
+  if iplug.Has('lightline.vim')
+    var dst_dir: string = ipath.Abspath('~/.vim/autoload/lightline/colorscheme/')
     if !isdirectory(dst_dir)
-      silent! call mkdir(dst_dir, 'p')
+      silent! mkdir(dst_dir, 'p')
     endif
 
-    let src = ilib#path#join(imodule#plug#plugin_dir('gruvbox-material'),
-          \ 'autoload/lightline/colorscheme/gruvbox_material.vim')
-    let dst = ilib#path#join(dst_dir, 'gruvbox_material.vim')
+    var src: string = ipath.Join(iplug.PluginDir('gruvbox-material'),
+      'autoload/lightline/colorscheme/gruvbox_material.vim')
+    var dst: string = ipath.Join(dst_dir, 'gruvbox_material.vim')
     if !filereadable(dst)
-      call filecopy(src, dst)
+      filecopy(src, dst)
     elseif getftime(src) > getftime(dst)
-      call delete(dst, 'f')
-      call filecopy(src, dst)
+      delete(dst, 'f')
+      filecopy(src, dst)
     endif
   endif
-endfunc
-call s:UpdateTheme()
-"  }}}
+enddef
+UpdateTheme()
+# }}}
 
 colorscheme gruvbox-material

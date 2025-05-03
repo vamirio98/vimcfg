@@ -1,12 +1,11 @@
 vim9script
 
-var msg_queue = []
-export var vim_enter: bool = false
+var s_msg_queue = []
 
 def Show(what: any, color: string = 'Normal', keep: bool = false): void
   var msg = type(what) == v:t_list ? join(what, '\n') : what
-  if !vim_enter
-    msg_queue += [function('Show', [msg, color])]
+  if !v:vim_did_enter
+    s_msg_queue += [function('Show', [msg, color])]
     return
   endif
 
@@ -27,3 +26,8 @@ enddef
 export def Info(what: any, keep: bool = false)
   Show(what, 'Identifier', keep)
 enddef
+
+augroup ivim_ilib_ui
+  au!
+  au VimEnter * for Msg in s_msg_queue | Msg() | endfor | s_msg_queue = []
+augroup END

@@ -1,141 +1,130 @@
-"==============================================================
-" add map through vim-which-key or which-key.nvim
-"==============================================================
+vim9script
+#==============================================================
+# add map through vim-which-key or which-key.nvim
+#==============================================================
 
-" {{{  ensure which-key
-let s:has_wk = 0
+import autoload "../ilib/ui.vim" as iui
+import autoload "./plug.vim" as iplug
 
-if !has('nvim')
-	if imodule#plug#has('vim-which-key')
-    let s:has_wk = 1
-	endif
-else
-	lua << END
-	ok, error = pcall(require, 'which-key')
-	vim.g['imodule#keymap#has_wk'] = ok and 1 or 0
-END
+# ensure which-key
+if !iplug.Has('vim-which-key')
+  iui.Error('has no which-key plugin')
+  finish
 endif
 
-if !s:has_wk
-	call lib#ui#error('has no which-key plugin')
-  finish
-endif  " }}}
+# {{{ global variable
+var s_desc: dict<dict<any>> = {'n': {}, 'v': {}}
+const NEED_ESCAPE_CHAR = ['''']
+const WHICH_KEY = {
+  '<leader>': g:mapleader,
+  '<localleader>': g:maplocalleader,
+  '<esc>': '<Esc>',
+  '<tab>': '<Tab>',
+  '<cr>': '<CR>',
+  '<del>': '<Del>',
+  '<bs>': '<BS>',
+  '<space>': '<Space>'
+}
+# }}}
 
-" {{{ global variable
-let g:imodule#keymap#desc = {'n': {}, 'v': {}}
-let s:desc = g:imodule#keymap#desc
-let s:NEED_ESCAPE_CHAR = ['''']
-let s:WHICH_KEY = {
-      \ '<leader>': g:mapleader,
-      \ '<localleader>': g:maplocalleader,
-      \ '<esc>': '<Esc>',
-      \ '<tab>': '<Tab>',
-      \ '<cr>': '<CR>',
-      \ '<del>': '<Del>',
-      \ '<bs>': '<BS>',
-      \ '<space>': '<Space>'
-      \ }
-" }}}
+#--------------------------------------------------------------
+# split keys string to key list
+#--------------------------------------------------------------
+def Split(key_seq: string): list<string>
+	var keys: list<string> = []
+	var in_key: bool = false
 
-"--------------------------------------------------------------
-" split keys string to key list
-"--------------------------------------------------------------
-function! s:Split(keys)
-	let key_seq = a:keys
-	let keys = []
-	let in_key = 0
-
-	let i = 0
+	var i: number = 0
 	while i < len(key_seq)
-		let c = key_seq[i]
+		var c: string = key_seq[i]
 		if c == '<' && match(key_seq, '<[^<]\{-}>', i) == i
-			let j = stridx(key_seq, '>', i + 1)
-			let keys += [key_seq[i : j]]
-			let i = j + 1
+			var j: number = stridx(key_seq, '>', i + 1)
+			keys += [key_seq[i : j]]
+			i = j + 1
 		else
-			let keys += [c]
-			let i = i + 1
+			keys += [c]
+			i = i + 1
 		endif
 	endwhile
 
 	return keys
-endfunc
+enddef
 
-"function! s:TestSplit()
-"	echom s:Split("ab")
-"	echom s:Split("<tab><space>abc")
-"	echom s:Split("<tab>abc<space>abc")
-"	echom s:Split("abc<tab>abc<space>")
-"	echom s:Split("abc<tababc<space>")
-"	echom s:Split("abc<tab>space>")
-"	echom s:Split("abc<sp")
-"	echom s:Split("abc>sp")
-"	echom s:Split("abc>s>p")
-"	echom s:Split("abc<s<p")
-"	echom s:Split("abc<<p")
-"	echom s:Split("abc>>p")
-"endfunc
-"call s:TestSplit()
+#deef TestSplit(): void
+#	echom Split("ab")
+#	echom Split("<tab><space>abc")
+#	echom Split("<tab>abc<space>abc")
+#	echom Split("abc<tab>abc<space>")
+#	echom Split("abc<tababc<space>")
+#	echom Split("abc<tab>space>")
+#	echom Split("abc<sp")
+#	echom Split("abc>sp")
+#	echom Split("abc>s>p")
+#	echom Split("abc<s<p")
+#	echom Split("abc<<p")
+#	echom Split("abc>>p")
+#enddef
+#TestSplit()
 
-function! s:GenDict(mode, keys) abort
-  let dict = 'g:imodule#keymap#desc["'.a:mode.'"]'
-  for k in a:keys
+def GenDict(mode: string, keys: list<string>): string
+  var dict = "s_desc['" .. mode .. "']"
+  for k in keys
     if !eval(printf('has_key(%s, "%s")', dict, k))
-      exec printf("let %s['%s'] = {}", dict, k)
+      exec printf("%s['%s'] = {}", dict, k)
     endif
-    let dict .= "['".k."']"
+    dict ..= "['" .. k .. "']"
   endfor
   return dict
-endfunc
+enddef
 
-" imodule#keymap#add_group({keys}, {group} [, {mode}, {overwrite}])
-function! imodule#keymap#add_group(keys, group, ...) abort
-  let keys = s:Split(a:keys)
-  if len(a:keys) == 0
-    call lib#ui#error('{keys} should not be empty')
+# AddGroup({key_seq}, {group} [, {mode} [, {overwrite}]])
+export def AddGroup(key_seq: string, group: string = null_string,
+    mode: string = 'n', overwrite: bool = false): void
+  var keys: list<string> = Split(key_seq)
+  if len(keys) == 0
+    iui.Error('{keys} should not be empty')
     return
   endif
 
-  let mode = get(a:000, 0, 'n')
-  let overwrite = get(a:000, 1, 0)
-  let desc = s:GenDict(mode, keys)
-  if !eval('has_key('.desc.', "name")') || overwrite
-    exec printf("let %s.name = '%s'", desc,
-          \ empty(a:group) ? 'which_key_ignore' : '+'.a:group)
+  var desc: string = GenDict(mode, keys)
+  if !eval('has_key(' .. desc .. ', "name")') || overwrite
+    exec printf("%s.name = '%s'", desc,
+      empty(group) ? 'which_key_ignore' : ('+' .. group))
   else
-    let groups = eval('split('.desc.'.name, "[\+/]")')
-    for g in groups
-      if g ==? a:group
-        return
-      endif
-    endfor
-    exec printf("let %s.name .= '%s'", desc, empty(a:group) ? '' : '/'.a:group)
+    var groups: list<string> = eval('split(' .. desc .. '.name, "[\+/]")')
+    map(groups, 'tolower(v:val)')
+    if index(groups, tolower(group)) >= 0
+      return
+    endif
+    exec printf("%s.name ..= '%s'", desc, empty(group) ? '' : ('/' .. group))
   endif
-endfunc
+enddef
 
-function! imodule#keymap#add_desc(keys, desc, ...) abort
-  let keys = s:Split(a:keys)
-  if len(a:keys) == 0
-    call lib#ui#error('{keys} should not be empty')
+export def AddDesc(key_seq: string, desc_str: string, mode: string = 'n')
+  var keys: list<string> = Split(key_seq)
+  if len(keys) == 0
+    iui.Error('{keys} should not be empty')
     return
   endif
 
-  let mode = get(a:000, 0, 'n')
-  let desc = s:GenDict(mode, keys)
-  exec printf("let %s = '%s'", desc, empty(a:desc) ? 'which_key_ignore' : a:desc)
-endfunc
+  var desc: string = GenDict(mode, keys)
+  exec printf("%s = '%s'", desc,
+    empty(desc_str) ? 'which_key_ignore' : desc_str)
+enddef
 
-function! s:RegisterWhichKey()
-  for mode in keys(g:imodule#keymap#desc)
-    for k in keys(s:desc[mode])
-      let which_key = get(s:WHICH_KEY, k, k)
-      call which_key#register(which_key, g:imodule#keymap#desc[mode][k], mode)
+g:imodule#keymap#desc = s_desc
+def RegisterWhichKey(): void
+  for mode in keys(s_desc)
+    for k in keys(s_desc[mode])
+      var which_key: string = get(WHICH_KEY, k, k)
+      which_key#register(which_key, g:imodule#keymap#desc[mode][k], mode)
       exec printf("%snoremap <silent> %s :<C-u>WhichKey%s '%s'<CR>",
             \ mode, k, (mode ==? 'n' ? '' : 'Visual'), which_key)
     endfor
   endfor
-endfunc
-augroup ivim_imodule_keymap
+enddef
+
+augroup ivim_autoload_imodule_keymap
   au!
-  au VimEnter * call s:RegisterWhichKey()
+  au VimEnter * RegisterWhichKey()
 augroup END

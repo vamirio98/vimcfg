@@ -1,82 +1,124 @@
-let s:windows = ilib#platform#is_win()
-let g:ilib#core#windows = s:windows
-let g:ilib#core#unix = !s:windows
+vim9script
+
+import autoload "./platform.vim" as iplatform
+import autoload "./path.vim" as ipath
+import autoload "./string.vim" as istring
+import autoload "./python.vim" as ipython
+
+const WIN: bool = iplatform.WIN
+var shell_error: number = 0
 
 
-"----------------------------------------------------------------------
-" call system: system(cmd [, cwd [, encoding [, input]]])
-"----------------------------------------------------------------------
-function! ilib#core#system(cmd, ...)
-	let cwd = ((a:0) > 0)? (a:1) : ''
-	if cwd != ''
-		let previous = getcwd()
-		noautocmd call ilib#path#chdir(cwd)
+#----------------------------------------------------------------------
+# call system(): system(cmd [, cwd [, input [, encoding]]])
+#----------------------------------------------------------------------
+export def System(cmd: string, cwd: string = null_string,
+    input: any = null, encoding: string = null_string): any
+  var previous: string = null_string
+  var sinput: string = null_string
+	if cwd != null
+		previous = getcwd()
+		ipath.ChdirNoautocmd(cwd)
 	endif
-	if a:0 >= 3
-		if type(a:3) == type('')
-			let sinput = a:3
-		else
-			let sinput = (type(a:3) == type([]))? join(a:3, "\n") : {}
-		endif
-	else
-		let sinput = {}
+  if input != null
+    sinput = type(input) == v:t_string ? input : (
+      type(input) == v:t_list ? join(input, '\n') : null_string
+    )
 	endif
-	let hr = ilib#python#system(a:cmd, sinput)
-	if cwd != ''
-		noautocmd call ilib#path#chdir(previous)
+	var hr: any = ipython.System(cmd, sinput)
+	if cwd != null
+		ipath.ChdirNoautocmd(previous)
 	endif
-	let g:ilib#core#shell_error = s:shell_error
-	if (a:0) > 1 && has('iconv')
-		let encoding = a:2
-		if encoding != '' && encoding != &encoding
+	shell_error = v:shell_error
+	if encoding != null && has('iconv')
+		if encoding != &encoding
 			try
-				let hr = iconv(hr, a:2, &encoding)
+				hr = iconv(hr, encoding, &encoding)
 			catch
 			endtry
 		endif
 	endif
 	return hr
-endfunc
+enddef
 
 
-"---------------------------------------------------------------
-" safe input
-"---------------------------------------------------------------
-function! ilib#core#input(...)
-	call inputsave()
+#---------------------------------------------------------------
+# safe input
+#---------------------------------------------------------------
+export def Input(...args: list<any>): string
+  var text: string = null_string
+	inputsave()
 	try
-    let text = call('input', a:000)
+    text = call('input', args)
 	catch /^Vim:Interrupt$/
-		let text = ''
+		text = null_string
 	endtry
-	call inputrestore()
-	return ilib#string#strip(text)
-endfunc
+	inputrestore()
+	return istring.Strip(text)
+enddef
 
-"----------------------------------------------------------------
-" Safe confirm
-"----------------------------------------------------------------
-function! ilib#core#confirm(...)
-	call inputsave()
+#----------------------------------------------------------------
+# safe confirm
+#----------------------------------------------------------------
+export def Confirm(...args: list<any>): number
+  var choice: number = 0
+	inputsave()
 	try
-		let hr = call('confirm', a:000)
+		choice = call('confirm', args)
 	catch /^Vim:Interrupt$/
-		let hr = 0
+		choice = 0
 	endtry
-	call inputrestore()
-	return hr
-endfunc
+	inputrestore()
+	return choice
+enddef
 
-"----------------------------------------------------------------------
-" Safe inputlist
-"----------------------------------------------------------------------
-function! ilib#core#inputlist(textlist)
-	call inputsave()
+#----------------------------------------------------------------------
+# safe inputlist
+#----------------------------------------------------------------------
+export def Inputlist(textlist: list<string>): number
+  var choice: number = 0
+	inputsave()
 	try
-		let hr = inputlist(a:textlist)
+		choice = inputlist(textlist)
 	catch /^Vim:Interrupt$/
-		let hr = -1
+		choice = 0
 	endtry
-	call inputrestore()
-	return hr
-endfunc
+	inputrestore()
+	return choice
+enddef
+
+
+#----------------------------------------------------------------------
+# find files in $PATH
+#----------------------------------------------------------------------
+export def Which(name: string): string
+  var sep: string = WIN ? ';' : ':'
+	if ipath.IsAbs(name) && filereadable(name)
+    return name
+	endif
+	for path in split($PATH, sep)
+		var filename: string = ipath.Join(path, name)
+		if filereadable(filename)
+			return ipath.Abspath(filename)
+		endif
+	endfor
+	return null_string
+enddef
+
+
+#----------------------------------------------------------------------
+# find executable in $PATH
+#----------------------------------------------------------------------
+export def Executable(name: string): string
+	if !WIN
+		return Which(name)
+	else
+		for n in ['.exe', '.cmd', '.bat', '.vbs']
+			var nname: string = name .. n
+			var npath: string = Which(nname)
+			if npath != null
+				return npath
+			endif
+		endfor
+	endif
+enddef

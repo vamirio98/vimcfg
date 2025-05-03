@@ -1,18 +1,23 @@
-let s:windows = g:ilib#platform#windows
+vim9script
 
-"----------------------------------------------------------------------
-" guess root
-"----------------------------------------------------------------------
-function! s:GuessRoot(filename, markers)
-	let fullname = ilib#path#abspath(a:filename)
-	let pivot = fullname
+import autoload "./platform.vim" as iplatform
+import autoload "./path.vim" as ipath
+
+const WIN: bool = iplatform.WIN
+
+#----------------------------------------------------------------------
+# guess root
+#----------------------------------------------------------------------
+def GuessRoot(filename: string, markers: list<string>): string
+	var fullname: string = ipath.Abspath(filename)
+	var pivot: string = fullname
 	if !isdirectory(pivot)
-		let pivot = fnamemodify(pivot, ':h')
+		pivot = fnamemodify(pivot, ':h')
 	endif
-	while 1
-		let prev = pivot
-		for marker in a:markers
-			let newname = ilib#path#join(pivot, marker)
+	while true
+		var prev: string = pivot
+		for marker in markers
+			var newname: string = ipath.Join(pivot, marker)
 			if newname =~ '[\*\?\[\]]'
 				if glob(newname) != ''
 					return pivot
@@ -23,105 +28,101 @@ function! s:GuessRoot(filename, markers)
 				return pivot
 			endif
 		endfor
-		let pivot = fnamemodify(pivot, ':h')
+		pivot = fnamemodify(pivot, ':h')
 		if pivot == prev
 			break
 		endif
 	endwhile
-	return ''
-endfunc
+	return null_string
+enddef
 
 
-"----------------------------------------------------------------------
-" find project root
-" @param name Path, bufnr or '%'
-" @param markers Root markers
-" @param strict If 1, return '' if not found, otherwise the cwd
-"----------------------------------------------------------------------
-function! s:FindRoot(name, markers, strict)
-	let path = ''
-	if type(a:name) == v:t_number
-		let bid = (a:name < 0)? bufnr('%') : (a:name + 0)
-		let path = bufname(bid)
-		let root = getbufvar(bid, 'ivim_root', '')
-		if root != ''
+#----------------------------------------------------------------------
+# FindRoot({name}, {markers}, {strict})
+# find project root
+# {name} path, bufnr or '%'
+# {markers} root markers
+# {strict} if true, return null_string when not found, otherwise the cwd
+#----------------------------------------------------------------------
+def FindRoot(name: any, markers: list<string> = null_list,
+    strict: bool = false): string
+	var path: string = null_string
+  var root: string = null_string
+	if type(name) == v:t_number
+		var bid: number = (name < 0) ? bufnr('%') : name
+		path = bufname(bid)
+		root = getbufvar(bid, 'ivim_root', null_string)
+		if root != null
 			return root
-		elseif exists('g:ivim_root') && g:ivim_root != ''
+		elseif exists('g:ivim_root') && g:ivim_root != null_string
 			return g:ivim_root
 		elseif exists('g:ivim_root_locator')
-			let root = call(g:ivim_root_locator, [bid])
-			if root != ''
+			root = call(g:ivim_root_locator, [bid])
+			if root != null
 				return root
 			endif
 		endif
-		if getbufvar(bid, '&buftype') != ''
-			let path = getcwd()
-			return ilib#path#abspath(path)
+		if getbufvar(bid, '&buftype') != null_string
+			path = getcwd()
+			return ipath.Abspath(path)
 		endif
-	elseif a:name == '%'
-		let path = a:name
-		if exists('b:ivim_root') && b:ivim_root != ''
+	elseif name == '%'
+		path = name
+		if exists('b:ivim_root') && b:ivim_root != null
 			return b:ivim_root
-		elseif exists('t:ivim_root') && t:ivim_root != ''
+		elseif exists('t:ivim_root') && t:ivim_root != null
 			return t:ivim_root
-		elseif exists('g:ivim_root') && g:ivim_root != ''
+		elseif exists('g:ivim_root') && g:ivim_root != null
 			return g:ivim_root
 		elseif exists('g:ivim_root_locator')
-			let root = call(g:ivim_root_locator, [a:name])
-			if root != ''
+			root = call(g:ivim_root_locator, [name])
+			if root != null
 				return root
 			endif
 		endif
 	else
-		let path = printf('%s', a:name)
+		path = printf('%s', name)
 	endif
-	let root = s:GuessRoot(path, a:markers)
-	if root != ''
-		return ilib#path#abspath(root)
-	elseif a:strict != 0
-		return ''
+	root = GuessRoot(path, markers)
+	if root != null
+		return ipath.Abspath(root)
+	elseif strict
+		return null_string
 	endif
-	" Not found: return parent directory of current file / file itself.
-	let fullname = ilib#path#abspath(path)
+	# Not found: return parent directory of current file / file itself.
+	var fullname: string = ipath.Abspath(path)
 	if isdirectory(fullname)
 		return fullname
 	endif
-	return ilib#path#abspath(fnamemodify(fullname, ':h'))
-endfunc
+	return ipath.Abspath(fnamemodify(fullname, ':h'))
+enddef
 
 
-"----------------------------------------------------------------------
-" get project root
-" @param name Path, bufnr or '%'
-" @param markers Root markers
-" @param strict If 1, return '' if not found, otherwise the cwd
-"----------------------------------------------------------------------
-function! ilib#project#get_root(path, ...)
-	let markers = ['.root', '.git', '.hg', '.svn', '.project']
-	if exists('g:ivim_rootmarkers')
-		let markers = g:ivim_rootmarkers
+#----------------------------------------------------------------------
+# GetRoot({path} [, {markers}, {strict}])
+# get project root
+# {name} path, bufnr or '%'
+# {markers} root markers
+# {strict} if true, return null_string if not found, otherwise the cwd
+#----------------------------------------------------------------------
+export def GetRoot(path: string, markers: list<string> = null_list,
+    strict: bool = false): string
+  var new_markers: list<string> = get(g:, 'ivim_rootmarkers',
+    ['.root', '.git', '.hg', '.svn', '.project'])
+  if markers != null
+    new_markers = markers
+  endif
+  var hr: string = FindRoot(path, new_markers, strict)
+	if WIN
+		hr = join(split(hr, '/', 1), "\\")
 	endif
-	if a:0 > 0
-		if type(a:1) == type([])
-			let markers = a:1
-		endif
-	endif
-	let strict = (a:0 >= 2)? (a:2) : 0
-	if type(a:path) == v:t_number && (a:path == 0)
-		let l:hr = s:FindRoot('%', markers, strict)
-	else
-		let l:hr = s:FindRoot(a:path, markers, strict)
-	endif
-	if s:windows != 0
-		let l:hr = join(split(l:hr, '/', 1), "\\")
-	endif
-	return l:hr
-endfunc
+	return hr
+enddef
 
 
-"----------------------------------------------------------------------
-" current root
-"----------------------------------------------------------------------
-function! ilib#project#current_root()
-	return ilib#project#get_root('%')
-endfunc
+#----------------------------------------------------------------------
+# current root
+#----------------------------------------------------------------------
+export def CurRoot(): string
+	return GetRoot('%')
+enddef

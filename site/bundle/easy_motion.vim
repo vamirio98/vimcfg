@@ -1,8 +1,10 @@
+vim9script
+
 noremap s <Cmd>call stargate#OKvim(1)<CR>
 
-let g:stargate_name = 'Master'
+g:stargate_name = 'Master'
 
-" set highlight after plugin load finishing to avoid color miss
+# set highlight after plugin load finishing to avoid color miss
 augroup ivim_easy_motion
   au!
   au VimEnter * hi! link StargateFocus Comment

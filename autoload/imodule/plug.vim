@@ -1,21 +1,13 @@
-function! imodule#plug#has(plugin) abort
-	if !has('nvim')
-		" vim-plug store all plugin in the variable `g:plugs`
-		return has_key(g:plugs, a:plugin)
-	else
-		return luaeval('require("lazy.core.config").spec.plugins["' . a:plugin . '"] ~= nil')
-	endif
-endfunc
+vim9script
 
-function! imodule#plug#plugin_dir(plugin) abort
-	let plugin = a:plugin
-	if !imodule#plug#has(plugin)
-		throw 'no such plugin: ' . plugin
-	endif
+export def Has(plugin: string): bool
+  # vim-plug store all plugin in the variable `g:plugs`
+  return has_key(g:plugs, plugin)
+enddef
 
-	if !has('nvim')
-		return g:plugs[plugin].dir
-	else
-		return luaeval('require("lazy.core.config").spec.plugins["' . plugin . '"].dir')
+export def PluginDir(plugin: string): string
+	if !Has(plugin)
+		throw 'no such plugin: ' .. plugin
 	endif
-endfunc
+  return g:plugs[plugin].dir
+enddef

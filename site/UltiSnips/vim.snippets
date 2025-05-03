@@ -1,0 +1,64 @@
+priority 100
+
+global !p
+def IsVim9():
+	return vim.eval('getline(1)') == 'vim9script'
+
+def GenPlaceholder(snip):
+	anon_snippet_body = ""
+
+	# get start and end line number of expanded snippet
+	lstart = snip.snippet_start[0]
+	lend = snip.snippet_end[0]
+
+	# copy all lines into anonymous snippet
+	for i in range(lstart, lend + 1):
+		anon_snippet_body += snip.buffer[i]
+		anon_snippet_body += "" if i == lend else "\n"
+
+	# delete expanded snippet line till second to last line
+	for i in range(lstart, lend):
+		del snip.buffer[lstart]
+
+	# empty last expanded snippet line while preserving the line
+	snip.buffer[lstart] = ''
+
+	# expand anonymous snippet
+	snip.expand_anon(anon_snippet_body)
+endglobal
+
+context "vim.eval('getline(1)') != 'vim9script'"
+snippet frame "section comment head" b
+"===============================================================
+" ${1}
+"===============================================================
+${0}
+endsnippet
+
+context "vim.eval('getline(1)') == 'vim9script'"
+snippet frame "section comment head" b
+#===============================================================
+# ${1}
+#===============================================================
+${0}
+endsnippet
+
+post_jump "GenPlaceholder(snip)"
+snippet iframe "function comment head" b
+`!p
+vim9 = IsVim9()
+sign = '#' if vim9 else '"'
+text = [
+f"{sign}---------------------------------------------------------------",
+f"{sign} ${1}",
+f"{sign}---------------------------------------------------------------",
+"${0}"
+]
+snip.rv = "\n".join(text)
+`
+endsnippet
+
+snippet scriptdir "script directory" b
+`!p snip.rv = 'var' if IsVim9() else "let"` ${1}`!p snip.rv = ': string' if IsVim9() else ''` = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+${0}
+endsnippet

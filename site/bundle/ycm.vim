@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+
 g:ycm_auto_trigger = 1
 
 g:ycm_enable_semantic_highlighting = 1
@@ -24,36 +26,38 @@ g:ycm_clangd_args = [ '--header-insertion=never' ]
 
 # {{{ map
 
-imodule#keymap#add_group('<leader>c', 'code')
-var Desc = function('imodule#keymap#add_desc')
+var AddGroup = ikeymap.AddGroup
+var AddDesc = ikeymap.AddDesc
 
 imap <C-l> <Plug>(YCMToggleSignatureHelp)
 
 nmap K <Plug>(YCMHover)
 
 # {{{ code
+AddGroup('<leader>c', 'code')
+
 nmap <leader>cc <Plug>(YCMCallHierarchy)
-Desc('<leader>cc', 'Call Hierarchy')
+AddDesc('<leader>cc', 'Call Hierarchy')
 
 def FindDiag(): void
   exec 'YcmDiags'
   exec 'Leaderf --bottom loclist'
 enddef
 nnoremap <leader>cd <Cmd>call <SID>FindDiag()<CR>
-Desc('<leader>cd', 'Show All Diags')
+AddDesc('<leader>cd', 'Show All Diags')
 g:ycm_key_detailed_diagnostics = '<leader>cD'
-Desc('<leader>cD', 'Show Diag Detail')
+AddDesc('<leader>cD', 'Show Diag Detail')
 
 nnoremap <leader>cf <Cmd>YcmCompleter Format<CR>
-Desc('<leader>cf', 'Format')
+AddDesc('<leader>cf', 'Format')
 vnoremap <leader>cf <Cmd>'<,'>YcmCompleter Format<CR>
-Desc('<leader>cf', 'Format', 'v')
+AddDesc('<leader>cf', 'Format', 'v')
 
 nnoremap <leader>ch <Cmd>YcmCompleter GoToAlternateFile<CR>
-Desc('<leader>ch', 'Switch Header/Source')
+AddDesc('<leader>ch', 'Switch Header/Source')
 
 nnoremap <leader>cq <Cmd>YcmCompleter FixIt<CR>
-Desc('<leader>cq', 'Quick Fix')
+AddDesc('<leader>cq', 'Quick Fix')
 
 def RenameSymbol(): void
   let new_name = ilib#core#input('New name: ')
@@ -63,12 +67,12 @@ def RenameSymbol(): void
   exec 'YcmCompleter RefactorRename' new_name
 enddef
 nnoremap <leader>cr <ScriptCmd>call RenameSymbol()<CR>
-Desc('<leader>cr', 'Rename Symbol')
+AddDesc('<leader>cr', 'Rename Symbol')
 nnoremap <leader>cR <Cmd>YcmForceCompileAndDiagnostics<CR>
-Desc('<leader>cR', 'Refresh Diags')
+AddDesc('<leader>cR', 'Refresh Diags')
 
 nmap <leader>ct <Plug>(YCMTypeHierarchy)
-Desc('<leader>ct', 'Type Hierarchy')
+AddDesc('<leader>ct', 'Type Hierarchy')
 # }}}
 
 # {{{ search
@@ -78,36 +82,36 @@ def FindSymbolCurDoc()
   exec 'Leaderf --nameOnly quickfix'
 enddef
 nnoremap <leader>ss <ScriptCmd>call FindSymbolCurDoc()<CR>
-imodule#keymap#add_group('<leader>s', 'search')
-Desc('<leader>ss', 'Symbol (Current File)')
+AddGroup('<leader>s', 'search')
+AddDesc('<leader>ss', 'Symbol (Current File)')
 # }}}
 
 # {{{ toggle
 nmap <leader>uh <Plug>(YCMToggleInlayHints)
-imodule#keymap#add_group('<leader>u', 'ui')
-Desc('<leader>uh', 'Toggle Inlay Hints')
+AddGroup('<leader>u', 'ui')
+AddDesc('<leader>uh', 'Toggle Inlay Hints')
 # }}}
 
 # {{{ goto
 nnoremap gd <Cmd>YcmCompleter GoToDeclaration<CR>
-Desc('gd', 'Go to Declaration')
+AddDesc('gd', 'Go to Declaration')
 nnoremap gD <Cmd>YcmCompleter GoToDefinition<CR>
-Desc('gD', 'Go to Definition')
+AddDesc('gD', 'Go to Definition')
 nnoremap gi <Cmd>YcmCompleter GoToImplementation<CR>
-Desc('gi', 'Go to Implementation')
+AddDesc('gi', 'Go to Implementation')
 def FindReferences()
   exec 'YcmCompleter GoToReferences'
   silent! cclose
   exec 'Leaderf quickfix'
 enddef
 nnoremap gr <ScriptCmd>call FindReferences()<CR>
-Desc('gr', 'Go to References')
+AddDesc('gr', 'Go to References')
 # }}}
 
 # }}}
 
 # load lsp config
-exec 'so ' .. fnameescape(g:bundle_home .. '/lsp-examples/vimrc.generated')
+exec 'so ' .. fnameescape(g:ivim_bundle_home .. '/lsp-examples/vimrc.generated')
 # setup lsp {{{
 const LSP = [
        # {
@@ -131,7 +135,7 @@ augroup ivim_ycm
   au!
   au FileType c,cpp b:ycm_hover = { 'command': 'GetDoc', 'syntax': &ft, }
   au FileType python b:ycm_hover = { 'command': 'GetHover', 'syntax': &ft, }
-  au FileType vim b:ycm_hover = {'command': 'GetHover', 'syntax': 'help'}
+  #au FileType vim b:ycm_hover = {'command': 'GetHover', 'syntax': 'help'}
 augroup END
 
 command! -nargs=0 IvimLspRestart exec 'YcmRestartServer'

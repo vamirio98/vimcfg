@@ -1,6 +1,7 @@
 vim9script
 
 import autoload "../../autoload/ilib/string.vim" as istring
+import autoload "../../autoload/imodule/keymap.vim" as ikeymap
 
 g:indent_guides_default_mapping = 0
 g:indent_guides_guide_size = 0
@@ -12,7 +13,7 @@ g:indent_guides_tab_guides = 0
 
 # {{{ keymap
 def StripListchars(listchars: string): string
-  var lc = listchars
+  var lc: string = listchars
   if istring.Contains(lc, 'tab:')
     lc = substitute(lc, '\vtab:.{-},', 'tab:\\ \\ ,', '')
   endif
@@ -21,26 +22,26 @@ def StripListchars(listchars: string): string
   endif
   return lc
 enddef
-def IvimIndentGuidesEnable(): void
+def g:IvimIndentGuidesEnable(): void
   exec 'IndentGuidesEnable'
   exec 'setlocal listchars=' .. StripListchars(g:ivim_listchars)
 enddef
-def IvimIndentGuidesDisable(): void
+def g:IvimIndentGuidesDisable(): void
   exec 'IndentGuidesDisable'
   exec 'setlocal listchars=' .. g:ivim_listchars
 enddef
-def ToggleIndentGuides(): void
+def g:ToggleIndentGuides(): void
   b:ivim_indent_guide_enabled = !get(b:, 'ivim_indent_guide_enabled', 0)
   if b:ivim_indent_guide_enabled
-    IvimIndentGuidesEnable()
+    g:IvimIndentGuidesEnable()
   else
-    IvimIndentGuidesDisable()
+    g:IvimIndentGuidesDisable()
   endif
 enddef
 
-imodule#keymap#add_group('<leader>u', 'ui')
-imodule#keymap#add_desc('<leader>ui', 'Toggle Indent Guides')
-nnoremap <leader>ui <ScriptCmd>call ToggleIndentGuides()<CR>
+ikeymap.AddGroup('<leader>u', 'ui')
+ikeymap.AddDesc('<leader>ui', 'Toggle Indent Guides')
+nnoremap <leader>ui <Cmd>call g:ToggleIndentGuides()<CR>
 # }}}
 
 if !has('gui_running')
@@ -50,6 +51,6 @@ if !has('gui_running')
     au VimEnter,Colorscheme * :hi link IndentGuidesOdd DiffAdd
     au VimEnter,Colorscheme * :hi link IndentGuidesEven ToolbarLine
     au BufReadPost,BufNewFile * if &expandtab
-      | IvimIndentGuidesEnable() | endif
+      | g:IvimIndentGuidesEnable() | endif
   augroup END
 endif

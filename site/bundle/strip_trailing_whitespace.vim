@@ -1,4 +1,6 @@
-augroup ivim_bundle_strip_trailing_whitespace
+vim9script
+
+augroup ivim_strip_trailing_whitespace
   au!
-  au FileType nofile let b:strip_trailing_whitespace_enabled = 0
+  au FileType dirvish b:strip_trailing_whitespace_enabled = 0
 augrou END
