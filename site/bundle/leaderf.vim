@@ -97,6 +97,9 @@ AddDesc('<leader>sc', 'Command History')
 nnoremap <leader>sh <Cmd>LeaderfHelp<CR>
 AddDesc('<leader>sh', 'Help Tag')
 
+nnoremap <leader>sj <Cmd>Leaderf jumps<CR>
+AddDesc('<leader>sj', 'Jump List')
+
 nnoremap <leader>sk <Cmd>LeaderfMap<CR>
 AddDesc('<leader>sk', 'Keymap')
 
@@ -123,7 +126,7 @@ nnoremap <leader>s: <Cmd>LeaderfCommand<CR>
 AddDesc('<leader>s:', 'Command')
 nnoremap <leader>s/ <Cmd>LeaderfHistorySearch<CR>
 AddDesc('<leader>s/', 'Search History')
-nnoremap <leader>/ <Cmd>Leaderf rg<CR>
+nnoremap <leader>/ <Cmd>Leaderf rg --nameOnly<CR>
 AddDesc('<leader>/', 'Live Search')
 # }}}
 

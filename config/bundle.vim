@@ -25,7 +25,7 @@ for key in g:ivim_bundle
   s_bundle[key] = true
 endfor
 if !exists('g:ivim_lsp_provider')
-  g:ivim_lsp_provider = 'ycm'
+  g:ivim_lsp_provider = 'coc'
 endif
 
 # specify a directory for plugins
@@ -105,7 +105,7 @@ if has_key(s_bundle, 'editor')
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-speeddating'
   Plug 'svermeulen/vim-yoink'
-  # TODO: create map
+  LoadConf site/bundle/yoink.vim
 endif
 # }}}
 
@@ -133,7 +133,7 @@ if has_key(s_bundle, 'ui')
   LoadConf site/bundle/lightline.vim
 
   Plug 'machakann/vim-highlightedyank'
-  # TODO:
+  LoadConf site/bundle/highlightedyank.vim
 endif
 # }}}
 

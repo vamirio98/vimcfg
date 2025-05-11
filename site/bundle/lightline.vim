@@ -2,6 +2,7 @@ vim9script
 
 import autoload "../../autoload/imodule/keymap.vim" as ikeymap
 import autoload "../../autoload/ilib/ui.vim" as iui
+import autoload "../../autoload/imodule/plug.vim" as iplug
 
 # {{{ setting
 set noshowmode
@@ -29,7 +30,7 @@ g:lightline.colorscheme = 'gruvbox_material'
 
 g:lightline.active = {
   'left': [ ['mode', 'paste'],
-    ['gitbranch', 'lspdiag', 'filename', 'modified'],
+    ['gitbranch', 'lspdiag', 'ivim_filename', 'modified'],
   ],
   'right': [ ['lineinfo'], ['percent'],
     ['gitsummary', 'fileformat', 'filetype'],
@@ -40,7 +41,9 @@ g:lightline.tabline = {
   'right': [ ['tabs'] ],
 }
 
-g:lightline.component_function = {}
+g:lightline.component_function = {
+  'ivim_filename': 'g:IvimFilename',
+}
 g:lightline.component_expand = {
   'buffers': 'lightline#bufferline#buffers',
   'gitsummary': "g:IvimStlGitSummary",
@@ -53,6 +56,7 @@ g:lightline.component_type = {
 # }}}
 
 # {{{ component utils
+# {{{ setup color group
 def SetupStlColor()
   hi! link IvimStlA LightlineLeft_normal_0
   hi! link IvimStlB LightlineLeft_normal_1
@@ -72,10 +76,22 @@ def NewColor(name: string, bg: string, fg: string): void
   exec printf('hi! %s ctermbg=%s ctermfg=%s guibg=%s guifg=%s',
     name, nbg.ctermbg, nfg.ctermfg, nbg.guibg, nfg.guifg)
 enddef
+# }}}
 
-#---------------------------------------------------------------
-# git summary
-#---------------------------------------------------------------
+# {{{ filename
+def g:IvimFilename(): string
+  var fn = expand('%')
+  if &ft == 'dirvish'
+    return fn == '/' ? fn : fnamemodify(fn, ':h:t')
+  else
+    fn = fnamemodify(fn, ':t')
+    fn = fn == '' ? "[No Name]" : fn
+    return fn
+  endif
+enddef
+# }}}
+
+# {{{ git summary
 def SetupStlGitSumColor(): void
   NewColor('IvimStlGitSumAdd', 'IvimStlX', 'GitGutterAdd')
   NewColor('IvimStlGitSumChange', 'IvimStlX', 'GitGutterChange')
@@ -92,10 +108,9 @@ def g:IvimStlGitSummary(): string
     (r == 0 ? '' : '%#IvimStlGitSumDelete#-' .. string(r) .. '%*')
   )
 enddef
+# }}}
 
-#---------------------------------------------------------------
-# git branch
-#---------------------------------------------------------------
+# {{{ git branch
 def SetupStlGitBranchColor(): void
   NewColor('IvimStlGitBranch', 'IvimStlB', 'Blue')
 enddef
@@ -104,25 +119,42 @@ def g:IvimStlGitBranch(): string
   return printf('%s', len(br) == 0 ? '' : '%#IvimStlGitBranch# ' ..
     br .. '%#IvimStlB#')
 enddef
+# }}}
 
-#---------------------------------------------------------------
-# lsp diag
-#---------------------------------------------------------------
+# {{{ lsp diag
 def SetupStlLspDiagColor(): void
   NewColor('IvimStlLspDiagError', 'IvimStlB', 'Red')
   NewColor('IvimStlLspDiagWarn', 'IvimStlB', 'Yellow')
 enddef
 def g:IvimStlLspDiag(): string
-  var error = youcompleteme#GetErrorCount()
-  var warn = youcompleteme#GetWarningCount()
-  return printf('%s%s%s',
-    (error == 0 ? '' :
-      '%#IvimStlLspDiagError# ' .. string(error) .. '%#IvimStlB#'),
-    (error > 0 && warn > 0 ? ' ' : ''),
-    (warn == 0 ? '' :
-      '%#IvimStlLspDiagWarn# ' .. string(warn) .. '%#IvimStlB#')
-  )
+  var ret: string = null_string
+
+  if iplug.Has('coc.nvim')
+    var error = b:coc_diagnostic_info.error
+    var warn = b:coc_diagnostic_info.warning
+    ret = printf('%s%s%s',
+      (error == 0 ? '' :
+        '%#IvimStlLspDiagError# ' .. string(error) .. '%#IvimStlB#'),
+      (error > 0 && warn > 0 ? ' ' : ''),
+      (warn == 0 ? '' :
+        '%#IvimStlLspDiagWarn# ' .. string(warn) .. '%#IvimStlB#')
+    )
+  elseif iplug.Has('YouCompleteMe')
+    var error = youcompleteme#GetErrorCount()
+    var warn = youcompleteme#GetWarningCount()
+    ret = printf('%s%s%s',
+      (error == 0 ? '' :
+        '%#IvimStlLspDiagError# ' .. string(error) .. '%#IvimStlB#'),
+      (error > 0 && warn > 0 ? ' ' : ''),
+      (warn == 0 ? '' :
+        '%#IvimStlLspDiagWarn# ' .. string(warn) .. '%#IvimStlB#')
+    )
+  endif
+
+  return ret
 enddef
+# }}}
+
 # }}}
 
 # {{{ keymap
@@ -154,7 +186,11 @@ augroup ivim_lightline
   au!
   # wait for colorscheme loaded
   au VimEnter * SetupStlColor()
-  au CursorHold * lightline#update()
+  if iplug.Has('coc.nvim')
+    au User CocStatusChange lightline#update()
+  elseif iplug.Has('YouCompleteMe')
+    au CursorHold * lightline#update()
+  endif
   au User GitGutter lightline#update()
 
   # update bufferline when buffer list change, or a deleted buffer may remain

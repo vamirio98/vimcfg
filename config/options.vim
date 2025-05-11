@@ -24,11 +24,11 @@ set hlsearch # highlight the search results
 set incsearch # dynamically and incrementally display the search results
 
 if has('multi_byte')
-	set termencoding=utf-8  # terminal encoding
-	set encoding=utf-8  # internal working encoding
-	set fileencoding=utf-8  # default file encoding
-	# auto try the following encoding when opening a file
-	set fileencodings=ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin1
+    set termencoding=utf-8  # terminal encoding
+    set encoding=utf-8  # internal working encoding
+    set fileencoding=utf-8  # default file encoding
+    # auto try the following encoding when opening a file
+    set fileencodings=ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin1
 endif
 
 # break at a multibyte character above 255, used for Asian text where every
@@ -40,9 +40,6 @@ set formatoptions+=B
 
 set mouse=a
 
-# when split a window vertically, display the new one on the right side
-set splitright
-
 set hidden
 set autowrite
 
@@ -50,10 +47,10 @@ set viewoptions=cursor,curdir,folds,slash,unix
 
 set clipboard=unnamedplus
 if (!empty($SSH_TTY) || iplatform.WSL)
-	set clipboard=
-	# let vim clipboard sync with system
-	# from https://www.zhihu.com/tardis/zm/ans/2156080913?source_id=1003
-	def RawEcho(str: string)
+    set clipboard=
+    # let vim clipboard sync with system
+    # from https://www.zhihu.com/tardis/zm/ans/2156080913?source_id=1003
+    def RawEcho(str: string)
     if filewritable('/dev/fd/2')
       writefile([str], '/dev/fd/2', 'b')
     else
@@ -62,17 +59,17 @@ if (!empty($SSH_TTY) || iplatform.WSL)
     endif
   enddef
 
-	def Copy(): void
-		var c: string = join(v:event.regcontents, "\n")
-		var c64: string = system("base64", c)
-		var s: string = "\e]52;c;" .. trim(c64) .. "\x07"
-		RawEcho(s)
+    def Copy(): void
+        var c: string = join(v:event.regcontents, "\n")
+        var c64: string = system("base64", c)
+        var s: string = "\e]52;c;" .. trim(c64) .. "\x07"
+        RawEcho(s)
   enddef
 
-	augroup ivim_config_system_clipboard
-		au!
-		au TextYankPost * Copy()
-	augroup END
+    augroup ivim_config_system_clipboard
+        au!
+        au TextYankPost * Copy()
+    augroup END
 endif
 
 set completeopt=menu,menuone,noselect
@@ -125,13 +122,13 @@ set shortmess+=WIcC
 
 # set navigation and font in GUI
 if has('gui_running')
-	set guioptions-=m  " remove menu bar.
-	set guioptions-=T  " remove toolbar.
-	set guioptions-=r  " remove right-hand scrollbar.
-	set guioptions-=L  " remove left-hand scrollbar.
-	set guioptions-=e  " use a non-GUI tab pages line.
-	set guifont=JetBrains_Mono_NL:h13,JetBrainsMonoNL_NFM:h13
-	set guifontwide=楷体:h15
+    set guioptions-=m  " remove menu bar.
+    set guioptions-=T  " remove toolbar.
+    set guioptions-=r  " remove right-hand scrollbar.
+    set guioptions-=L  " remove left-hand scrollbar.
+    set guioptions-=e  " use a non-GUI tab pages line.
+    set guifont=JetBrains_Mono_NL:h13,JetBrainsMonoNL_NFM:h13
+    set guifontwide=楷体:h15
 endif
 
 set laststatus=2

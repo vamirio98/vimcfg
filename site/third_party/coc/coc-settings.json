@@ -1,0 +1,34 @@
+{
+  "coc.preferences.maxFileSize": "10MB",
+  "colors.enable": true,
+  "codeLens.enable": true,
+  "semanticTokens.enable": true,
+  "suggest.enablePreselect": false,
+  "suggest.noselect": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.highlightLimit": 100,
+  "inlayHint.position": "inline",
+  "inlayHint.enable": true,
+  "inlayHint.display": false,
+  "hover.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "suggest.floatConfig": {
+    "border": false,
+    "rounded": true
+  },
+  "signature.floatConfig": {
+    "border": false,
+    "rounded": true
+  },
+  "diagnostic.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "python.venvPath": "~/.venv/bin/python3",
+  "signature.target": "echo",
+}

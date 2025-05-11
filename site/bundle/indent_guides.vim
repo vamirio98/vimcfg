@@ -50,7 +50,7 @@ if !has('gui_running')
     au!
     au VimEnter,Colorscheme * :hi link IndentGuidesOdd DiffAdd
     au VimEnter,Colorscheme * :hi link IndentGuidesEven ToolbarLine
-    au BufReadPost,BufNewFile * if &expandtab
+    au BufAdd * if &expandtab
       | g:IvimIndentGuidesEnable() | endif
   augroup END
 endif
