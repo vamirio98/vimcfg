@@ -215,9 +215,11 @@ augroup ivim_lightline
   au VimEnter * SetupStlColor()
   if iplug.Has('coc.nvim')
     au User CocStatusChange lightline#update()
-  elseif iplug.Has('YouCompleteMe')
+  endif
+  if iplug.Has('YouCompleteMe')
     au CursorHold * lightline#update()
   endif
+  au FileType dirvish lightline#update()
   au User GitGutter lightline#update()
 
   # update bufferline when buffer list change, or a deleted buffer may remain
