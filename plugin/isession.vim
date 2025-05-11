@@ -163,6 +163,7 @@ command! -nargs=? -bar -bang -complete=customlist,g:SessionList
 command! -nargs=? -bar -bang -complete=customlist,g:SessionList
       \ IvimSessionDelete g:SessionDelete(<bang>0, <f-args>)
 command! -nargs=0 -bar IvimSessionClose g:SessionClose()
+command! -nargs=0 IvimRoot iui.Info(iproject.CurRoot())
 
 augroup ivim_plugin_isession
   au!

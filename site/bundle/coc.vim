@@ -42,8 +42,8 @@ else
   g:coc_selectmode_mapping = 1
 endif
 
-g:coc_status_error_sign = ''
-g:coc_status_warning_sign = ''
+g:coc_status_error_sign = ' '
+g:coc_status_warning_sign = ' '
 g:coc_notify_error_icon = ''
 g:coc_notify_warning_icon = ''
 g:coc_notify_info_icon = ''

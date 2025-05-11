@@ -30,7 +30,10 @@ g:lightline.colorscheme = 'gruvbox_material'
 
 g:lightline.active = {
   'left': [ ['mode', 'paste'],
-    ['gitbranch', 'lspdiag', 'ivim_filename', 'modified'],
+    ['gitbranch',
+      'coc_error', 'coc_warn', 'lspdiag',
+      'ivim_filename', 'modified',
+    ],
   ],
   'right': [ ['lineinfo'], ['percent'],
     ['gitsummary', 'fileformat', 'filetype'],
@@ -49,9 +52,15 @@ g:lightline.component_expand = {
   'gitsummary': "g:IvimStlGitSummary",
   'lspdiag': 'g:IvimStlLspDiag',
   'gitbranch': 'g:IvimStlGitBranch',
+  'coc_error': 'g:IvimStlCocError',
+  'coc_warn': 'g:IvimStlCocWarn',
 }
 g:lightline.component_type = {
   'buffers': 'tabsel',
+  'coc_error': 'error',
+  'coc_warn': 'warning',
+  #'coc_error': 'ivim_coc_error',
+  #'coc_warn': 'ivim_coc_warn',
 }
 # }}}
 
@@ -68,13 +77,19 @@ def SetupStlColor()
   SetupStlGitSumColor()
   SetupStlLspDiagColor()
   SetupStlGitBranchColor()
+  #SetupCocColor()
 enddef
 
-def NewColor(name: string, bg: string, fg: string): void
+def NewHighlight(name: string, bg: string, fg: string): void
   var nbg: dict<any> = hlget(bg, 1)[0]
   var nfg: dict<any> = hlget(fg, 1)[0]
   exec printf('hi! %s ctermbg=%s ctermfg=%s guibg=%s guifg=%s',
     name, nbg.ctermbg, nfg.ctermfg, nbg.guibg, nfg.guifg)
+enddef
+def NewColor(bg: string, fg: string): list<string>
+  var nbg: dict<any> = hlget(bg, 1)[0]
+  var nfg: dict<any> = hlget(fg, 1)[0]
+  return [ nfg.guifg, nbg.guibg, nfg.ctermfg, nbg.ctermbg ]
 enddef
 # }}}
 
@@ -93,9 +108,9 @@ enddef
 
 # {{{ git summary
 def SetupStlGitSumColor(): void
-  NewColor('IvimStlGitSumAdd', 'IvimStlX', 'GitGutterAdd')
-  NewColor('IvimStlGitSumChange', 'IvimStlX', 'GitGutterChange')
-  NewColor('IvimStlGitSumDelete', 'IvimStlX', 'GitGutterDelete')
+  NewHighlight('IvimStlGitSumAdd', 'IvimStlX', 'GitGutterAdd')
+  NewHighlight('IvimStlGitSumChange', 'IvimStlX', 'GitGutterChange')
+  NewHighlight('IvimStlGitSumDelete', 'IvimStlX', 'GitGutterDelete')
 enddef
 
 def g:IvimStlGitSummary(): string
@@ -112,37 +127,29 @@ enddef
 
 # {{{ git branch
 def SetupStlGitBranchColor(): void
-  NewColor('IvimStlGitBranch', 'IvimStlB', 'Blue')
+  NewHighlight('IvimStlGitBranch', 'IvimStlB', 'Blue')
 enddef
 def g:IvimStlGitBranch(): string
-  var br = g:FugitiveHead()
-  return printf('%s', len(br) == 0 ? '' : '%#IvimStlGitBranch# ' ..
-    br .. '%#IvimStlB#')
+  if &ft == 'dirvish'
+    return ''
+  else
+    var br = g:FugitiveHead()
+    return printf('%s', len(br) == 0 ? '' : '%#IvimStlGitBranch# ' ..
+      br .. '%#IvimStlB#')
+  endif
 enddef
 # }}}
 
 # {{{ lsp diag
 def SetupStlLspDiagColor(): void
-  NewColor('IvimStlLspDiagError', 'IvimStlB', 'Red')
-  NewColor('IvimStlLspDiagWarn', 'IvimStlB', 'Yellow')
+  NewHighlight('IvimStlLspDiagError', 'IvimStlB', 'Red')
+  NewHighlight('IvimStlLspDiagWarn', 'IvimStlB', 'Yellow')
 enddef
 def g:IvimStlLspDiag(): string
-  var ret: string = null_string
-
-  if iplug.Has('coc.nvim')
-    var error = b:coc_diagnostic_info.error
-    var warn = b:coc_diagnostic_info.warning
-    ret = printf('%s%s%s',
-      (error == 0 ? '' :
-        '%#IvimStlLspDiagError# ' .. string(error) .. '%#IvimStlB#'),
-      (error > 0 && warn > 0 ? ' ' : ''),
-      (warn == 0 ? '' :
-        '%#IvimStlLspDiagWarn# ' .. string(warn) .. '%#IvimStlB#')
-    )
-  elseif iplug.Has('YouCompleteMe')
+  if iplug.Has('YouCompleteMe')
     var error = youcompleteme#GetErrorCount()
     var warn = youcompleteme#GetWarningCount()
-    ret = printf('%s%s%s',
+    return printf('%s%s%s',
       (error == 0 ? '' :
         '%#IvimStlLspDiagError# ' .. string(error) .. '%#IvimStlB#'),
       (error > 0 && warn > 0 ? ' ' : ''),
@@ -150,9 +157,29 @@ def g:IvimStlLspDiag(): string
         '%#IvimStlLspDiagWarn# ' .. string(warn) .. '%#IvimStlB#')
     )
   endif
-
-  return ret
 enddef
+# }}}
+
+# {{{ coc-status
+def SetupCocColor(): void
+  var palette = lightline#palette()
+  palette.normal.ivim_coc_error = [ NewColor('IvimStlB', 'Red') ]
+  palette.normal.ivim_coc_warn = [ NewColor('IvimStlB', 'Yellow') ]
+  lightline#colorscheme()
+enddef
+def g:IvimStlCocError(): string
+  var error_sign: string = get(g:, 'coc_status_error_sign', ' ')
+  var info = get(b:, 'coc_diagnostic_info', {})
+  var error_num: number = get(info, 'error', 0)
+  return error_num == 0 ? '' : error_sign .. string(error_num)
+enddef
+def g:IvimStlCocWarn(): string
+  var warn_sign: string = get(g:, 'coc_status_warning_sign', ' ')
+  var info = get(b:, 'coc_diagnostic_info', {})
+  var warn_num: number = get(info, 'warning', 0)
+  return warn_num == 0 ? '' : warn_sign .. string(warn_num)
+enddef
+defc g:IvimStlCocWarn
 # }}}
 
 # }}}
