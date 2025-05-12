@@ -21,7 +21,7 @@ export var shell_error: number = 0
 # return if has '+python3'
 #--------------------------------------------------------------
 export def HasPython()
-	return has('python3')
+  return has('python3')
 enddef
 
 
@@ -29,9 +29,9 @@ enddef
 # execute code
 #--------------------------------------------------------------
 export def Exec(script: any): void
-	if !s_has_py
+  if !s_has_py
     iui.Error(s_health)
-		return
+    return
   endif
   var code: string = type(script) == v:t_string ? script : (
     type(script) == v:t_list ? join(script, '\n') : null_string
@@ -44,9 +44,9 @@ enddef
 # eval script
 #--------------------------------------------------------------
 export def Eval(script: any): any
-	if !s_has_py
+  if !s_has_py
     iui.Error(s_health)
-		return
+    return
   endif
   var code: string = type(script) == v:t_string ? script : (
     type(script) == v:t_list ? join(script, '\n') : '0'
@@ -59,9 +59,9 @@ enddef
 # py3file
 #--------------------------------------------------------------
 export def File(filename: string): void
-	if !s_has_py
+  if !s_has_py
     iui.Error(s_health)
-		return
+    return
   endif
   exec 'py3file' fnameescape(filename)
 endfunc
@@ -70,23 +70,23 @@ endfunc
 # python call
 #--------------------------------------------------------------
 export def Call(funcname: string, args: any)
-	if !s_has_py
+  if !s_has_py
     iui.Error(s_health)
-		return
-	endif
-	if !s_ensure
-		exec 'py3 import vim'
-		s_ensure = true
-	endif
-	py3 __py_args = vim.eval('args')
-	return py3eval(funcname . '(*__py_args)')
+    return
+  endif
+  if !s_ensure
+    exec 'py3 import vim'
+    s_ensure = true
+  endif
+  py3 __py_args = vim.eval('args')
+  return py3eval(funcname . '(*__py_args)')
 enddef
 
 #----------------------------------------------------------------------
 # python system
 #----------------------------------------------------------------------
 export def System(cmd: string, input: any = null): any
-	var has_input: bool = false
+  var has_input: bool = false
   if input != null
     has_input = true
     var sinput: string = type(input) == v:t_string ? input : (
@@ -94,26 +94,26 @@ export def System(cmd: string, input: any = null): any
     )
   endif
   if !iplatform.WIN || !s_has_py
-		var text: string = !has_input ? system(cmd) : system(cmd, sinput)
+    var text: string = !has_input ? system(cmd) : system(cmd, sinput)
     shell_error = v:shell_error
-		return text
-	endif
-	exec 'py3 import subprocess, vim'
-	exec 'py3 __argv = {"args": vim.eval("cmd")}'
-	exec 'py3 __argv["shell"] = True'
-	exec 'py3 __argv["stdout"] = subprocess.PIPE'
-	exec 'py3 __argv["stderr"] = subprocess.STDOUT'
-	if has_input
-		exec 'py3 __argv["stdin"] = subprocess.PIPE'
-	endif
-	exec 'py3 __pp = subprocess.Popen(**__argv)'
-	if has_input
-		exec 'py3 __si = vim.eval("sinput")'
-		exec 'py3 __pp.stdin.write(__si.encode("utf-8"))'
-		exec 'py3 __pp.stdin.close()'
-	endif
-	exec 'py3 __return_text = __pp.stdout.read()'
-	exec 'py3 __return_code = __pp.wait()'
-	shell_error = Eval('__return_code')
-	return Eval('__return_text')
+    return text
+  endif
+  exec 'py3 import subprocess, vim'
+  exec 'py3 __argv = {"args": vim.eval("cmd")}'
+  exec 'py3 __argv["shell"] = True'
+  exec 'py3 __argv["stdout"] = subprocess.PIPE'
+  exec 'py3 __argv["stderr"] = subprocess.STDOUT'
+  if has_input
+    exec 'py3 __argv["stdin"] = subprocess.PIPE'
+  endif
+  exec 'py3 __pp = subprocess.Popen(**__argv)'
+  if has_input
+    exec 'py3 __si = vim.eval("sinput")'
+    exec 'py3 __pp.stdin.write(__si.encode("utf-8"))'
+    exec 'py3 __pp.stdin.close()'
+  endif
+  exec 'py3 __return_text = __pp.stdout.read()'
+  exec 'py3 __return_code = __pp.wait()'
+  shell_error = Eval('__return_code')
+  return Eval('__return_text')
 enddef

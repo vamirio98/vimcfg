@@ -31,38 +31,38 @@ const WHICH_KEY = {
 # split keys string to key list
 #--------------------------------------------------------------
 def Split(key_seq: string): list<string>
-	var keys: list<string> = []
-	var in_key: bool = false
+  var keys: list<string> = []
+  var in_key: bool = false
 
-	var i: number = 0
-	while i < len(key_seq)
-		var c: string = key_seq[i]
-		if c == '<' && match(key_seq, '<[^<]\{-}>', i) == i
-			var j: number = stridx(key_seq, '>', i + 1)
-			keys += [key_seq[i : j]]
-			i = j + 1
-		else
-			keys += [c]
-			i = i + 1
-		endif
-	endwhile
+  var i: number = 0
+  while i < len(key_seq)
+    var c: string = key_seq[i]
+    if c == '<' && match(key_seq, '<[^<]\{-}>', i) == i
+      var j: number = stridx(key_seq, '>', i + 1)
+      keys += [key_seq[i : j]]
+      i = j + 1
+    else
+      keys += [c]
+      i = i + 1
+    endif
+  endwhile
 
-	return keys
+  return keys
 enddef
 
 #deef TestSplit(): void
-#	echom Split("ab")
-#	echom Split("<tab><space>abc")
-#	echom Split("<tab>abc<space>abc")
-#	echom Split("abc<tab>abc<space>")
-#	echom Split("abc<tababc<space>")
-#	echom Split("abc<tab>space>")
-#	echom Split("abc<sp")
-#	echom Split("abc>sp")
-#	echom Split("abc>s>p")
-#	echom Split("abc<s<p")
-#	echom Split("abc<<p")
-#	echom Split("abc>>p")
+# echom Split("ab")
+# echom Split("<tab><space>abc")
+# echom Split("<tab>abc<space>abc")
+# echom Split("abc<tab>abc<space>")
+# echom Split("abc<tababc<space>")
+# echom Split("abc<tab>space>")
+# echom Split("abc<sp")
+# echom Split("abc>sp")
+# echom Split("abc>s>p")
+# echom Split("abc<s<p")
+# echom Split("abc<<p")
+# echom Split("abc>>p")
 #enddef
 #TestSplit()
 

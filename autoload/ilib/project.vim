@@ -9,31 +9,31 @@ const WIN: bool = iplatform.WIN
 # guess root
 #----------------------------------------------------------------------
 def GuessRoot(filename: string, markers: list<string>): string
-	var fullname: string = ipath.Abspath(filename)
-	var pivot: string = fullname
-	if !isdirectory(pivot)
-		pivot = fnamemodify(pivot, ':h')
-	endif
-	while true
-		var prev: string = pivot
-		for marker in markers
-			var newname: string = ipath.Join(pivot, marker)
-			if newname =~ '[\*\?\[\]]'
-				if glob(newname) != ''
-					return pivot
-				endif
-			elseif filereadable(newname)
-				return pivot
-			elseif isdirectory(newname)
-				return pivot
-			endif
-		endfor
-		pivot = fnamemodify(pivot, ':h')
-		if pivot == prev
-			break
-		endif
-	endwhile
-	return null_string
+  var fullname: string = ipath.Abspath(filename)
+  var pivot: string = fullname
+  if !isdirectory(pivot)
+    pivot = fnamemodify(pivot, ':h')
+  endif
+  while true
+    var prev: string = pivot
+    for marker in markers
+      var newname: string = ipath.Join(pivot, marker)
+      if newname =~ '[\*\?\[\]]'
+        if glob(newname) != ''
+          return pivot
+        endif
+      elseif filereadable(newname)
+        return pivot
+      elseif isdirectory(newname)
+        return pivot
+      endif
+    endfor
+    pivot = fnamemodify(pivot, ':h')
+    if pivot == prev
+      break
+    endif
+  endwhile
+  return null_string
 enddef
 
 
@@ -46,55 +46,55 @@ enddef
 #----------------------------------------------------------------------
 def FindRoot(name: any, markers: list<string> = null_list,
     strict: bool = false): string
-	var path: string = null_string
+  var path: string = null_string
   var root: string = null_string
-	if type(name) == v:t_number
-		var bid: number = (name < 0) ? bufnr('%') : name
-		path = bufname(bid)
-		root = getbufvar(bid, 'ivim_root', null_string)
-		if root != null
-			return root
-		elseif exists('g:ivim_root') && g:ivim_root != null_string
-			return g:ivim_root
-		elseif exists('g:ivim_root_locator')
-			root = call(g:ivim_root_locator, [bid])
-			if root != null
-				return root
-			endif
-		endif
-		if getbufvar(bid, '&buftype') != null_string
-			path = getcwd()
-			return ipath.Abspath(path)
-		endif
-	elseif name == '%'
-		path = name
-		if exists('b:ivim_root') && b:ivim_root != null
-			return b:ivim_root
-		elseif exists('t:ivim_root') && t:ivim_root != null
-			return t:ivim_root
-		elseif exists('g:ivim_root') && g:ivim_root != null
-			return g:ivim_root
-		elseif exists('g:ivim_root_locator')
-			root = call(g:ivim_root_locator, [name])
-			if root != null
-				return root
-			endif
-		endif
-	else
-		path = printf('%s', name)
-	endif
-	root = GuessRoot(path, markers)
-	if root != null
-		return ipath.Abspath(root)
-	elseif strict
-		return null_string
-	endif
-	# Not found: return parent directory of current file / file itself.
-	var fullname: string = ipath.Abspath(path)
-	if isdirectory(fullname)
-		return fullname
-	endif
-	return ipath.Abspath(fnamemodify(fullname, ':h'))
+  if type(name) == v:t_number
+    var bid: number = (name < 0) ? bufnr('%') : name
+    path = bufname(bid)
+    root = getbufvar(bid, 'ivim_root', null_string)
+    if root != null
+      return root
+    elseif exists('g:ivim_root') && g:ivim_root != null_string
+      return g:ivim_root
+    elseif exists('g:ivim_root_locator')
+      root = call(g:ivim_root_locator, [bid])
+      if root != null
+        return root
+      endif
+    endif
+    if getbufvar(bid, '&buftype') != null_string
+      path = getcwd()
+      return ipath.Abspath(path)
+    endif
+  elseif name == '%'
+    path = name
+    if exists('b:ivim_root') && b:ivim_root != null
+      return b:ivim_root
+    elseif exists('t:ivim_root') && t:ivim_root != null
+      return t:ivim_root
+    elseif exists('g:ivim_root') && g:ivim_root != null
+      return g:ivim_root
+    elseif exists('g:ivim_root_locator')
+      root = call(g:ivim_root_locator, [name])
+      if root != null
+        return root
+      endif
+    endif
+  else
+    path = printf('%s', name)
+  endif
+  root = GuessRoot(path, markers)
+  if root != null
+    return ipath.Abspath(root)
+  elseif strict
+    return null_string
+  endif
+  # Not found: return parent directory of current file / file itself.
+  var fullname: string = ipath.Abspath(path)
+  if isdirectory(fullname)
+    return fullname
+  endif
+  return ipath.Abspath(fnamemodify(fullname, ':h'))
 enddef
 
 
@@ -113,10 +113,10 @@ export def GetRoot(path: string, markers: list<string> = null_list,
     new_markers = markers
   endif
   var hr: string = FindRoot(path, new_markers, strict)
-	if WIN
-		hr = join(split(hr, '/', 1), "\\")
-	endif
-	return hr
+  if WIN
+    hr = join(split(hr, '/', 1), "\\")
+  endif
+  return hr
 enddef
 
 
@@ -124,5 +124,5 @@ enddef
 # current root
 #----------------------------------------------------------------------
 export def CurRoot(): string
-	return GetRoot('%')
+  return GetRoot('%')
 enddef

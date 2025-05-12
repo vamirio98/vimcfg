@@ -6,8 +6,8 @@ export def Has(plugin: string): bool
 enddef
 
 export def PluginDir(plugin: string): string
-	if !Has(plugin)
-		throw 'no such plugin: ' .. plugin
-	endif
+  if !Has(plugin)
+    throw 'no such plugin: ' .. plugin
+  endif
   return g:plugs[plugin].dir
 enddef

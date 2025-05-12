@@ -48,9 +48,9 @@ if !has('gui_running')
   g:indent_guides_auto_colors = 0
   augroup ivim_indent_guides
     au!
-    au VimEnter,Colorscheme * :hi link IndentGuidesOdd DiffAdd
-    au VimEnter,Colorscheme * :hi link IndentGuidesEven ToolbarLine
-    au BufAdd * if &expandtab
+    au VimEnter,ColorScheme * :hi link IndentGuidesOdd DiffAdd
+    au VimEnter,ColorScheme * :hi link IndentGuidesEven ToolbarLine
+    au FileType * if &expandtab
       | g:IvimIndentGuidesEnable() | endif
   augroup END
 endif

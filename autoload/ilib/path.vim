@@ -11,7 +11,7 @@ export const SEP: string = WIN ? '\' : '/'
 #----------------------------------------------------------------------
 export def GetCdCmd(): string
   var cmd: string = haslocaldir() ? ((haslocaldir() == 1) ? 'lcd' : 'tcd') : 'cd'
-	return cmd
+  return cmd
 enddef
 
 
@@ -19,8 +19,8 @@ enddef
 # change directory in proper way
 #----------------------------------------------------------------------
 export def Chdir(path: string): void
-	var cmd: string = GetCdCmd()
-	silent exec cmd fnameescape(path)
+  var cmd: string = GetCdCmd()
+  silent exec cmd fnameescape(path)
 enddef
 
 
@@ -28,62 +28,62 @@ enddef
 # change dir with noautocmd prefix
 #----------------------------------------------------------------------
 export def ChdirNoautocmd(path: string): void
-	noautocmd Chdir(path)
+  noautocmd Chdir(path)
 enddef
 
 
 export def Abspath(path: string): string
-	var p: string = path
-	if p =~ "'."
-		try
+  var p: string = path
+  if p =~ "'."
+    try
       var m: string = null_string
-			redir => m
-			silent exe ':marks' p[1]
-			redir END
-			p = split(split(m, '\n')[-1])[-1]
-			p = filereadable(p) ? p : null_string
-		catch
-			p = '%'
-		endtry
-	endif
-	if p == '%'
-		p = expand('%')
-		if &bt == 'terminal'
-			p = null_string
-		elseif &bt != ''
-			var is_directory: bool = false
-			if p =~ '\v^fugitive\:[\\\/]{3}'
-				return Abspath(p)
-			elseif p =~ '[\/\\]$'
-				if p =~ '^[\/\\]' || p =~ '^.:[\/\\]'
-					is_directory = isdirectory(p)
-				endif
-			endif
-			p = is_directory ? p : null_string
-		endif
-	elseif p =~ '^\~[\/\\]'
-		p = expand(p)
-	elseif p =~ '\v^fugitive\:[\\\/]{3}'
-		p = strpart(p, WIN ? 12 : 11)
-		var pos: number = stridx(p, '.git')
-		if pos >= 0
-			p = strpart(p, 0, pos)
-		endif
-		p = fnamemodify(p, ':h')
-	endif
-	p = fnamemodify(p, ':p')
-	if WIN
-		p = tr(p, '\', '/')
-		var h: string = matchstr(p, '\v^[\/\\]+')
-		var b: string = strpart(p, strlen(h))
-		p = h .. substitute(b, '\v[\/\\]+', '/', 'g')
-	else
-		p = substitute(p, '\v[\/\\]+', '/', 'g')
-	endif
-	if p =~ '\/$'
-		p = fnamemodify(p, ':h')
-	endif
-	return p
+      redir => m
+      silent exe ':marks' p[1]
+      redir END
+      p = split(split(m, '\n')[-1])[-1]
+      p = filereadable(p) ? p : null_string
+    catch
+      p = '%'
+    endtry
+  endif
+  if p == '%'
+    p = expand('%')
+    if &bt == 'terminal'
+      p = null_string
+    elseif &bt != ''
+      var is_directory: bool = false
+      if p =~ '\v^fugitive\:[\\\/]{3}'
+        return Abspath(p)
+      elseif p =~ '[\/\\]$'
+        if p =~ '^[\/\\]' || p =~ '^.:[\/\\]'
+          is_directory = isdirectory(p)
+        endif
+      endif
+      p = is_directory ? p : null_string
+    endif
+  elseif p =~ '^\~[\/\\]'
+    p = expand(p)
+  elseif p =~ '\v^fugitive\:[\\\/]{3}'
+    p = strpart(p, WIN ? 12 : 11)
+    var pos: number = stridx(p, '.git')
+    if pos >= 0
+      p = strpart(p, 0, pos)
+    endif
+    p = fnamemodify(p, ':h')
+  endif
+  p = fnamemodify(p, ':p')
+  if WIN
+    p = tr(p, '\', '/')
+    var h: string = matchstr(p, '\v^[\/\\]+')
+    var b: string = strpart(p, strlen(h))
+    p = h .. substitute(b, '\v[\/\\]+', '/', 'g')
+  else
+    p = substitute(p, '\v[\/\\]+', '/', 'g')
+  endif
+  if p =~ '\/$'
+    p = fnamemodify(p, ':h')
+  endif
+  return p
 enddef
 
 
@@ -92,16 +92,16 @@ enddef
 #----------------------------------------------------------------------
 export def IsAbs(path: string): bool
   var head: string = null_string
-	if strpart(path, 0, 1) == '~'
-		return true
-	endif
-	if WIN
+  if strpart(path, 0, 1) == '~'
+    return true
+  endif
+  if WIN
     if path =~ '^.:[\/\\]' | return true | endif
-		head = strpart(path, 0, 1)
+    head = strpart(path, 0, 1)
     if head == '\' | return true | endif
     return false
-	endif
-	head = strpart(path, 0, 1)
+  endif
+  head = strpart(path, 0, 1)
   return head == '/'
 enddef
 
@@ -110,14 +110,14 @@ enddef
 # join two path
 #----------------------------------------------------------------------
 def JoinTwoPath(home: string, name: string): string
-	if empty(home) | return name | endif
+  if empty(home) | return name | endif
   if empty(name) | return home | endif
 
-	if IsAbs(name)
-		return name
-	endif
-	var size: number = strlen(home)
-	var last: string = strpart(home, size - 1, 1)
+  if IsAbs(name)
+    return name
+  endif
+  var size: number = strlen(home)
+  var last: string = strpart(home, size - 1, 1)
   if last == SEP || (WIN && last == '/')
     return home .. name
   else
@@ -130,11 +130,11 @@ enddef
 # python: os.path.join
 #--------------------------------------------------------------
 export def Join(...paths: list<string>): string
-	var ret: string = null_string
-	for p in paths
-		ret = JoinTwoPath(ret, p)
-	endfor
-	return ret
+  var ret: string = null_string
+  for p in paths
+    ret = JoinTwoPath(ret, p)
+  endfor
+  return ret
 enddef
 
 
@@ -142,7 +142,7 @@ enddef
 # dirname
 #----------------------------------------------------------------------
 export def Dirname(path: string): string
-	return fnamemodify(path, ':h')
+  return fnamemodify(path, ':h')
 enddef
 
 
@@ -150,7 +150,7 @@ enddef
 # basename of /foo/bar is bar
 #----------------------------------------------------------------------
 export def Basename(path: string): string
-	return fnamemodify(path, ':t')
+  return fnamemodify(path, ':t')
 enddef
 
 
@@ -163,24 +163,24 @@ enddef
 export def Normalize(path: string, lower: bool = false): string
   if empty(path) | return '' | endif
 
-	var new_path: string = path
-	if (!WIN && new_path !~ '^/') || (WIN && new_path !~ '^.:[\/\\]')
-		new_path = fnamemodify(new_path, ':p')
-	endif
-	if WIN
-		new_path = tr(new_path, '\', '/')
-	endif
-	if lower && (WIN || has('win32unix'))
-		new_path = tolower(new_path)
-	endif
+  var new_path: string = path
+  if (!WIN && new_path !~ '^/') || (WIN && new_path !~ '^.:[\/\\]')
+    new_path = fnamemodify(new_path, ':p')
+  endif
+  if WIN
+    new_path = tr(new_path, '\', '/')
+  endif
+  if lower && (WIN || has('win32unix'))
+    new_path = tolower(new_path)
+  endif
   new_path = substitute(new_path, '\v/+', '/', 'g')
-	if new_path =~ '^/$' || (WIN && new_path =~ '^.:/$')
-		return new_path
-	endif
-	if new_path[-1] == '/'
-		new_path = fnamemodify(new_path, ':h')
-	endif
-	return new_path
+  if new_path =~ '^/$' || (WIN && new_path =~ '^.:/$')
+    return new_path
+  endif
+  if new_path[-1] == '/'
+    new_path = fnamemodify(new_path, ':h')
+  endif
+  return new_path
 enddef
 
 
@@ -194,12 +194,12 @@ enddef
 
 
 export def Equal(path1: string, path2: string): bool
-	if path1 == path2
-		return true
-	endif
-	var p1: string = Normcase(Abspath(path1))
-	var p2: string = Normcase(Abspath(path2))
-	return p1 == p2
+  if path1 == path2
+    return true
+  endif
+  var p1: string = Normcase(Abspath(path1))
+  var p2: string = Normcase(Abspath(path2))
+  return p1 == p2
 enddef
 
 
@@ -207,13 +207,13 @@ enddef
 # return true if base directory contains child
 #----------------------------------------------------------------------
 export def Contains(base: string, child: string): bool
-	var new_base: string = Abspath(base)
-	var new_child: string = Abspath(child)
-	new_base = Normalize(new_base)
-	new_child = Normalize(new_child)
-	new_base = Normcase(new_base)
-	new_child = Normcase(new_child)
-	return stridx(new_child, new_base) == 0
+  var new_base: string = Abspath(base)
+  var new_child: string = Abspath(child)
+  new_base = Normalize(new_base)
+  new_child = Normalize(new_child)
+  new_base = Normcase(new_base)
+  new_child = Normcase(new_child)
+  return stridx(new_child, new_base) == 0
 enddef
 
 
@@ -221,24 +221,24 @@ enddef
 # return a relative version of a path
 #----------------------------------------------------------------------
 export def Relpath(apath: string, abase: string): string
-	var path: string = Abspath(apath)
-	var base: string = Abspath(abase)
-	path = Normalize(path)
-	base = Normalize(base)
-	var head: string = null_string
-	while true
-		if Contains(base, path)
+  var path: string = Abspath(apath)
+  var base: string = Abspath(abase)
+  path = Normalize(path)
+  base = Normalize(base)
+  var head: string = null_string
+  while true
+    if Contains(base, path)
       var size: number = strlen(base) + (base =~ '/$' ? 0 : 1)
-			return head .. strpart(path, size)
-		endif
-		var prev: string = base
-		head = '../' .. head
-		base = fnamemodify(base, ':h')
-		if base == prev
-			break
-		endif
-	endwhile
-	return null_string
+      return head .. strpart(path, size)
+    endif
+    var prev: string = base
+    head = '../' .. head
+    base = fnamemodify(base, ':h')
+    if base == prev
+      break
+    endif
+  endwhile
+  return null_string
 enddef
 
 
@@ -246,9 +246,9 @@ enddef
 # python: os.path.split
 #----------------------------------------------------------------------
 export def Split(path: string): tuple<string, string>
-	var p1 = fnamemodify(path, ':h')
-	var p2 = fnamemodify(path, ':t')
-	return (p1, p2)
+  var p1 = fnamemodify(path, ':h')
+  var p2 = fnamemodify(path, ':t')
+  return (p1, p2)
 enddef
 
 
@@ -256,17 +256,17 @@ enddef
 # split externsion, return (main, ext)
 #----------------------------------------------------------------------
 export def SplitExt(path: string): tuple<string, string>
-	var pos: number = strridx(path, '.')
-	if pos <= 0
-		return (path, null_string)
-	endif
-	var p: number = strridx(path, SEP)
-	if p > pos || p == pos - 1
-		return (path, null_string)
-	endif
-	var main: string = strpart(path, 0, pos)
-	var ext: string = strpart(path, pos + 1)
-	return (main, ext)
+  var pos: number = strridx(path, '.')
+  if pos <= 0
+    return (path, null_string)
+  endif
+  var p: number = strridx(path, SEP)
+  if p > pos || p == pos - 1
+    return (path, null_string)
+  endif
+  var main: string = strpart(path, 0, pos)
+  var ext: string = strpart(path, pos + 1)
+  return (main, ext)
 enddef
 
 
@@ -274,10 +274,10 @@ enddef
 # strip ending slash
 #----------------------------------------------------------------------
 export def StripSlash(path: string): string
-	if path =~ '\v[\/\\]$'
-		return fnamemodify(path, ':h')
-	endif
-	return path
+  if path =~ '\v[\/\\]$'
+    return fnamemodify(path, ':h')
+  endif
+  return path
 enddef
 
 
@@ -295,20 +295,20 @@ enddef
 #          default: ''
 #----------------------------------------------------------------------
 export def Win2Unix(winpath: string, prefix: string = null_string): string
-	var p: string = null_string
-	if winpath =~ '^\a:[/\\]'
+  var p: string = null_string
+  if winpath =~ '^\a:[/\\]'
     var drive: string = tolower(strpart(winpath, 0, 1))
     var name: string = strpart(winpath, 3)
     p = Join(prefix, drive, name)
-		return tr(p, '\', '/')
-	elseif winpath =~ '^[/\\]'
-		var drive: string = tolower(strpart(getcwd(), 0, 1))
-		var name: string = strpart(winpath, 1)
-		p = Join(prefix, drive, name)
-		return tr(p, '\', '/')
-	else
-		return tr(winpath, '\', '/')
-	endif
+    return tr(p, '\', '/')
+  elseif winpath =~ '^[/\\]'
+    var drive: string = tolower(strpart(getcwd(), 0, 1))
+    var name: string = strpart(winpath, 1)
+    p = Join(prefix, drive, name)
+    return tr(p, '\', '/')
+  else
+    return tr(winpath, '\', '/')
+  endif
 enddef
 
 
@@ -318,21 +318,21 @@ enddef
 # {limit} The path length limit, default: 40
 #----------------------------------------------------------------------
 export def Shorten(path: string, limit: number = 40): string
-	var home: string = expand('~')
+  var home: string = expand('~')
   var new_path: string = path
   var size: number = 0
-	if Contains(home, path)
-		size = strlen(home)
-		new_path = Join('~', strpart(new_path, size + 1))
-	endif
-	size = strlen(new_path)
-	if size > limit
-		var t: string = pathshorten(new_path, 2)
-		size = strlen(t)
-		if size > limit
-			return pathshorten(new_path)
-		endif
-		return t
-	endif
-	return new_path
+  if Contains(home, path)
+    size = strlen(home)
+    new_path = Join('~', strpart(new_path, size + 1))
+  endif
+  size = strlen(new_path)
+  if size > limit
+    var t: string = pathshorten(new_path, 2)
+    size = strlen(t)
+    if size > limit
+      return pathshorten(new_path)
+    endif
+    return t
+  endif
+  return new_path
 enddef

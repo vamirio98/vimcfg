@@ -21,53 +21,53 @@ set ttimeout
 set ttimeoutlen=50
 
 if $TMUX != ''
-	set ttimeoutlen=30
+  set ttimeoutlen=30
 elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
-	set ttimeoutlen=80
+  set ttimeoutlen=80
 endif
 # use ALT in terminal, should set ttimeout and ttimeoutlen at first
 # refer: http://www.skywind.me/blog/archives/2021
 if has('gui_running') == 0
-	def SetMetacode(key: string)
-		exec "set <M-" .. key .. ">=\e" .. key
-		exec "imap \e" .. key .. " <M-" .. key .. ">"
+  def SetMetacode(key: string)
+    exec "set <M-" .. key .. ">=\e" .. key
+    exec "imap \e" .. key .. " <M-" .. key .. ">"
   enddef
-	for i in range(10)
-		SetMetacode(nr2char(char2nr('0') + i))
-	endfor
-	for i in range(26)
-		SetMetacode(nr2char(char2nr('a') + i))
-		SetMetacode(nr2char(char2nr('A') + i))
-	endfor
-	for c in [',', '.', '/', ';', '{', '}']
-		SetMetacode(c)
-	endfor
-	for c in ['?', ':', '-', '_', '+', '=', "'"]
-		SetMetacode(c)
-	endfor
+  for i in range(10)
+    SetMetacode(nr2char(char2nr('0') + i))
+  endfor
+  for i in range(26)
+    SetMetacode(nr2char(char2nr('a') + i))
+    SetMetacode(nr2char(char2nr('A') + i))
+  endfor
+  for c in [',', '.', '/', ';', '{', '}']
+    SetMetacode(c)
+  endfor
+  for c in ['?', ':', '-', '_', '+', '=', "'"]
+    SetMetacode(c)
+  endfor
 endif
 
 # use function key in terminal
 def SetFunctionKey(name: string, code: string)
-	exec "set " .. name .. "=\e" .. code
+  exec "set " .. name .. "=\e" .. code
 enddef
 if has('gui_running') == 0
-	SetFunctionKey('<F1>', 'OP')
-	SetFunctionKey('<F2>', 'OQ')
-	SetFunctionKey('<F3>', 'OR')
-	SetFunctionKey('<F4>', 'OS')
-	SetFunctionKey('<S-F1>', '[1;2P')
-	SetFunctionKey('<S-F2>', '[1;2Q')
-	SetFunctionKey('<S-F3>', '[1;2R')
-	SetFunctionKey('<S-F4>', '[1;2S')
-	SetFunctionKey('<S-F5>', '[15;2~')
-	SetFunctionKey('<S-F6>', '[17;2~')
-	SetFunctionKey('<S-F7>', '[18;2~')
-	SetFunctionKey('<S-F8>', '[19;2~')
-	SetFunctionKey('<S-F9>', '[20;2~')
-	SetFunctionKey('<S-F10>', '[21;2~')
-	SetFunctionKey('<S-F11>', '[23;2~')
-	SetFunctionKey('<S-F12>', '[24;2~')
+  SetFunctionKey('<F1>', 'OP')
+  SetFunctionKey('<F2>', 'OQ')
+  SetFunctionKey('<F3>', 'OR')
+  SetFunctionKey('<F4>', 'OS')
+  SetFunctionKey('<S-F1>', '[1;2P')
+  SetFunctionKey('<S-F2>', '[1;2Q')
+  SetFunctionKey('<S-F3>', '[1;2R')
+  SetFunctionKey('<S-F4>', '[1;2S')
+  SetFunctionKey('<S-F5>', '[15;2~')
+  SetFunctionKey('<S-F6>', '[17;2~')
+  SetFunctionKey('<S-F7>', '[18;2~')
+  SetFunctionKey('<S-F8>', '[19;2~')
+  SetFunctionKey('<S-F9>', '[20;2~')
+  SetFunctionKey('<S-F10>', '[21;2~')
+  SetFunctionKey('<S-F11>', '[23;2~')
+  SetFunctionKey('<S-F12>', '[24;2~')
 endif
 # }}}
 
@@ -93,8 +93,8 @@ nnoremap <M-l> <C-w>l
 
 # terminal
 if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
-	set termwinkey=<C-_>
-	tnoremap <esc><esc> <C-\><C-n>
+  set termwinkey=<C-_>
+  tnoremap <esc><esc> <C-\><C-n>
 endif
 
 type Option = ioption.Option
@@ -190,12 +190,12 @@ AddGroup('<leader>x', 'location')
 # location list
 def ToggleLocList(): void
   var ll = getloclist(bufnr('%'))
-	if len(ll) == 0
-		iui.Warn('location list is empty')
+  if len(ll) == 0
+    iui.Warn('location list is empty')
     lclose
-	else
-		lopen
-	endif
+  else
+    lopen
+  endif
 enddef
 nnoremap <leader>xl <ScriptCmd>ToggleLocList()<CR>
 AddDesc('<leader>xl', 'Toggle Location List')
@@ -204,12 +204,12 @@ AddGroup('<leader>x', 'quickfix')
 # quickfix list
 def ToggleQfList(): void
   var qf = getqflist({'bufnr': bufnr('%')})
-	if len(qf) == 0
-		iui.Warn('quickfix list is empty')
-		cclose
-	else
-		copen
-	endif
+  if len(qf) == 0
+    iui.Warn('quickfix list is empty')
+    cclose
+  else
+    copen
+  endif
 enddef
 nnoremap <leader>xq <ScriptCmd>ToggleQfList()<CR>
 AddDesc('<leader>xq', 'Toggle QuickFix List')

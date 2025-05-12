@@ -26,11 +26,11 @@ set hlsearch # highlight the search results
 set incsearch # dynamically and incrementally display the search results
 
 if has('multi_byte')
-    set termencoding=utf-8  # terminal encoding
-    set encoding=utf-8  # internal working encoding
-    set fileencoding=utf-8  # default file encoding
-    # auto try the following encoding when opening a file
-    set fileencodings=ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin1
+  set termencoding=utf-8  # terminal encoding
+  set encoding=utf-8  # internal working encoding
+  set fileencoding=utf-8  # default file encoding
+  # auto try the following encoding when opening a file
+  set fileencodings=ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin1
 endif
 
 # break at a multibyte character above 255, used for Asian text where every
@@ -124,13 +124,13 @@ set shortmess+=WIcC
 
 # set navigation and font in GUI
 if has('gui_running')
-    set guioptions-=m  " remove menu bar.
-    set guioptions-=T  " remove toolbar.
-    set guioptions-=r  " remove right-hand scrollbar.
-    set guioptions-=L  " remove left-hand scrollbar.
-    set guioptions-=e  " use a non-GUI tab pages line.
-    set guifont=JetBrains_Mono_NL:h13,JetBrainsMonoNL_NFM:h13
-    set guifontwide=楷体:h15
+  set guioptions-=m  # remove menu bar.
+  set guioptions-=T  # remove toolbar.
+  set guioptions-=r  # remove right-hand scrollbar.
+  set guioptions-=L  # remove left-hand scrollbar.
+  set guioptions-=e  # use a non-GUI tab pages line.
+  set guifont=JetBrains_Mono_NL:h13,JetBrainsMonoNL_NFM:h13
+  set guifontwide=楷体:h15
 endif
 
 set laststatus=2

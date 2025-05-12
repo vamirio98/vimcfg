@@ -1,10 +1,12 @@
+vim9script
+
 set suffixes=.bak,~,.o,.info,.swp,.obj,.pyc,.pyo,.egg-info,.class
 set suffixes+=.exe,.class,.jpg,.png,.webp
 
-" stuff to ignore when tab completing
+# stuff to ignore when tab completing
 set wildignore=*.o,*.obj,*~,*.exe,*.a,*.pdb,*.lib,*.bak
 set wildignore+=*.so,*.dll,*.swp,*.egg,*.jar,*.class,*.pyc,*.pyo,*.bin,*.dex
-set wildignore+=*.zip,*.7z,*.rar,*.gz,*.tar,*.gzip,*.bz2,*.tgz,*.xz    " MacOSX/Linux
+set wildignore+=*.zip,*.7z,*.rar,*.gz,*.tar,*.gzip,*.bz2,*.tgz,*.xz    # MacOSX/Linux
 set wildignore+=*DS_Store*,*.ipch
 set wildignore+=*.gem
 set wildignore+=*.png,*.jpg,*.gif,*.bmp,*.tga,*.pcx,*.ppm,*.img,*.iso,*.webp
