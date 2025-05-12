@@ -113,9 +113,6 @@ export def GetRoot(path: string, markers: list<string> = null_list,
     new_markers = markers
   endif
   var hr: string = FindRoot(path, new_markers, strict)
-  if WIN
-    hr = join(split(hr, '/', 1), "\\")
-  endif
   return hr
 enddef
 

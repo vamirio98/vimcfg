@@ -72,14 +72,7 @@ export def Abspath(path: string): string
     p = fnamemodify(p, ':h')
   endif
   p = fnamemodify(p, ':p')
-  if WIN
-    p = tr(p, '\', '/')
-    var h: string = matchstr(p, '\v^[\/\\]+')
-    var b: string = strpart(p, strlen(h))
-    p = h .. substitute(b, '\v[\/\\]+', '/', 'g')
-  else
-    p = substitute(p, '\v[\/\\]+', '/', 'g')
-  endif
+  p = substitute(p, '\v[\/\\]+', (WIN ? '\\\\' : '/'), 'g')
   if p =~ '\/$'
     p = fnamemodify(p, ':h')
   endif
@@ -116,13 +109,16 @@ def JoinTwoPath(home: string, name: string): string
   if IsAbs(name)
     return name
   endif
+  var path = null_string
   var size: number = strlen(home)
   var last: string = strpart(home, size - 1, 1)
   if last == SEP || (WIN && last == '/')
-    return home .. name
+    path = home .. name
   else
-    return home .. SEP .. name
+    path = home .. SEP .. name
   endif
+  path = substitute(path, '\v[\/\\]+', (WIN ? '\\\\' : '/'), 'g')
+  return path
 enddef
 
 
@@ -220,21 +216,25 @@ enddef
 #----------------------------------------------------------------------
 # return a relative version of a path
 #----------------------------------------------------------------------
-export def Relpath(apath: string, abase: string): string
-  var path: string = Abspath(apath)
-  var base: string = Abspath(abase)
-  path = Normalize(path)
-  base = Normalize(base)
+export def Relpath(path: string, base: string): string
+  var new_path: string = Abspath(path)
+  var new_base: string = Abspath(base)
+  new_path = Normalize(new_path)
+  new_base = Normalize(new_base)
   var head: string = null_string
   while true
-    if Contains(base, path)
-      var size: number = strlen(base) + (base =~ '/$' ? 0 : 1)
-      return head .. strpart(path, size)
+    if Contains(new_base, new_path)
+      var size: number = strlen(new_base) + (new_base =~ '/$' ? 0 : 1)
+      var relpath: string = head .. strpart(new_path, size)
+      if WIN
+        relpath = substitute(relpath, '/', '\\\\', 'g')
+      endif
+      return relpath
     endif
-    var prev: string = base
+    var prev: string = new_base
     head = '../' .. head
-    base = fnamemodify(base, ':h')
-    if base == prev
+    new_base = fnamemodify(new_base, ':h')
+    if new_base == prev
       break
     endif
   endwhile
@@ -299,15 +299,17 @@ export def Win2Unix(winpath: string, prefix: string = null_string): string
   if winpath =~ '^\a:[/\\]'
     var drive: string = tolower(strpart(winpath, 0, 1))
     var name: string = strpart(winpath, 3)
+    name = substitute(name, '\v[\/\\]+', '/', 'g')
     p = Join(prefix, drive, name)
-    return tr(p, '\', '/')
+    return substitute(p, '\v[\/\\]+', '/', 'g')
   elseif winpath =~ '^[/\\]'
     var drive: string = tolower(strpart(getcwd(), 0, 1))
     var name: string = strpart(winpath, 1)
+    name = substitute(name, '\v[\/\\]+', '/', 'g')
     p = Join(prefix, drive, name)
-    return tr(p, '\', '/')
+    return substitute(p, '\v[\/\\]+', '/', 'g')
   else
-    return tr(winpath, '\', '/')
+    return substitute(winpath, '\v[\/\\]+', '/', 'g')
   endif
 enddef
 
