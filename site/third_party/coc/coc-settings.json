@@ -1,5 +1,6 @@
 {
   "coc.preferences.maxFileSize": "10MB",
+  "coc.preferences.promptInput": false,
   "colors.enable": true,
   "codeLens.enable": true,
   "semanticTokens.enable": true,

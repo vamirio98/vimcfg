@@ -189,9 +189,9 @@ AddDesc('<leader>cL', 'Show Lsp Info')
 def ToggleOutline(): void
   var winid: number = coc#window#find('cocViewId', 'OUTLINE')
   if winid == -1
-    g:CocAction('showOutline')
+    g:CocActionAsync('showOutline')
   else
-    g:CocAction('hideOutline')
+    g:CocActionAsync('hideOutline')
   endif
 enddef
 nnoremap <leader>co <ScriptCmd>ToggleOutline()<CR>
