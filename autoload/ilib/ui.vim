@@ -5,7 +5,7 @@ var s_msg_queue = []
 def Show(what: any, color: string = 'Normal', keep: bool = false): void
   var msg = type(what) == v:t_list ? join(what, '\n') : what
   if !v:vim_did_enter
-    s_msg_queue += [function('Show', [msg, color])]
+    s_msg_queue += [function('Show', [msg, color, keep])]
     return
   endif
 
