@@ -25,8 +25,8 @@ $PYTHONUNBUFFERED = 1
 # https://github.com/skywind3000/asynctasks.vim/wiki/UI-Integration
 if iplug.Has('LeaderF')
   nnoremap <leader>pt <Cmd>Leaderf --nowrap task<CR>
-  ikeymap.AddGroup('<leader>p', 'project')
-  ikeymap.AddDesc('<leader>pt', 'Query Tasks')
+  ikeymap.SetGroup('<leader>p', 'project')
+  ikeymap.SetDesc('<leader>pt', 'Query Tasks')
 
   def LfTaskSource(..._): list<string>
     var rows: list<list<string>> = asynctasks#source(&columns * 48 / 100)

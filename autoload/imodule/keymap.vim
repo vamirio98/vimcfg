@@ -77,8 +77,8 @@ def GenDict(mode: string, keys: list<string>): string
   return dict
 enddef
 
-# AddGroup({key_seq}, {group} [, {mode} [, {overwrite}]])
-export def AddGroup(key_seq: string, group: string = null_string,
+# SetGroup({key_seq}, {group} [, {mode} [, {overwrite}]])
+export def SetGroup(key_seq: string, group: string = null_string,
     mode: string = 'n', overwrite: bool = false): void
   var keys: list<string> = Split(key_seq)
   if len(keys) == 0
@@ -100,7 +100,7 @@ export def AddGroup(key_seq: string, group: string = null_string,
   endif
 enddef
 
-export def AddDesc(key_seq: string, desc_str: string, mode: string = 'n')
+export def SetDesc(key_seq: string, desc_str: string, mode: string = 'n')
   var keys: list<string> = Split(key_seq)
   if len(keys) == 0
     iui.Error('{keys} should not be empty')

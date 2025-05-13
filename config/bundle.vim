@@ -94,10 +94,12 @@ if has_key(s_bundle, 'editor')
   Plug 'skywind3000/asynctasks.vim'
   LoadConf site/bundle/asynctasks.vim
 
-  Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-  Plug 'Yggdroot/LeaderF-marks'
-  Plug 'FahimAnayet/LeaderF-map'
-  LoadConf site/bundle/leaderf.vim
+  if has('python3')
+    Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+    Plug 'Yggdroot/LeaderF-marks'
+    Plug 'FahimAnayet/LeaderF-map'
+    LoadConf site/bundle/leaderf.vim
+  endif
 
   # text opeartor
   Plug 'tpope/vim-surround'

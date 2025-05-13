@@ -26,38 +26,38 @@ g:ycm_clangd_args = [ '--header-insertion=never' ]
 
 # {{{ map
 
-var AddGroup = ikeymap.AddGroup
-var AddDesc = ikeymap.AddDesc
+var SetGroup = ikeymap.SetGroup
+var SetDesc = ikeymap.SetDesc
 
 imap <C-l> <Plug>(YCMToggleSignatureHelp)
 
 nmap K <Plug>(YCMHover)
 
 # {{{ code
-AddGroup('<leader>c', 'code')
+SetGroup('<leader>c', 'code')
 
 nmap <leader>cc <Plug>(YCMCallHierarchy)
-AddDesc('<leader>cc', 'Call Hierarchy')
+SetDesc('<leader>cc', 'Call Hierarchy')
 
 def FindDiag(): void
   exec 'YcmDiags'
   exec 'Leaderf --bottom loclist'
 enddef
 nnoremap <leader>cd <Cmd>call <SID>FindDiag()<CR>
-AddDesc('<leader>cd', 'Show All Diags')
+SetDesc('<leader>cd', 'Show All Diags')
 g:ycm_key_detailed_diagnostics = '<leader>cD'
-AddDesc('<leader>cD', 'Show Diag Detail')
+SetDesc('<leader>cD', 'Show Diag Detail')
 
 nnoremap <leader>cf <Cmd>YcmCompleter Format<CR>
-AddDesc('<leader>cf', 'Format')
+SetDesc('<leader>cf', 'Format')
 vnoremap <leader>cf <Cmd>'<,'>YcmCompleter Format<CR>
-AddDesc('<leader>cf', 'Format', 'v')
+SetDesc('<leader>cf', 'Format', 'v')
 
 nnoremap <leader>ch <Cmd>YcmCompleter GoToAlternateFile<CR>
-AddDesc('<leader>ch', 'Switch Header/Source')
+SetDesc('<leader>ch', 'Switch Header/Source')
 
 nnoremap <leader>cq <Cmd>YcmCompleter FixIt<CR>
-AddDesc('<leader>cq', 'Quick Fix')
+SetDesc('<leader>cq', 'Quick Fix')
 
 def RenameSymbol(): void
   let new_name = ilib#core#input('New name: ')
@@ -67,12 +67,12 @@ def RenameSymbol(): void
   exec 'YcmCompleter RefactorRename' new_name
 enddef
 nnoremap <leader>cr <ScriptCmd>call RenameSymbol()<CR>
-AddDesc('<leader>cr', 'Rename Symbol')
+SetDesc('<leader>cr', 'Rename Symbol')
 nnoremap <leader>cR <Cmd>YcmForceCompileAndDiagnostics<CR>
-AddDesc('<leader>cR', 'Refresh Diags')
+SetDesc('<leader>cR', 'Refresh Diags')
 
 nmap <leader>ct <Plug>(YCMTypeHierarchy)
-AddDesc('<leader>ct', 'Type Hierarchy')
+SetDesc('<leader>ct', 'Type Hierarchy')
 # }}}
 
 # {{{ search
@@ -82,30 +82,30 @@ def FindSymbolCurDoc()
   exec 'Leaderf --nameOnly quickfix'
 enddef
 nnoremap <leader>ss <ScriptCmd>call FindSymbolCurDoc()<CR>
-AddGroup('<leader>s', 'search')
-AddDesc('<leader>ss', 'Symbol (Current File)')
+SetGroup('<leader>s', 'search')
+SetDesc('<leader>ss', 'Symbol (Current File)')
 # }}}
 
 # {{{ toggle
 nmap <leader>uh <Plug>(YCMToggleInlayHints)
-AddGroup('<leader>u', 'ui')
-AddDesc('<leader>uh', 'Toggle Inlay Hints')
+SetGroup('<leader>u', 'ui')
+SetDesc('<leader>uh', 'Toggle Inlay Hints')
 # }}}
 
 # {{{ goto
 nnoremap gd <Cmd>YcmCompleter GoToDeclaration<CR>
-AddDesc('gd', 'Go to Declaration')
+SetDesc('gd', 'Go to Declaration')
 nnoremap gD <Cmd>YcmCompleter GoToDefinition<CR>
-AddDesc('gD', 'Go to Definition')
+SetDesc('gD', 'Go to Definition')
 nnoremap gi <Cmd>YcmCompleter GoToImplementation<CR>
-AddDesc('gi', 'Go to Implementation')
+SetDesc('gi', 'Go to Implementation')
 def FindReferences()
   exec 'YcmCompleter GoToReferences'
   silent! cclose
   exec 'Leaderf quickfix'
 enddef
 nnoremap gr <ScriptCmd>call FindReferences()<CR>
-AddDesc('gr', 'Go to References')
+SetDesc('gr', 'Go to References')
 # }}}
 
 # }}}

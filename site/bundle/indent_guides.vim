@@ -39,8 +39,8 @@ def g:ToggleIndentGuides(): void
   endif
 enddef
 
-ikeymap.AddGroup('<leader>u', 'ui')
-ikeymap.AddDesc('<leader>ui', 'Toggle Indent Guides')
+ikeymap.SetGroup('<leader>u', 'ui')
+ikeymap.SetDesc('<leader>ui', 'Toggle Indent Guides')
 nnoremap <leader>ui <Cmd>call g:ToggleIndentGuides()<CR>
 # }}}
 

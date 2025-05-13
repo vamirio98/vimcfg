@@ -49,10 +49,9 @@ set viewoptions=cursor,curdir,folds,slash,unix
 
 set clipboard^=unnamed,unnamedplus
 if (!empty($SSH_TTY) || iplatform.WSL)
-    set clipboard=
-    # let vim clipboard sync with system
-    # from https://www.zhihu.com/tardis/zm/ans/2156080913?source_id=1003
-    def RawEcho(str: string)
+  # let vim clipboard sync with system
+  # from https://www.zhihu.com/tardis/zm/ans/2156080913?source_id=1003
+  def RawEcho(str: string)
     if filewritable('/dev/fd/2')
       writefile([str], '/dev/fd/2', 'b')
     else
@@ -61,17 +60,17 @@ if (!empty($SSH_TTY) || iplatform.WSL)
     endif
   enddef
 
-    def Copy(): void
-        var c: string = join(v:event.regcontents, "\n")
-        var c64: string = system("base64", c)
-        var s: string = "\e]52;c;" .. trim(c64) .. "\x07"
-        RawEcho(s)
+  def Copy(): void
+    var c: string = join(v:event.regcontents, "\n")
+    var c64: string = system("base64", c)
+    var s: string = "\e]52;c;" .. trim(c64) .. "\x07"
+    RawEcho(s)
   enddef
 
-    augroup ivim_config_system_clipboard
-        au!
-        au TextYankPost * Copy()
-    augroup END
+  augroup ivim_config_system_clipboard
+    au!
+    au TextYankPost * Copy()
+  augroup END
 endif
 
 set completeopt=menu,menuone,noselect

@@ -185,28 +185,28 @@ defc g:IvimStlCocWarn
 # }}}
 
 # {{{ keymap
-var AddGroup: func = ikeymap.AddGroup
-var AddDesc: func = ikeymap.AddDesc
+var SetGroup: func = ikeymap.SetGroup
+var SetDesc: func = ikeymap.SetDesc
 
 nmap H <Plug>lightline#bufferline#go_previous()
 nmap L <Plug>lightline#bufferline#go_next()
 nmap [b <Plug>lightline#bufferline#go_previous()
 nmap ]b <Plug>lightline#bufferline#go_next()
 
-AddGroup('<leader>b', 'buffer')
+SetGroup('<leader>b', 'buffer')
 
 nmap <leader>bH <Plug>lightline#bufferline#move_first()
-AddDesc('<leader>bH', 'Reorder to First')
+SetDesc('<leader>bH', 'Reorder to First')
 nmap <leader>bL <Plug>lightline#bufferline#move_last()
-AddDesc('<leader>bL', 'Reorder to Last')
+SetDesc('<leader>bL', 'Reorder to Last')
 
 nmap <leader>bh <Plug>lightline#bufferline#move_previous()
-AddDesc('<leader>bh', 'Reorder to Prev')
+SetDesc('<leader>bh', 'Reorder to Prev')
 nmap <leader>bl <Plug>lightline#bufferline#move_next()
-AddDesc('<leader>bl', 'Reorder to Next')
+SetDesc('<leader>bl', 'Reorder to Next')
 
 nmap <leader>br <Plug>lightline#bufferline#reset_order()
-AddDesc('<leader>br', 'Reorder')
+SetDesc('<leader>br', 'Reorder')
 # }}}
 
 augroup ivim_lightline

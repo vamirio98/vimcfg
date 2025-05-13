@@ -98,8 +98,8 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
 endif
 
 type Option = ioption.Option
-var AddGroup: func = ikeymap.AddGroup
-var AddDesc: func = ikeymap.AddDesc
+var SetGroup: func = ikeymap.SetGroup
+var SetDesc: func = ikeymap.SetDesc
 
 # resize window {{{
 # increase window height
@@ -131,28 +131,28 @@ nnoremap <S-l> <Cmd>bnext<CR>
 nnoremap [b <Cmd>bprevious<CR>
 nnoremap ]b <Cmd>bnext<CR>
 
-AddGroup('<leader>b', 'buffer')
+SetGroup('<leader>b', 'buffer')
 # switch to other buffer
 nnoremap <leader>bb <Cmd>e #<CR>
-AddDesc('<leader>bb', 'Switch to Other Buffer')
+SetDesc('<leader>bb', 'Switch to Other Buffer')
 
 # delete buffer
 nnoremap <leader>bd <ScriptCmd>iutils.BufDel()<CR>
-AddDesc('<leader>bd', 'Delete Buffer')
+SetDesc('<leader>bd', 'Delete Buffer')
 # delete other buffers
 nnoremap <leader>bo <ScriptCmd>iutils.BufDelOther()<CR>
-AddDesc('<leader>bo', 'Delete Other Buffers')
+SetDesc('<leader>bo', 'Delete Other Buffers')
 # delete buffer and window
 nnoremap <leader>bD <cmd>:bd<cr>
-AddDesc('<leader>bD', 'Delete Buffer & Window')
+SetDesc('<leader>bD', 'Delete Buffer & Window')
 # }}}
 
 # clear search on escape
 nnoremap <Esc> <Esc><Cmd>nohlsearch<CR>
-AddGroup('<leader>u', 'ui')
+SetGroup('<leader>u', 'ui')
 # clear search, diff update and redraw, taken from runtime/lua/_editor.lua
 nnoremap <leader>ur <Cmd>noh<bar>diffupdate<bar>normal! <C-l><CR>
-AddDesc('<leader>ur', 'Clear Hlsearch / Diff Update / Redraw')
+SetDesc('<leader>ur', 'Clear Hlsearch / Diff Update / Redraw')
 
 # next search result {{{
 # https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
@@ -181,12 +181,12 @@ vnoremap < <gv
 vnoremap > >gv
 
 # new file
-AddGroup('<leader>f', 'file')
+SetGroup('<leader>f', 'file')
 nnoremap <leader>fn <Cmd>enew<CR>
-AddDesc('<leader>fn', 'New File')
+SetDesc('<leader>fn', 'New File')
 
 # {{{ location list/ quickfix list
-AddGroup('<leader>x', 'location')
+SetGroup('<leader>x', 'location')
 # location list
 def ToggleLocList(): void
   var ll = getloclist(bufnr('%'))
@@ -198,9 +198,9 @@ def ToggleLocList(): void
   endif
 enddef
 nnoremap <leader>xl <ScriptCmd>ToggleLocList()<CR>
-AddDesc('<leader>xl', 'Toggle Location List')
+SetDesc('<leader>xl', 'Toggle Location List')
 
-AddGroup('<leader>x', 'quickfix')
+SetGroup('<leader>x', 'quickfix')
 # quickfix list
 def ToggleQfList(): void
   var qf = getqflist({'bufnr': bufnr('%')})
@@ -212,7 +212,7 @@ def ToggleQfList(): void
   endif
 enddef
 nnoremap <leader>xq <ScriptCmd>ToggleQfList()<CR>
-AddDesc('<leader>xq', 'Toggle QuickFix List')
+SetDesc('<leader>xq', 'Toggle QuickFix List')
 
 # previous quickfix
 nnoremap [q <Cmd>cprev<CR>
@@ -221,18 +221,18 @@ nnoremap ]q <Cmd>cnext<CR>
 # }}}
 
 # {{{ option
-AddGroup('<leader>u', 'option')
+SetGroup('<leader>u', 'option')
 var spell = Option.new('spell')
 nnoremap <leader>us <ScriptCmd>spell.Toggle()<CR>
-AddDesc('<leader>us', 'Toggle Spell')
+SetDesc('<leader>us', 'Toggle Spell')
 
 var wrap = Option.new('wrap')
 nnoremap <leader>uw <ScriptCmd>wrap.Toggle()<CR>
-AddDesc('<leader>uw', 'Toggle Wrap')
+SetDesc('<leader>uw', 'Toggle Wrap')
 
 var relativenumber = Option.new('relativenumber')
 nnoremap <leader>uL <ScriptCmd>relativenumber.Toggle()<CR>
-AddDesc('<leader>uL', 'Toggle Relative Line No')
+SetDesc('<leader>uL', 'Toggle Relative Line No')
 
 def SetLineNo(enable: bool): void
   b:ivim_rnu = get(b:, 'ivim_rnu', &relativenumber)
@@ -246,23 +246,23 @@ def SetLineNo(enable: bool): void
 enddef
 var number = Option.new('number', v:none, SetLineNo)
 nnoremap <leader>ul <ScriptCmd>number.Toggle()<CR>
-AddDesc('<leader>ul', 'Toggle Line No')
+SetDesc('<leader>ul', 'Toggle Line No')
 
 var conceallevel = Option.newOnOff('conceallevel', (&cole > 0 ? &cole : 2), 0)
 nnoremap <leader>uc <ScriptCmd>conceallevel.Toggle()<CR>
-AddDesc('<leader>uc', 'Toggle Conceal Lv')
+SetDesc('<leader>uc', 'Toggle Conceal Lv')
 # }}}
 
 nnoremap Q <Cmd>qa<CR>
 
 # windows {{{
 nnoremap <leader>- <C-w>s
-AddDesc('<leader>-', 'Split Window Below')
+SetDesc('<leader>-', 'Split Window Below')
 nnoremap <leader><bar> <C-w>v
-AddDesc('<leader>|', 'Split Window Right')
+SetDesc('<leader>|', 'Split Window Right')
 nnoremap <leader>wd <C-w>c
-AddGroup('<leader>w', 'window')
-AddDesc('<leader>wd', 'Close Window')
+SetGroup('<leader>w', 'window')
+SetDesc('<leader>wd', 'Close Window')
 
 # toggle window maximize {{{
 # https://github.com/szw/vim-maximizer/blob/master/plugin/maximizer.vim
@@ -290,7 +290,7 @@ def ToggleWinMax()
   endif
 enddef
 nnoremap <leader>um <ScriptCmd>ToggleWinMax()<CR>
-AddDesc('<leader>um', 'Toggle Win Maximize')
+SetDesc('<leader>um', 'Toggle Win Maximize')
 augroup ivim_restore_maximize_win_on_winleave
   au!
   au WinLeave * RestoreWin()
@@ -301,21 +301,21 @@ augroup END
 
 # tabs {{{
 # vim-which-key only recognize <Tab>, no <tab>
-AddGroup('<leader><Tab>', 'tab')
+SetGroup('<leader><Tab>', 'tab')
 nnoremap <leader><Tab>f <Cmd>tabfirst<CR>
-AddDesc('<leader><Tab>f', 'First Tab')
+SetDesc('<leader><Tab>f', 'First Tab')
 nnoremap <leader><Tab>l <Cmd>tablast<CR>
-AddDesc('<leader><Tab>l', 'Last Tab')
+SetDesc('<leader><Tab>l', 'Last Tab')
 nnoremap <leader><Tab>o <Cmd>tabonly<CR>
-AddDesc('<leader><Tab>o', 'Close Other Tabs')
+SetDesc('<leader><Tab>o', 'Close Other Tabs')
 nnoremap <leader><Tab>n <Cmd>tabnew<CR>
-AddDesc('<leader><Tab>n', 'New Tab')
+SetDesc('<leader><Tab>n', 'New Tab')
 nnoremap <leader><Tab>d <Cmd>tabclose<CR>
-AddDesc('<leader><Tab>d', 'Close Tab')
+SetDesc('<leader><Tab>d', 'Close Tab')
 nnoremap [<Tab> <Cmd>tabprevious<CR>
-AddDesc('[<Tab>', 'Prev Tab')
+SetDesc('[<Tab>', 'Prev Tab')
 nnoremap ]<Tab> <Cmd>tabnext<CR>
-AddDesc(']<Tab>', 'Next Tab')
+SetDesc(']<Tab>', 'Next Tab')
 # }}}
 
 # {{{ scroll popup window
