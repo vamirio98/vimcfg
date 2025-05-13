@@ -9,7 +9,7 @@ g:indent_guides_start_level = 1
 g:indent_guides_enable_on_vim_startup = 0
 g:indent_guides_exclude_buftype = 0
 g:indent_guides_exclude_filetypes = ['help', 'startify', 'nerdtree']
-g:indent_guides_tab_guides = 0
+g:indent_guides_tab_guides = 1
 
 # {{{ keymap
 def StripListchars(listchars: string): string
@@ -50,7 +50,7 @@ if !has('gui_running')
     au!
     au VimEnter,ColorScheme * :hi link IndentGuidesOdd DiffAdd
     au VimEnter,ColorScheme * :hi link IndentGuidesEven ToolbarLine
-    au FileType,BufAdd * if &expandtab
+    au FileType * if &expandtab
       | g:IvimIndentGuidesEnable() | endif
   augroup END
 endif
