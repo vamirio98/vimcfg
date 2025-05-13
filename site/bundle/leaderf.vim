@@ -126,8 +126,12 @@ nnoremap <leader>s: <Cmd>LeaderfCommand<CR>
 AddDesc('<leader>s:', 'Command')
 nnoremap <leader>s/ <Cmd>LeaderfHistorySearch<CR>
 AddDesc('<leader>s/', 'Search History')
-nnoremap <leader>/ <Cmd>Leaderf rg --nameOnly<CR>
-AddDesc('<leader>/', 'Live Search')
+def LiveSearchInRoot(): void
+  var root: string = iproject.CurRoot()
+  exec 'Leaderf rg --live --no-fixed-string' root
+enddef
+nnoremap <leader>/ <ScriptCmd>LiveSearchInRoot()<CR>
+AddDesc('<leader>/', 'Live Search (Root)')
 # }}}
 
 # }}}
