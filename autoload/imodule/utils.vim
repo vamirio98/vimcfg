@@ -5,7 +5,7 @@ import autoload "../ilib/core.vim" as icore
 export def BufDel(btarget: number = bufnr('%')): void
   if &modified
     var choice: number = icore.Confirm(printf('Save changes to %s',
-      bufname(btarget)), '&Yes\n&No\n&Cancel')
+      bufname(btarget)), "&Yes\n&No\n&Cancel")
     if choice == 0 || choice == 3 # 0 for <Esc>/<C-c> and 3 for Cancel
       return
     endif
