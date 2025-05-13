@@ -51,8 +51,8 @@ g:coc_notify_info_icon = ''
 g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰', ]
 
 # {{{ keymap
-var AddGroup = ikeymap.AddGroup
-var AddDesc = ikeymap.AddDesc
+var SetGroup = ikeymap.SetGroup
+var SetDesc = ikeymap.SetDesc
 
 def ShowDoc(): void
   if g:CocHasProvider('hover')
@@ -69,7 +69,7 @@ vmap <silent> <M-s> <Plug>(coc-range-select)
 vmap <silent> <M-S> <Plug>(coc-range-select-backward)
 
 # {{{ goto
-AddGroup('g', 'goto')
+SetGroup('g', 'goto')
 
 def CocAction(keys: string, ability: string, ...action: list<any>)
   if g:CocHasProvider(ability)
@@ -80,18 +80,18 @@ def CocAction(keys: string, ability: string, ...action: list<any>)
 enddef
 
 nnoremap gd <ScriptCmd>CocAction('gd', 'definition', ['jumpDefinition'])<CR>
-AddDesc('gd', 'Go to Definition')
+SetDesc('gd', 'Go to Definition')
 nnoremap gD <ScriptCmd>CocAction('gD', 'declaration', ['jumpDeclaration'])<CR>
-AddDesc('gD', 'Go to Declaration')
+SetDesc('gD', 'Go to Declaration')
 
 nnoremap gi <Cmd>call g:CocActionAsync('jumpImplementation', v:false)<CR>
-AddDesc('gi', 'Go to implementation')
+SetDesc('gi', 'Go to implementation')
 
 nnoremap gr <Cmd>call g:CocActionAsync('jumpUsed', v:false)<CR>
-AddDesc('gr', 'Go to References')
+SetDesc('gr', 'Go to References')
 
 nnoremap gy <Cmd>call g:CocActionAsync('jumpTypeDefinition')<CR>
-AddDesc('gy', 'Go to Type Definition')
+SetDesc('gy', 'Go to Type Definition')
 
 # }}}
 
@@ -121,10 +121,10 @@ nmap [d <Plug>(coc-diagnostic-prev)
 nmap ]d <Plug>(coc-diagnostic-next)
 nmap [e <Plug>(coc-diagnostic-prev-error)
 nmap ]e <Plug>(coc-diagnostic-next-error)
-AddDesc('[d', 'Prev Diag')
-AddDesc(']d', 'Next Diag')
-AddDesc('[e', 'Prev Error')
-AddDesc(']e', 'Prev Error')
+SetDesc('[d', 'Prev Diag')
+SetDesc(']d', 'Next Diag')
+SetDesc('[e', 'Prev Error')
+SetDesc(']e', 'Prev Error')
 
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
@@ -134,10 +134,10 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-AddDesc('if', 'Inside Func', 'v')
-AddDesc('af', 'Around Func', 'v')
-AddDesc('ic', 'Inside Class', 'v')
-AddDesc('ac', 'Around Class', 'v')
+SetDesc('if', 'Inside Func', 'v')
+SetDesc('af', 'Around Func', 'v')
+SetDesc('ic', 'Inside Class', 'v')
+SetDesc('ac', 'Around Class', 'v')
 
 # remap <C-f> and <C-b> to scroll float windows/popups
 if has('patch-8.2.0750')
@@ -156,35 +156,35 @@ nmap <M-C> <Plug>(coc-cursors-position)
 vmap <M-c> <Plug>(coc-cursors-range)
 
 # {{{ code
-AddGroup('<leader>c', 'code')
+SetGroup('<leader>c', 'code')
 
 nmap <silent> <leader>ca <Plug>(coc-codeaction)
-AddDesc('<leader>ca', 'Code Action (cword)')
+SetDesc('<leader>ca', 'Code Action (cword)')
 xmap <silent> <leader>ca <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>cA <Plug>(coc-codeaction-source)
-AddDesc('<leader>cA', 'Code Action (document)')
+SetDesc('<leader>cA', 'Code Action (document)')
 
 nnoremap <leader>cc <Cmd>call g:CocAction('showIncomingCalls')<CR>
 nnoremap <leader>cC <Cmd>call g:CocAction('showOutgoingCalls')<CR>
-AddDesc('<leader>cc', 'Show Incoming Call')
-AddDesc('<leader>cC', 'Show Outgoing Call')
+SetDesc('<leader>cc', 'Show Incoming Call')
+SetDesc('<leader>cC', 'Show Outgoing Call')
 
 nnoremap <leader>cd <Cmd>CocDiagnostics<CR>
-AddDesc('<leader>cd', 'Show Diagnostics')
+SetDesc('<leader>cd', 'Show Diagnostics')
 
 nnoremap <leader>cf <Cmd>call g:CocActionAsync('format')<CR>
 xmap <leader>cf <Plug>(coc-format-selected)
-AddDesc('<leader>cf', 'Foramt')
-AddDesc('<leader>cf', 'Foramt', 'v')
+SetDesc('<leader>cf', 'Foramt')
+SetDesc('<leader>cf', 'Foramt', 'v')
 nmap <silent> <leader>cF <Plug>(coc-codeaction-refactor)
 xmap <silent> <leader>cF <Plug>(coc-codeaction-refactor-selected)
-AddDesc('<leader>cF', 'Refactor')
-AddDesc('<leader>cF', 'Refactor', 'v')
+SetDesc('<leader>cF', 'Refactor')
+SetDesc('<leader>cF', 'Refactor', 'v')
 
 nmap <silent> <leader>cl <Plug>(coc-codelens-action)
-AddDesc('<leader>cl', 'Code Lens Action')
+SetDesc('<leader>cl', 'Code Lens Action')
 nnoremap <leader>cL <Cmd>CocCommand document.checkBuffer<CR>
-AddDesc('<leader>cL', 'Show Lsp Info')
+SetDesc('<leader>cL', 'Show Lsp Info')
 
 def ToggleOutline(): void
   var winid: number = coc#window#find('cocViewId', 'OUTLINE')
@@ -195,49 +195,49 @@ def ToggleOutline(): void
   endif
 enddef
 nnoremap <leader>co <ScriptCmd>ToggleOutline()<CR>
-AddDesc('<leader>co', 'Toggle Outline')
+SetDesc('<leader>co', 'Toggle Outline')
 nnoremap <leader>cO <Cmd>call g:CocAction('organizeImport')<CR>
-AddDesc('<leader>cO', 'Organize Import')
+SetDesc('<leader>cO', 'Organize Import')
 
 
 nmap <leader>cq <Plug>(coc-fix-current)
-AddDesc('<leader>cq', 'Quick Fix')
+SetDesc('<leader>cq', 'Quick Fix')
 
 nmap <leader>cr <Plug>(coc-rename)
-AddDesc('<leader>cr', 'Rename Symbol')
+SetDesc('<leader>cr', 'Rename Symbol')
 nnoremap <leader>cR <Cmd>CocCommand workspace.renameCurrentFile<CR>
-AddDesc('<leader>cR', 'Rename Cur File')
+SetDesc('<leader>cR', 'Rename Cur File')
 
 nnoremap <leader>cy <Cmd>call g:CocAction('showSuperTypes')<CR>
 nnoremap <leader>cY <Cmd>call g:CocAction('showSubTypes')<CR>
-AddDesc('<leader>cy', 'Show Super Type')
-AddDesc('<leader>cY', 'Show Sub Type')
+SetDesc('<leader>cy', 'Show Super Type')
+SetDesc('<leader>cY', 'Show Sub Type')
 
 # }}}
 
 # ui
 nnoremap <leader>uh <Cmd>CocCommand document.toggleInlayHint<CR>
-AddDesc('<leader>uh', 'Toggle Inlay Hint')
+SetDesc('<leader>uh', 'Toggle Inlay Hint')
 nnoremap <leader>ud <Cmd>call g:CocAction('diagnosticToggle')<CR>
-AddDesc('<leader>ud', 'Toggle Diagnostic (Global)')
+SetDesc('<leader>ud', 'Toggle Diagnostic (Global)')
 nnoremap <leader>uD <Cmd>call g:CocAction('diagnosticToggleBuffer')<CR>
-AddDesc('<leader>uD', 'Toggle Diagnostic (Cur Buffer)')
+SetDesc('<leader>uD', 'Toggle Diagnostic (Cur Buffer)')
 
 # {{{ CocList
-AddGroup('<leader>C', 'coc-list')
+SetGroup('<leader>C', 'coc-list')
 nnoremap <leader>Cc <Cmd>CocList commands<CR>
-AddDesc('<leader>Cc', 'Command')
+SetDesc('<leader>Cc', 'Command')
 nnoremap <leader>Cd <Cmd>CocList diagnostics<CR>
-AddDesc('<leader>Cd', 'Diags')
+SetDesc('<leader>Cd', 'Diags')
 nnoremap <leader>Ce <Cmd>CocList extensions<CR>
-AddDesc('<leader>Ce', 'Extensions')
+SetDesc('<leader>Ce', 'Extensions')
 nnoremap <leader>Cp <Cmd>CocListResume<CR>
-AddDesc('<leader>Cp', 'Resume Lastest Command')
+SetDesc('<leader>Cp', 'Resume Lastest Command')
 
 nnoremap <leader>ss <Cmd>CocList outline<CR>
-AddDesc('<leader>ss', 'Symbols (Cur File)')
+SetDesc('<leader>ss', 'Symbols (Cur File)')
 nnoremap <leader>sS <Cmd>CocList -I symbols<CR>
-AddDesc('<leader>sS', 'Symbols (Workspace)')
+SetDesc('<leader>sS', 'Symbols (Workspace)')
 # }}}
 
 # }}}

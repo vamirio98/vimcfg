@@ -175,7 +175,7 @@ augroup END
 # {{{ leaderf integration
 if iplug.Has('LeaderF')
   nnoremap <leader>sp <Cmd>Leaderf project<CR>
-  ikeymap.AddDesc('<leader>sp', 'Project')
+  ikeymap.SetDesc('<leader>sp', 'Project')
 
   def LfProjectSource(..._): list<string>
     return g:SessionList('')

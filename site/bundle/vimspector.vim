@@ -2,29 +2,29 @@ vim9script
 
 import autoload "../../autoload/imodule/keymap.vim" as ikeymap
 
-var AddGroup: func = ikeymap.AddGroup
-var AddDesc: func = ikeymap.AddDesc
-AddGroup('<leader>d', 'debug')
+var SetGroup: func = ikeymap.SetGroup
+var SetDesc: func = ikeymap.SetDesc
+SetGroup('<leader>d', 'debug')
 
 nmap <silent> <leader>db <Plug>VimspectorToggleBreakpoint
-AddDesc('<leader>db', 'Toggle Breakpoint')
+SetDesc('<leader>db', 'Toggle Breakpoint')
 nmap <silent> <leader>dB <Plug>VimspectorToggleConditionalBreakpoint
-AddDesc('<leader>dB', 'Toggle Cond Breakpoint')
+SetDesc('<leader>dB', 'Toggle Cond Breakpoint')
 
 nmap <silent> <leader>dc <Plug>VimspectorContinue
-AddDesc('<leader>dc', 'Start/Continue')
+SetDesc('<leader>dc', 'Start/Continue')
 
 nmap <silent> <leader>df <Plug>VimspectorAddFunctionBreakpoint
-AddDesc('<leader>df', 'Toggle Func Breakpoint')
+SetDesc('<leader>df', 'Toggle Func Breakpoint')
 
 nmap <silent> <leader>dp <Plug>VimspectorPause
-AddDesc('<leader>dp', 'Pause Debug')
+SetDesc('<leader>dp', 'Pause Debug')
 
 nmap <silent> <leader>dr <Plug>VimspectorRestart
-AddDesc('<leader>dr', 'Restart')
+SetDesc('<leader>dr', 'Restart')
 
 nmap <silent> <leader>ds <Plug>VimspectorStop
-AddDesc('<leader>ds', 'Stop')
+SetDesc('<leader>ds', 'Stop')
 
 augroup ivim_vimspector
   au!

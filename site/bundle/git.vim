@@ -14,28 +14,28 @@ g:gitgutter_close_preview_on_escape = 0
 g:gitgutter_grep = 'rg --color=never'
 
 # map {{{
-var AddGroup: func = ikeymap.AddGroup
-var AddDesc: func = ikeymap.AddDesc
+var SetGroup: func = ikeymap.SetGroup
+var SetDesc: func = ikeymap.SetDesc
 
-AddGroup('<leader>g', 'git')
+SetGroup('<leader>g', 'git')
 
 nmap [h <Plug>(GitGutterPrevHunk)
 nmap ]h <Plug>(GitGutterNextHunk)
-AddDesc('[h', 'Prev Hunk')
-AddDesc(']h', 'Next Hunk')
+SetDesc('[h', 'Prev Hunk')
+SetDesc(']h', 'Next Hunk')
 
 command! IvimGitHunk  GitGutterQuickFix | LeaderfQuickFix
 nnoremap <leader>gs <Cmd>IvimGitHunk<CR>
-AddDesc('<leader>gs', 'Search Hunk')
+SetDesc('<leader>gs', 'Search Hunk')
 nmap <leader>gp <Plug>(GitGutterPrevHunk)
-AddDesc('<leader>gp', 'Preview Hunk')
+SetDesc('<leader>gp', 'Preview Hunk')
 
 omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
 xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
-AddDesc('ih', 'Inner Hunk', 'v')
-AddDesc('ah', 'Outer Hunk', 'v')
+SetDesc('ih', 'Inner Hunk', 'v')
+SetDesc('ah', 'Outer Hunk', 'v')
 # }}}
 
 # TODO: add map to change diff base

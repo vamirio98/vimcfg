@@ -8,8 +8,8 @@ augroup ivim_config_autoreload
   au!
   # trigger autoread when cursor stop moving, buffer change or terminal focus
   au CursorHold,CursorHoldI,BufEnter,FocusGained *
-      \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == ''
-      \ | checktime | endif
+        \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == ''
+        \ | checktime | endif
   # notification after file change
   au FileChangedShellPost *
         \ iui.Warn('File changed on disk. Buffer reloaded.')
@@ -33,8 +33,8 @@ augroup ivim_config_last_loc
   au!
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \ && &filetype != "gitcommit"
-  | execute("normal `\"")
-  | endif
+        | execute("normal `\"")
+        | endif
 augroup END
 
 

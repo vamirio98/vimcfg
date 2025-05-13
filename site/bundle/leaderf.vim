@@ -51,8 +51,8 @@ endif
 # }}}
 
 # {{{ keymap
-var AddGroup: func = ikeymap.AddGroup
-var AddDesc: func = ikeymap.AddDesc
+var SetGroup: func = ikeymap.SetGroup
+var SetDesc: func = ikeymap.SetDesc
 
 # {{{ file
 def SearchFileInProject()
@@ -60,78 +60,78 @@ def SearchFileInProject()
   exec 'LeaderfFile' root
 enddef
 
-AddGroup('<leader>f', 'file')
+SetGroup('<leader>f', 'file')
 
 nnoremap <leader>ff <ScriptCmd>call SearchFileInProject()<CR>
-AddDesc('<leader>ff', 'Search File (Project Root)')
+SetDesc('<leader>ff', 'Search File (Project Root)')
 nnoremap <leader>fF <Cmd>LeaderfFile .<CR>
-AddDesc('<leader>fF', 'Search File (Cwd)')
+SetDesc('<leader>fF', 'Search File (Cwd)')
 
 nnoremap <leader>fr <Cmd>LeaderfMru<CR>
-AddDesc('<leader>fr', 'Recent File')
+SetDesc('<leader>fr', 'Recent File')
 nnoremap <leader>fR <Cmd>LeaderfMruCwd<CR>
-AddDesc('<leader>fR', 'Recent File (Cwd)')
+SetDesc('<leader>fR', 'Recent File (Cwd)')
 # }}}
 
 # gtags {{{
-AddGroup('<leader>g', 'gtags')
+SetGroup('<leader>g', 'gtags')
 nmap <leader>gd <Plug>LeaderfGtagsDefinition
-AddDesc('<leader>gd', 'Gtags Definition')
+SetDesc('<leader>gd', 'Gtags Definition')
 nmap <leader>gg <Plug>LeaderfGtagsGrep
-AddDesc('<leader>gg', 'Gtags Word')
+SetDesc('<leader>gg', 'Gtags Word')
 nmap <leader>gr <Plug>LeaderfGtagsReference
-AddDesc('<leader>gr', 'Gtags Reference')
+SetDesc('<leader>gr', 'Gtags Reference')
 nmap <leader>gS <Plug>LeaderfGtagsSymbol
-AddDesc('<leader>gS', 'Gtags Symbol')
+SetDesc('<leader>gS', 'Gtags Symbol')
 # }}}
 
 # {{{ search
-AddGroup('<leader>s', 'search')
+SetGroup('<leader>s', 'search')
 
 nnoremap <leader>sb <Cmd>LeaderfBuffer<CR>
-AddDesc('<leader>sb', 'Buffer')
+SetDesc('<leader>sb', 'Buffer')
 
 nnoremap <leader>sc <Cmd>LeaderfHistoryCmd<CR>
-AddDesc('<leader>sc', 'Command History')
+SetDesc('<leader>sc', 'Command History')
 
 nnoremap <leader>sh <Cmd>LeaderfHelp<CR>
-AddDesc('<leader>sh', 'Help Tag')
+SetDesc('<leader>sh', 'Help Tag')
 
 nnoremap <leader>sj <Cmd>Leaderf jumps<CR>
-AddDesc('<leader>sj', 'Jump List')
+SetDesc('<leader>sj', 'Jump List')
 
 nnoremap <leader>sk <Cmd>LeaderfMap<CR>
-AddDesc('<leader>sk', 'Keymap')
+SetDesc('<leader>sk', 'Keymap')
 
 nnoremap <leader>sl <Cmd>LeaderfLocList<CR>
-AddDesc('<leader>sl', 'Location List')
+SetDesc('<leader>sl', 'Location List')
 nnoremap <leader>sL <Cmd>LeaderfSelf<CR>
-AddDesc('<leader>sL', 'Leaderf Command')
+SetDesc('<leader>sL', 'Leaderf Command')
 
 nnoremap <leader>sm <Cmd>LeaderfMark<CR>
-AddDesc('<leader>sm', 'Mark')
+SetDesc('<leader>sm', 'Mark')
 
 nnoremap <leader>sq <Cmd>LeaderfQuickFix<CR>
-AddDesc('<leader>sq', 'Quickfix')
+SetDesc('<leader>sq', 'Quickfix')
 
 nnoremap <leader>sf <Cmd>LeaderfFunction<CR>
-AddDesc('<leader>sf', 'Function (Current File)')
+SetDesc('<leader>sf', 'Function (Current File)')
 
 nnoremap <leader>st <Cmd>LeaderfBufTag<CR>
-AddDesc('<leader>st', 'Tag (Current File)')
+SetDesc('<leader>st', 'Tag (Current File)')
 nnoremap <leader>sT <Cmd>LeaderfTag<CR>
-AddDesc('<leader>sT', 'Tag (Workspace)')
+SetDesc('<leader>sT', 'Tag (Workspace)')
 
 nnoremap <leader>s: <Cmd>LeaderfCommand<CR>
-AddDesc('<leader>s:', 'Command')
+SetDesc('<leader>s:', 'Command')
 nnoremap <leader>s/ <Cmd>LeaderfHistorySearch<CR>
-AddDesc('<leader>s/', 'Search History')
+SetDesc('<leader>s/', 'Search History')
 def LiveSearchInRoot(): void
   var root: string = iproject.CurRoot()
   exec 'Leaderf rg --live --no-fixed-string' root
 enddef
 nnoremap <leader>/ <ScriptCmd>LiveSearchInRoot()<CR>
-AddDesc('<leader>/', 'Live Search (Root)')
+SetDesc('<leader>/', 'Live Search (Root)')
 # }}}
 
 # }}}

@@ -39,8 +39,8 @@ def g:ToggleIndentGuides(): void
   endif
 enddef
 
-ikeymap.AddGroup('<leader>u', 'ui')
-ikeymap.AddDesc('<leader>ui', 'Toggle Indent Guides')
+ikeymap.SetGroup('<leader>u', 'ui')
+ikeymap.SetDesc('<leader>ui', 'Toggle Indent Guides')
 nnoremap <leader>ui <Cmd>call g:ToggleIndentGuides()<CR>
 # }}}
 
@@ -50,7 +50,7 @@ if !has('gui_running')
     au!
     au VimEnter,ColorScheme * :hi link IndentGuidesOdd DiffAdd
     au VimEnter,ColorScheme * :hi link IndentGuidesEven ToolbarLine
-    au FileType * if &expandtab
+    au FileType,BufAdd * if &expandtab
       | g:IvimIndentGuidesEnable() | endif
   augroup END
 endif
