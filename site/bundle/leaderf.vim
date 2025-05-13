@@ -55,14 +55,24 @@ var SetGroup: func = ikeymap.SetGroup
 var SetDesc: func = ikeymap.SetDesc
 
 # {{{ file
+SetGroup('<leader>f', 'file')
+
+def SearchFileInVimcfg()
+  exec 'LeaderfFile' g:ivim_home
+enddef
+def LiveSearchVimcfg(): void
+  exec 'Leaderf rg --live --no-fixed-string' g:ivim_home
+enddef
+nnoremap <leader>fc <ScriptCmd>SearchFileInVimcfg()<CR>
+SetDesc('<leader>fc', 'Search Config File')
+nnoremap <leader>fC <ScriptCmd>LiveSearchVimcfg()<CR>
+SetDesc('<leader>fC', 'Live Search Config')
+
 def SearchFileInProject()
   var root = iproject.GetRoot('.')
   exec 'LeaderfFile' root
 enddef
-
-SetGroup('<leader>f', 'file')
-
-nnoremap <leader>ff <ScriptCmd>call SearchFileInProject()<CR>
+nnoremap <leader>ff <ScriptCmd>SearchFileInProject()<CR>
 SetDesc('<leader>ff', 'Search File (Project Root)')
 nnoremap <leader>fF <Cmd>LeaderfFile .<CR>
 SetDesc('<leader>fF', 'Search File (Cwd)')
