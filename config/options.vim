@@ -47,7 +47,7 @@ set autowrite
 
 set viewoptions=cursor,curdir,folds,slash,unix
 
-set clipboard=unnamedplus
+set clipboard^=unnamed,unnamedplus
 if (!empty($SSH_TTY) || iplatform.WSL)
     set clipboard=
     # let vim clipboard sync with system
