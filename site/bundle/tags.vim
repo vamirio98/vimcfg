@@ -4,6 +4,9 @@ import autoload "../../autoload/ilib/ui.vim" as iui
 import autoload "../../autoload/ilib/path.vim" as ipath
 import autoload "../../autoload/imodule/plug.vim" as iplug
 
+# do NOT append default markers
+g:gutentags_add_default_project_roots = 0
+
 # set root dir of a project
 g:gutentags_project_root = get(g:, 'ivim_rootmarkers',
   ['.root', '.svn', '.hg', '.git', '.project'])
