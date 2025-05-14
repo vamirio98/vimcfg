@@ -3,10 +3,12 @@ vim9script
 import autoload "../../autoload/ilib/string.vim" as istring
 import autoload "../../autoload/imodule/keymap.vim" as ikeymap
 
+g:ivim_indent_guide_enabled = get(g:, 'ivim_indent_guide_enabled', 1)
+
 g:indent_guides_default_mapping = 0
 g:indent_guides_guide_size = 0
 g:indent_guides_start_level = 1
-g:indent_guides_enable_on_vim_startup = 0
+g:indent_guides_enable_on_vim_startup = g:ivim_indent_guide_enabled
 g:indent_guides_exclude_buftype = 0
 g:indent_guides_exclude_filetypes = ['help', 'startify', 'nerdtree']
 g:indent_guides_tab_guides = 1
@@ -22,20 +24,21 @@ def StripListchars(listchars: string): string
   endif
   return lc
 enddef
-def g:IvimIndentGuidesEnable(): void
+def IvimIndentGuidesEnable(): void
+  g:ivim_indent_guide_enabled = 1
   exec 'IndentGuidesEnable'
-  exec 'setlocal listchars=' .. StripListchars(g:ivim_listchars)
+  exec 'set listchars=' .. StripListchars(g:ivim_listchars)
 enddef
-def g:IvimIndentGuidesDisable(): void
+def IvimIndentGuidesDisable(): void
+  g:ivim_indent_guide_enabled = 0
   exec 'IndentGuidesDisable'
-  exec 'setlocal listchars=' .. g:ivim_listchars
+  exec 'set listchars=' .. g:ivim_listchars
 enddef
 def g:ToggleIndentGuides(): void
-  b:ivim_indent_guide_enabled = !get(b:, 'ivim_indent_guide_enabled', 0)
-  if b:ivim_indent_guide_enabled
-    g:IvimIndentGuidesEnable()
+  if g:ivim_indent_guide_enabled
+    IvimIndentGuidesDisable()
   else
-    g:IvimIndentGuidesDisable()
+    IvimIndentGuidesEnable()
   endif
 enddef
 
@@ -44,13 +47,11 @@ ikeymap.SetDesc('<leader>ui', 'Toggle Indent Guides')
 nnoremap <leader>ui <Cmd>call g:ToggleIndentGuides()<CR>
 # }}}
 
-if !has('gui_running')
-  g:indent_guides_auto_colors = 0
-  augroup ivim_indent_guides
-    au!
-    au VimEnter,ColorScheme * :hi link IndentGuidesOdd DiffAdd
-    au VimEnter,ColorScheme * :hi link IndentGuidesEven ToolbarLine
-    au FileType * if &expandtab
-      | g:IvimIndentGuidesEnable() | endif
-  augroup END
-endif
+g:indent_guides_auto_colors = 0
+augroup ivim_indent_guides
+  au!
+  au VimEnter,ColorScheme * :hi link IndentGuidesOdd DiffAdd
+  au VimEnter,ColorScheme * :hi link IndentGuidesEven ToolbarLine
+  au VimEnter * if g:ivim_indent_guide_enabled
+    | IvimIndentGuidesEnable() | endif
+augroup END
