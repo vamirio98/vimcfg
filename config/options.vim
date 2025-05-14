@@ -110,7 +110,7 @@ set relativenumber
 # always show the signcolumn, otherwise it would shift the text each time
 set signcolumn=yes
 
-set scrolloff=2
+set scrolloff=3
 set sidescrolloff=8 # columns of context
 set showmatch
 set matchtime=3
