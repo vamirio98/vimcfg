@@ -19,16 +19,21 @@ var SetDesc: func = ikeymap.SetDesc
 
 SetGroup('<leader>g', 'git')
 
-nmap [h <Plug>(GitGutterPrevHunk)
-nmap ]h <Plug>(GitGutterNextHunk)
-SetDesc('[h', 'Prev Hunk')
-SetDesc(']h', 'Next Hunk')
+nmap [c <Plug>(GitGutterPrevHunk)
+nmap ]c <Plug>(GitGutterNextHunk)
+SetDesc('[c', 'Prev Hunk')
+SetDesc(']c', 'Next Hunk')
+
+def PreviewHunk(): void
+  exec 'GitGutterPreviewHunk'
+  silent! wincmd P
+enddef
+nmap <leader>gp <ScriptCmd>PreviewHunk()<CR>
+SetDesc('<leader>gp', 'Preview Hunk')
 
 command! IvimGitHunk  GitGutterQuickFix | LeaderfQuickFix
 nnoremap <leader>gs <Cmd>IvimGitHunk<CR>
 SetDesc('<leader>gs', 'Search Hunk')
-nmap <leader>gp <Plug>(GitGutterPrevHunk)
-SetDesc('<leader>gp', 'Preview Hunk')
 
 omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
@@ -36,6 +41,11 @@ xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 SetDesc('ih', 'Inner Hunk', 'v')
 SetDesc('ah', 'Outer Hunk', 'v')
+
+augroup ivim_git
+  au!
+  au FileType diff nnoremap gq <Cmd>close<CR>
+augroup END
 # }}}
 
 # TODO: add map to change diff base

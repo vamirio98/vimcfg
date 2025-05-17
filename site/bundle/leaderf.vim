@@ -84,15 +84,15 @@ SetDesc('<leader>fR', 'Recent File (Cwd)')
 # }}}
 
 # gtags {{{
-SetGroup('<leader>g', 'gtags')
-nmap <leader>gd <Plug>LeaderfGtagsDefinition
-SetDesc('<leader>gd', 'Gtags Definition')
-nmap <leader>gg <Plug>LeaderfGtagsGrep
-SetDesc('<leader>gg', 'Gtags Word')
-nmap <leader>gr <Plug>LeaderfGtagsReference
-SetDesc('<leader>gr', 'Gtags Reference')
-nmap <leader>gS <Plug>LeaderfGtagsSymbol
-SetDesc('<leader>gS', 'Gtags Symbol')
+SetGroup('<leader>G', 'gtags')
+nmap <leader>Gd <Plug>LeaderfGtagsDefinition
+SetDesc('<leader>Gd', 'Gtags Definition')
+nmap <leader>Gg <Plug>LeaderfGtagsGrep
+SetDesc('<leader>Gg', 'Gtags Word')
+nmap <leader>Gr <Plug>LeaderfGtagsReference
+SetDesc('<leader>Gr', 'Gtags Reference')
+nmap <leader>Gs <Plug>LeaderfGtagsSymbol
+SetDesc('<leader>Gs', 'Gtags Symbol')
 # }}}
 
 # {{{ search
