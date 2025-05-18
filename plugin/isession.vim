@@ -191,7 +191,7 @@ if iplug.Has('LeaderF')
   g:Lf_Extensions.project = {
     'source': string(function('LfProjectSource'))[10 : -3],
     'accept': string(function('LfPorjectAccept'))[10 : -3],
-    'help': 'navigate available project from session_mgr.vim',
+    'help': 'navigate available project from isession.vim',
   }
 endif
 
