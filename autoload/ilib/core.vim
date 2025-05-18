@@ -121,4 +121,5 @@ export def Executable(name: string): string
       endif
     endfor
   endif
+  return null_string
 enddef

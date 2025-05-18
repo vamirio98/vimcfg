@@ -20,7 +20,7 @@ export var shell_error: number = 0
 #--------------------------------------------------------------
 # return if has '+python3'
 #--------------------------------------------------------------
-export def HasPython()
+export def HasPython(): bool
   return has('python3')
 enddef
 
@@ -46,7 +46,7 @@ enddef
 export def Eval(script: any): any
   if !s_has_py
     iui.Error(s_health)
-    return
+    return null
   endif
   var code: string = type(script) == v:t_string ? script : (
     type(script) == v:t_list ? join(script, '\n') : '0'
@@ -64,22 +64,22 @@ export def File(filename: string): void
     return
   endif
   exec 'py3file' fnameescape(filename)
-endfunc
+enddef
 
 #--------------------------------------------------------------
 # python call
 #--------------------------------------------------------------
-export def Call(funcname: string, args: any)
+export def Call(funcname: string, args: any): any
   if !s_has_py
     iui.Error(s_health)
-    return
+    return null
   endif
   if !s_ensure
     exec 'py3 import vim'
     s_ensure = true
   endif
   py3 __py_args = vim.eval('args')
-  return py3eval(funcname . '(*__py_args)')
+  return py3eval(funcname .. '(*__py_args)')
 enddef
 
 #----------------------------------------------------------------------
@@ -87,10 +87,11 @@ enddef
 #----------------------------------------------------------------------
 export def System(cmd: string, input: any = null): any
   var has_input: bool = false
+  var sinput: string = null_string
   if input != null
     has_input = true
-    var sinput: string = type(input) == v:t_string ? input : (
-      type(input) == v:t_list ? join(input, '\n')
+    sinput = type(input) == v:t_string ? input : (
+      type(input) == v:t_list ? join(input, '\n') : string(input)
     )
   endif
   if !iplatform.WIN || !s_has_py
