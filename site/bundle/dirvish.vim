@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "../../autoload/ilib/ui.vim" as iui
+
 g:ivim_dirvish_hide_dotfile = get(g:, 'ivim_dirvish_hide_dotfile', 1)
 
 # sort and hide files, then locate related file
@@ -27,6 +29,7 @@ enddef
 
 def ToggleHideDotfile()
   g:ivim_dirvish_hide_dotfile = !g:ivim_dirvish_hide_dotfile
+  iui.Info(printf('%s dot files', g:ivim_dirvish_hide_dotfile ? 'Hide' : 'Show'))
   exec 'Dirvish'
 enddef
 
