@@ -15,7 +15,7 @@ endif
 def DoLoadConf(script: string)
   exec "augroup ivim_bundle_" .. tr(script, '/.', '__')
   exec "au!"
-  exec "au User IvimBundleLoadPost IncScript" script
+  exec "au User IvimLoadPost IncScript" script
   exec "augroup END"
 enddef
 command! -nargs=1 LoadConf DoLoadConf('<args>')
@@ -141,5 +141,3 @@ endif
 
 # initialize plugin system
 plug#end()
-
-doautocmd <nomodeline> User IvimBundleLoadPost
