@@ -23,7 +23,7 @@ export def BufDel(btarget: number = bufnr('%')): void
     # try using alternate buffer or previous buffer
     var alt: number = bufnr('#')
     if alt > 0 && buflisted(alt) && alt != btarget
-      buffer #
+      exec 'buffer' alt
     else
       try
         bprevious
