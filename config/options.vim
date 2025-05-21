@@ -122,6 +122,8 @@ exec 'set listchars=' .. g:ivim_listchars
 # error format
 set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
 set shortmess+=WIcC
+# show search count message
+set shortmess-=S
 
 # set navigation and font in GUI
 if has('gui_running')
