@@ -1,6 +1,8 @@
 vim9script
 
 import autoload "../autoload/ilib/platform.vim" as iplatform
+import autoload "../autoload/ilib/path.vim" as ipath
+import autoload "../autoload/ilib/ui.vim" as iui
 
 set nocompatible
 set backspace=indent,eol,start
@@ -156,5 +158,28 @@ g:maplocalleader = '\'
 
 # global variable
 g:ivim_rootmarkers = ['.git', '.svn', '.hg', '.root', '.project']
-g:ivim_cache_dir = expand('~/.cache/vim')
-g:ivim_bundle_home = expand('~/.vim/bundle')
+
+# {{{ ensure all directories is exists
+g:ivim_cache_dir = ipath.Abspath('~/.cache/vim')
+g:ivim_bundle_home = ipath.Abspath('~/.vim/bundle')
+g:ivim_swapfile_dir = ipath.Abspath('~/.cache/vim/swapfiles')
+
+const DIRS = [
+  g:ivim_cache_dir,
+  g:ivim_bundle_home,
+  g:ivim_swapfile_dir,
+]
+for d in DIRS
+  if !isdirectory(d)
+    if !mkdir(d, 'p')
+      iui.Error("Can not create dir " .. d)
+    endif
+  endif
+endfor
+# }}}
+
+# https://stackoverflow.com/a/21026618
+# see :h 'directory'
+# use trailing '//' to make the swapfile name built from the complete path
+# to the file with all path separators substituted to percent '%' signs
+exec 'set directory=' .. ipath.StripSlash(g:ivim_swapfile_dir) .. '//'
