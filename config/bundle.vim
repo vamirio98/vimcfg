@@ -24,9 +24,6 @@ var s_bundle: dict<bool> = null_dict
 for key in g:ivim_bundle
   s_bundle[key] = true
 endfor
-if !exists('g:ivim_lsp_provider')
-  g:ivim_lsp_provider = 'coc'
-endif
 
 # specify a directory for plugins
 var s_bundle_home: string = get(g:, 'ivim_bundle_home', '~/.vim/bundle')
@@ -54,15 +51,12 @@ if has_key(s_bundle, 'coding')
     iui.Error("no python3 support")
   endif
 
-  if g:ivim_lsp_provider == 'ycm'
-    Plug 'ycm-core/YouCompleteMe'
-    # for lsp config examples
-    Plug 'ycm-core/lsp-examples'
-    LoadConf site/bundle/ycm.vim
-  elseif g:ivim_lsp_provider == 'coc'
-    Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
-    LoadConf site/bundle/coc.vim
-  endif
+  # Plug 'ycm-core/YouCompleteMe'
+  # # for lsp config examples
+  # Plug 'ycm-core/lsp-examples'
+  # LoadConf site/bundle/ycm.vim
+  Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
+  LoadConf site/bundle/coc.vim
 endif
 # }}}
 
@@ -75,6 +69,8 @@ endif
 if has_key(s_bundle, 'editor')
   Plug 'monkoose/vim9-stargate'
   LoadConf site/bundle/easy_motion.vim
+
+  Plug 'kshenoy/vim-signature'
 
   Plug 'liuchengxu/vim-which-key'
   LoadConf site/bundle/which_key.vim
@@ -94,12 +90,14 @@ if has_key(s_bundle, 'editor')
   Plug 'skywind3000/asynctasks.vim'
   LoadConf site/bundle/asynctasks.vim
 
-  if has('python3')
-    Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-    Plug 'Yggdroot/LeaderF-marks'
-    Plug 'FahimAnayet/LeaderF-map'
-    LoadConf site/bundle/leaderf.vim
-  endif
+  #Plug 'junegunn/fzf'
+  #Plug 'junegunn/fzf.vim'
+  #LoadConf site/bundle/fzf.vim
+
+  Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+  Plug 'Yggdroot/LeaderF-marks'
+  Plug 'FahimAnayet/LeaderF-map'
+  LoadConf site/bundle/leaderf.vim
 
   # text opeartor
   Plug 'tpope/vim-surround'
