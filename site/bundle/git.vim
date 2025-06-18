@@ -6,6 +6,7 @@ import autoload "../../autoload/ilib/core.vim" as icore
 import autoload "../../autoload/ilib/ui.vim" as iui
 import autoload "../../autoload/ilib/project.vim" as iproject
 import autoload "../../autoload/ilib/string.vim" as istring
+import autoload "../../autoload/ilib/buffer.vim" as ibuffer
 
 g:gitgutter_map_keys = 0
 
@@ -63,10 +64,27 @@ if iplug.Has('LeaderF')
     iui.Warn(printf('Change git diff base to [ %s ]', line), true)
   enddef
 
+  def LfGitDiffBasePreview(_: any, _: any, line: string, _: any): any
+    if empty(line)
+      return []
+    endif
+
+    var bid: number = ibuffer.Alloc(true, 'leaderf_git_preview')
+    var obj: dict<any> = ibuffer.Object(bid)
+    setbufvar(bid, '&ft', 'git')
+
+    var hash: string = split(line, ' ')[0]
+    var log = icore.System(printf('git log -n 1 %s', hash))
+    ibuffer.Update(bid, log)
+    return [obj['path'], 1, ""]
+  enddef
+
+  # TODO: fix highlight miss
   g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   g:Lf_Extensions.git_diff_base = {
     'source': string(function('LfGitDiffBaseSource'))[10 : -3],
     'accept': string(function('LfGitDiffBaseAccept'))[10 : -3],
+    'preview': string(function('LfGitDiffBasePreview'))[10 : -3],
     'highlights_def': {
       'Lf_hl_funcScope': '^\S\+'
     },
