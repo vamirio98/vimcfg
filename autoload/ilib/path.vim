@@ -338,3 +338,19 @@ export def Shorten(path: string, limit: number = 40): string
   endif
   return new_path
 enddef
+
+
+#---------------------------------------------------------------
+# return the temporary directory path
+#---------------------------------------------------------------
+export def Tmpdir(): string
+  return fnamemodify(tempname(), ':h')
+enddef
+
+
+#---------------------------------------------------------------
+# return the temporary file path
+#---------------------------------------------------------------
+export def Tmpfile(): string
+  return tempname()
+enddef
