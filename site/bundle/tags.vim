@@ -25,6 +25,9 @@ if !iplug.Has('LeaderF')
   g:gutentags_cache_dir = tag_cache_dir
 endif
 
+# uncomment this for dubug
+# g:gutentags_trace = 1
+
 # use a ctags-compatible program to generate a tags file and
 # GNU's gtags to generate a code database file
 g:gutentags_modules = []
@@ -39,7 +42,7 @@ if empty(g:gutentags_modules)
 endif
 
 # set ctags arguments
-g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extras=+q']
 g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 

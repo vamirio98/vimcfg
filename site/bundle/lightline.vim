@@ -36,7 +36,7 @@ g:lightline.active = {
     ],
   ],
   'right': [ ['lineinfo'], ['percent'],
-    ['gitsummary', 'fileformat', 'filetype'],
+    ['gutentags', 'gitsummary', 'fileformat', 'filetype'],
   ]
 }
 g:lightline.tabline = {
@@ -49,6 +49,7 @@ g:lightline.component_function = {
 }
 g:lightline.component_expand = {
   'buffers': 'lightline#bufferline#buffers',
+  'gutentags': "gutentags#statusline",
   'gitsummary': "g:IvimStlGitSummary",
   #'lspdiag': 'g:IvimStlLspDiag',
   'gitbranch': 'g:IvimStlGitBranch',
@@ -208,6 +209,10 @@ augroup ivim_lightline
   endif
   if iplug.Has('YouCompleteMe')
     au CursorHold * lightline#update()
+  endif
+  if iplug.Has('vim-gutentags')
+    au User GutentagsUpdating lightline#update()
+    au User GutentagsUpdated lightline#update()
   endif
   au FileType dirvish lightline#update()
   au User GitGutter lightline#update()
