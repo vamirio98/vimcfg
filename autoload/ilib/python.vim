@@ -15,7 +15,9 @@ endif
 
 
 export var shell_error: number = 0
-
+# in vim9script, vim module in python can only access script level var, not
+# function local var, see: https://github.com/vim/vim/issues/8573
+var s_args: any = null
 
 #--------------------------------------------------------------
 # return if has '+python3'
@@ -78,6 +80,7 @@ export def Call(funcname: string, args: any): any
     exec 'py3 import vim'
     s_ensure = true
   endif
+  s_args = args
   py3 __py_args = vim.eval('args')
   return py3eval(funcname .. '(*__py_args)')
 enddef
@@ -99,22 +102,24 @@ export def System(cmd: string, input: any = null): any
     shell_error = v:shell_error
     return text
   endif
-  exec 'py3 import subprocess, vim'
-  exec 'py3 __argv = {"args": vim.eval("cmd")}'
-  exec 'py3 __argv["shell"] = True'
-  exec 'py3 __argv["stdout"] = subprocess.PIPE'
-  exec 'py3 __argv["stderr"] = subprocess.STDOUT'
+  py3 import subprocess, vim
+  s_args = cmd
+  py3 __argv = {"args": vim.eval("s_args")}
+  py3 __argv["shell"] = True
+  py3 __argv["stdout"] = subprocess.PIPE
+  py3 __argv["stderr"] = subprocess.STDOUT
   if has_input
-    exec 'py3 __argv["stdin"] = subprocess.PIPE'
+    py3 __argv["stdin"] = subprocess.PIPE
   endif
-  exec 'py3 __pp = subprocess.Popen(**__argv)'
+  py3 __pp = subprocess.Popen(**__argv)
   if has_input
-    exec 'py3 __si = vim.eval("sinput")'
-    exec 'py3 __pp.stdin.write(__si.encode("utf-8"))'
-    exec 'py3 __pp.stdin.close()'
+    s_args = sinput
+    py3 __si = vim.eval("s_args")
+    py3 __pp.stdin.write(__si.encode("utf-8"))
+    py3 __pp.stdin.close()
   endif
-  exec 'py3 __return_text = __pp.stdout.read()'
-  exec 'py3 __return_code = __pp.wait()'
+  py3 __return_text = __pp.stdout.read()
+  py3 __return_code = __pp.wait()
   shell_error = Eval('__return_code')
   return Eval('__return_text')
 enddef
