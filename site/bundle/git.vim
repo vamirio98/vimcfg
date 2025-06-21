@@ -33,8 +33,8 @@ SetDesc(']c', 'Next Hunk')
 # {{{ git diff base
 def IsGitRepo(cwd: string = null_string): bool
   var path = cwd == null ? expand('%:h') : cwd
-  var res = icore.System('git rev-parse --is-inside-work-tree', cwd)
-  res = istring.Strip(res)
+  var res = icore.System('git rev-parse --is-inside-work-tree', path)
+  res = istring.Strip(split(res, '\n')[0])
   return res == 'true'
 enddef
 def GetGitCommits(cwd: string = null_string, reflog: bool = false): list<string>
