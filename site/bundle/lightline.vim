@@ -24,6 +24,9 @@ endif
 g:lightline.subseparator = {'left': '|', 'right': '|'}
 g:lightline.tabline_subseparator = g:lightline.subseparator
 
+# tabs compoents
+g:lightline.tab = { 'active': [ 'tabnum' ], 'inactive': [ 'tabnum' ] }
+
 g:lightline#bufferline#buffer_filter = "g:LightlineBufferlineFilter"
 
 g:lightline.colorscheme = 'gruvbox_material'
@@ -41,7 +44,7 @@ g:lightline.active = {
 }
 g:lightline.tabline = {
   'left': [ ['buffers'] ],
-  'right': [ ['tabs'] ],
+  'right': [ ['rtabs'] ],
 }
 
 g:lightline.component_function = {
@@ -49,6 +52,7 @@ g:lightline.component_function = {
 }
 g:lightline.component_expand = {
   'buffers': 'lightline#bufferline#buffers',
+  'rtabs': 'g:LightlineTabRight',
   'gutentags': "gutentags#statusline",
   'gitsummary': "g:IvimStlGitSummary",
   #'lspdiag': 'g:IvimStlLspDiag',
@@ -58,6 +62,7 @@ g:lightline.component_expand = {
 }
 g:lightline.component_type = {
   'buffers': 'tabsel',
+  'rtabs': 'tabsel',
   'coc_error': 'error',
   'coc_warn': 'warning',
 }
@@ -65,7 +70,7 @@ g:lightline.component_type = {
 
 # {{{ component utils
 # {{{ setup color group
-def SetupStlColor()
+def SetupColor()
   hi! link IvimStlA LightlineLeft_normal_0
   hi! link IvimStlB LightlineLeft_normal_1
   hi! link IvimStlC LightlineRight_normal_2
@@ -76,6 +81,12 @@ def SetupStlColor()
   SetupStlGitSumColor()
   SetupStlLspDiagColor()
   SetupStlGitBranchColor()
+
+  # change tabline color, see:
+  # https://github.com/itchyny/lightline.vim/issues/508#issuecomment-694716949
+  var palette = eval(printf("g:lightline#colorscheme#%s#palette",
+    g:lightline.colorscheme))
+  palette.tabline.right = palette.tabline.left
 enddef
 
 def NewHighlight(name: string, bg: string, fg: string): void
@@ -88,6 +99,13 @@ def NewColor(bg: string, fg: string): list<string>
   var nbg: dict<any> = hlget(bg, 1)[0]
   var nfg: dict<any> = hlget(fg, 1)[0]
   return [ nfg.guifg, nbg.guibg, nfg.ctermfg, nbg.ctermbg ]
+enddef
+# }}}
+
+# {{{ tabs
+# see: https://github.com/itchyny/lightline.vim/issues/440#issuecomment-610172628
+def g:LightlineTabRight(): list<list<string>>
+  return reverse(lightline#tabs())
 enddef
 # }}}
 
@@ -203,7 +221,7 @@ SetDesc('<leader>br', 'Reorder')
 augroup ivim_lightline
   au!
   # wait for colorscheme loaded
-  au VimEnter * SetupStlColor()
+  au VimEnter * SetupColor()
   if iplug.Has('coc.nvim')
     au User CocStatusChange lightline#update()
   endif
