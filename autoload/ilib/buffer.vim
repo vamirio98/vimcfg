@@ -3,12 +3,10 @@ vim9script
 import autoload "./ui.vim" as iui
 import autoload "./path.vim" as ipath
 
-# for anonymous buffers, only in memory and only vim can read from/write to it
+# for anonymous buffers
 var s_anon: list<number> = []
-# for named buffers, in memory and disk, any program can read from/write to it
+# for named buffers
 var s_named: dict<number> = {}  # all buffers have key 'name'
-# record all named buffer, used to delete these file when leave vim
-var s_record: list<number> = []
 
 
 #---------------------------------------------------------------
@@ -122,9 +120,6 @@ export def Update(bid: number, textlist: any): number
   var ret: number =
     (!deletebufline(bid, 1, '$') && setbufline(bid, 1, text)) ? 0 : -1
   setbufvar(bid, '&modifiable', modifiable)
-  if IsNamed(bid)
-    Sync(bid)
-  endif
 
   return ret
 enddef
@@ -148,9 +143,6 @@ export def Append(bid: number, lnum: number, textlist: any): number
   setbufvar(bid, '&modifiable', 1)
   var ret: number = appendbufline(bid, lnum, text)
   setbufvar(bid, '&modifiable', modifiable)
-  if IsNamed(bid)
-    Sync(bid)
-  endif
 
   return ret
 enddef
@@ -164,9 +156,6 @@ export def DeleteLine(bid: number, first: number, last: any): number
   setbufvar(bid, '&modifiable', 1)
   var ret: number = deletebufline(bid, first, last)
   setbufvar(bid, '&modifiable', modifiable)
-  if IsNamed(bid)
-    Sync(bid)
-  endif
 
   return ret
 enddef
@@ -182,9 +171,6 @@ export def SetLine(bid: number, lnum: number, textlist: any): number
   setbufvar(bid, '&modifiable', 1)
   var ret: number = setbufline(bid, lnum, text)
   setbufvar(bid, '&modifiable', modifiable)
-  if IsNamed(bid)
-    Sync(bid)
-  endif
 
   return ret
 enddef
@@ -230,7 +216,6 @@ export def Alloc(named: bool = false, name: string = null_string): number
         new_name = ipath.Basename(filepath)
       endif
       silent bid = bufadd(filepath)
-      add(s_record, bid)
       new = true
     endif
   endif
@@ -251,7 +236,6 @@ export def Alloc(named: bool = false, name: string = null_string): number
   if named
     SetVar(bid, 'name', new_name)
     SetVar(bid, 'path', filepath)
-    Sync(bid)
   endif
   setbufvar(bid, '&modifiable', 0)
   setbufvar(bid, '&filetype', '')
@@ -272,12 +256,3 @@ export def Free(bid: number): void
   endif
   Clear(bid)
 enddef
-
-
-# delete all named buffer from disk when leave vim
-augroup ilib_buffer
-  au!
-  au VimLeavePre * for bid in s_record
-    | if bufexists(bid) | delete(Object(bid)['name']) | endif
-    | endfor
-augroup END
