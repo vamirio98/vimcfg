@@ -50,7 +50,7 @@ g:lightline.component_function = {
 g:lightline.component_expand = {
   'buffers': 'lightline#bufferline#buffers',
   'gitsummary': "g:IvimStlGitSummary",
-  'lspdiag': 'g:IvimStlLspDiag',
+  #'lspdiag': 'g:IvimStlLspDiag',
   'gitbranch': 'g:IvimStlGitBranch',
   'coc_error': 'g:IvimStlCocError',
   'coc_warn': 'g:IvimStlCocWarn',
@@ -59,8 +59,6 @@ g:lightline.component_type = {
   'buffers': 'tabsel',
   'coc_error': 'error',
   'coc_warn': 'warning',
-  #'coc_error': 'ivim_coc_error',
-  #'coc_warn': 'ivim_coc_warn',
 }
 # }}}
 
@@ -77,7 +75,6 @@ def SetupStlColor()
   SetupStlGitSumColor()
   SetupStlLspDiagColor()
   SetupStlGitBranchColor()
-  #SetupCocColor()
 enddef
 
 def NewHighlight(name: string, bg: string, fg: string): void
@@ -116,11 +113,11 @@ enddef
 def g:IvimStlGitSummary(): string
   var [a, m, r] = g:GitGutterGetHunkSummary()
   return printf('%s%s%s%s%s',
-    (a == 0 ? '' : '%#IvimStlGitSumAdd#+' .. string(a) .. '%*'),
+    (a == 0 ? '' : printf('%%#IvimStlGitSumAdd#+%%(%d%%)%%*', a)),
     (m + r > 0 ? ' ' : ''),
-    (m == 0 ? '' : '%#IvimStlGitSumChange#~' .. string(m) .. '%*'),
+    (m == 0 ? '' : printf('%%#IvimStlGitSumChange#~%%(%d%%)%%*', m)),
     (m > 0 && r > 0 ? ' ' : ''),
-    (r == 0 ? '' : '%#IvimStlGitSumDelete#-' .. string(r) .. '%*')
+    (r == 0 ? '' : printf('%%#IvimStlGitSumDelete#-%%(%d%%)%%*', r))
   )
 enddef
 # }}}
@@ -134,8 +131,8 @@ def g:IvimStlGitBranch(): string
     return ''
   else
     var br = g:FugitiveHead()
-    return printf('%s', len(br) == 0 ? '' : '%#IvimStlGitBranch# ' ..
-      br .. '%#IvimStlB#')
+    return len(br) == 0 ? '' :
+      printf('%%#IvimStlGitBranch# %%(%s%%)%%#IvimStlB#', br)
   endif
 enddef
 # }}}
@@ -161,25 +158,18 @@ enddef
 # }}}
 
 # {{{ coc-status
-def SetupCocColor(): void
-  var palette = lightline#palette()
-  palette.normal.ivim_coc_error = [ NewColor('IvimStlB', 'Red') ]
-  palette.normal.ivim_coc_warn = [ NewColor('IvimStlB', 'Yellow') ]
-  lightline#colorscheme()
-enddef
 def g:IvimStlCocError(): string
   var error_sign: string = get(g:, 'coc_status_error_sign', ' ')
   var info = get(b:, 'coc_diagnostic_info', {})
   var error_num: number = get(info, 'error', 0)
-  return error_num == 0 ? '' : error_sign .. string(error_num)
+  return error_num == 0 ? '' : printf("%s%d", error_sign, error_num)
 enddef
 def g:IvimStlCocWarn(): string
   var warn_sign: string = get(g:, 'coc_status_warning_sign', ' ')
   var info = get(b:, 'coc_diagnostic_info', {})
   var warn_num: number = get(info, 'warning', 0)
-  return warn_num == 0 ? '' : warn_sign .. string(warn_num)
+  return warn_num == 0 ? '' : printf("%s%d", warn_sign, warn_num)
 enddef
-defc g:IvimStlCocWarn
 # }}}
 
 # }}}
