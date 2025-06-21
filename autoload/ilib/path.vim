@@ -20,7 +20,10 @@ enddef
 #----------------------------------------------------------------------
 export def Chdir(path: string): void
   var cmd: string = GetCdCmd()
-  silent exec cmd fnameescape(path)
+  # FIXME: it's strange that Vim can only cd to relative path on Windows
+  var cwd: string = getcwd()
+  var relpath: string = Relpath(path, cwd)
+  silent exec cmd fnameescape(relpath)
 enddef
 
 
