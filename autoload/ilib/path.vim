@@ -232,7 +232,9 @@ export def Relpath(path: string, base: string): string
       if WIN
         relpath = substitute(relpath, '/', '\\\\', 'g')
       endif
-      return relpath
+      # FIXME: if remove the '.', vim will jump to home directory when
+      # call `cd Relpath('.')`, no current directory
+      return Join(relpath, '.')
     endif
     var prev: string = new_base
     head = '../' .. head

@@ -79,7 +79,6 @@ if iplug.Has('LeaderF')
     return [obj['path'], 1, ""]
   enddef
 
-  # TODO: fix highlight miss
   g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   g:Lf_Extensions.git_diff_base = {
     'source': string(function('LfGitDiffBaseSource'))[10 : -3],
