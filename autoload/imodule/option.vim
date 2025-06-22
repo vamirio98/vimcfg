@@ -2,8 +2,8 @@ vim9script
 
 import autoload "../ilib/ui.vim" as iui
 
-type GetFunc = func(): bool
-type SetFunc = func(any): void
+type GetFunc = func(): any
+type SetFunc = func(bool): void
 type ToggleFunc = func(): void
 
 export class Option
@@ -14,12 +14,17 @@ export class Option
   var Toggle: ToggleFunc = null_function
 
   static def _GenGet(name: string): GetFunc
-    return (): bool => eval('&' .. name)
+    return (): any => eval('&' .. name)
   enddef
 
-  static def _GenSet(name: string): SetFunc
+  static def _GenSet(name: string, opt: Option): SetFunc
     return (on: bool): void => {
-      exec 'setlocal' (on ? '' : 'no') .. name
+      if opt.on == null
+        exe printf("setlocal %s%s", (on ? '' : 'no'), name)
+      else
+        exe printf( "setlocal %s=%s", name,
+          (type(opt.on) == v:t_string ? opt.on : string(opt.on)) )
+      endif
     }
   enddef
 
@@ -29,7 +34,8 @@ export class Option
         opt.Set(!opt.Get())
         iui.Info((opt.Get() ? 'enable ' : 'disable ') .. name)
       else
-        exec 'setlocal' name .. '=' .. (opt.Get() == opt.on ? opt.off : opt.on)
+        exe printf("setlocal %s=%s", name,
+          (opt.Get() == opt.on ? opt.off : opt.on))
         iui.Info('set ' .. name .. ' = ' .. opt.Get())
       endif
     }
@@ -41,12 +47,16 @@ export class Option
       this.Get = _GenGet(name)
     endif
     if this.Set == null
-      this.Set = _GenSet(name)
+      this.Set = _GenSet(name, this)
     endif
     this.Toggle = _GenToggle(name, this)
   enddef
 
   def newOnOff(name: string, this.on, this.off)
-    Option.new(name, v:none, v:none, this.on, this.off)
+    # NOTE: do _NOT_ use Option.new() to instead the following lines,
+    # vim9script does _NOT_ have delegating constructor
+    this.Get = _GenGet(name)
+    this.Set = _GenSet(name, this)
+    this.Toggle = _GenToggle(name, this)
   enddef
 endclass
