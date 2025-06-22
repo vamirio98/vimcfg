@@ -41,7 +41,9 @@ endfor
 if iplug.Has('vim-gutentags')
   g:Lf_GtagsGutentags = 1
   g:Lf_CacheDirectory = g:ivim_cache_dir
-  var tag_cache_dir: string = expand(g:Lf_CacheDirectory .. '/LeaderF/gtags')
+  var tag_cache_dir: string = ipath.Join(g:Lf_CacheDirectory, "LeaderF", "gtags")
+  # FIXME: cmd.exe can _NOT_ handle '\\' in file path
+  tag_cache_dir = substitute(tag_cache_dir, '\\\\', '\\', 'g')
   if !isdirectory(tag_cache_dir)
     silent! mkdir(tag_cache_dir, 'p')
   endif
