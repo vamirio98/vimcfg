@@ -251,6 +251,10 @@ SetDesc('<leader>ul', 'Toggle Line No')
 var conceallevel = Option.newOnOff('conceallevel', (&cole > 0 ? &cole : 2), 0)
 nnoremap <leader>uc <ScriptCmd>conceallevel.Toggle()<CR>
 SetDesc('<leader>uc', 'Toggle Conceal Lv')
+
+var colorcolumn = Option.newOnOff('colorcolumn', (&cc == "" ? "81" : &cc), "")
+nnoremap <leader>uC <ScriptCmd>colorcolumn.Toggle()<CR>
+SetDesc('<leader>uC', 'Toggle Color Column')
 # }}}
 
 nnoremap Q <Cmd>qa<CR>
