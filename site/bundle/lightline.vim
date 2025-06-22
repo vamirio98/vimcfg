@@ -53,7 +53,7 @@ g:lightline.component_function = {
 g:lightline.component_expand = {
   'buffers': 'lightline#bufferline#buffers',
   'rtabs': 'g:LightlineTabRight',
-  'gutentags': "gutentags#statusline",
+  'gutentags': "g:IvimStlTags",
   'gitsummary': "g:IvimStlGitSummary",
   #'lspdiag': 'g:IvimStlLspDiag',
   'gitbranch': 'g:IvimStlGitBranch',
@@ -101,6 +101,12 @@ def NewColor(bg: string, fg: string): list<string>
   return [ nfg.guifg, nbg.guibg, nfg.ctermfg, nbg.ctermbg ]
 enddef
 # }}}
+
+# tags {{{ #
+def g:IvimStlTags(): string
+  return gutentags#statusline('[R] ', '', 'tags')
+enddef
+# }}} tags #
 
 # {{{ tabs
 # see: https://github.com/itchyny/lightline.vim/issues/440#issuecomment-610172628
