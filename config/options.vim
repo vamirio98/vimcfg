@@ -151,7 +151,7 @@ exec 'set fillchars=foldopen:,foldclose:,fold:\ ,foldsep:\ ,diff:╱,eob:\
 set foldlevel=99
 
 set smoothscroll
-set foldmethod=indent
+set foldmethod=marker
 set foldtext=foldtext()
 
 # set <leader> key.
