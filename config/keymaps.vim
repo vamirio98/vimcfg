@@ -75,6 +75,8 @@ endif
 # move in insert mode.
 inoremap <C-a> <home>
 inoremap <C-e> <end>
+inoremap <C-h> <left>
+inoremap <C-l> <right>
 
 # move in command mode.
 cnoremap <C-h> <left>
@@ -255,6 +257,25 @@ SetDesc('<leader>uc', 'Toggle Conceal Lv')
 var colorcolumn = Option.newOnOff('colorcolumn', (&cc == "" ? "81" : &cc), "")
 nnoremap <leader>uC <ScriptCmd>colorcolumn.Toggle()<CR>
 SetDesc('<leader>uC', 'Toggle Color Column')
+
+# {{{ toggle paste mode
+# set filetype to empty to avoid vim format paste content
+def TogglePasteMode(): void
+  var paste: bool = &paste
+  if !paste
+    b:ivim_original_filetype = &ft
+    set paste
+    set ft=
+  else
+    exe 'set ft=' .. b:ivim_original_filetype
+    set nopaste
+    unlet b:ivim_original_filetype
+  endif
+enddef
+nnoremap <leader>up <ScriptCmd>TogglePasteMode()<CR>
+SetDesc('<leader>up', 'Toggle Paste Mode')
+# }}}
+
 # }}}
 
 nnoremap Q <Cmd>qa<CR>
@@ -354,22 +375,4 @@ def ScrollCursorPopup(down: bool): bool
 
   return true
 enddef
-# }}}
-
-# {{{ toggle paste mode
-# set filetype to empty to avoid vim format paste content
-def TogglePasteMode(): void
-  var paste: bool = &paste
-  if !paste
-    b:ivim_original_filetype = &ft
-    set paste
-    set ft=
-  else
-    exe 'set ft=' .. b:ivim_original_filetype
-    set nopaste
-    unlet b:ivim_original_filetype
-  endif
-enddef
-nnoremap <leader>up <ScriptCmd>TogglePasteMode()<CR>
-SetDesc('<leader>up', 'Toggle Paste Mode')
 # }}}
