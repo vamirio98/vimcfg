@@ -55,7 +55,7 @@ if has_key(s_bundle, 'coding')
   # # for lsp config examples
   # Plug 'ycm-core/lsp-examples'
   # LoadConf site/bundle/ycm.vim
-  Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   LoadConf site/bundle/coc.vim
 endif
 # }}}
