@@ -1,13 +1,24 @@
 vim9script
 
 import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/ilib/ui.vim" as iui
+import autoload "../../autoload/ilib/path.vim" as ipath
+import autoload "../../autoload/ilib/core.vim" as icore
+
+# install {{{ #
+var clangd: string = icore.Executable('clangd')
+if clangd != null
+  g:ycm_clangd_binary_path = clangd
+endif
+# }}} install #
 
 g:ycm_auto_trigger = 1
 
 g:ycm_enable_semantic_highlighting = 1
 
 g:ycm_enable_inlay_hints = 0
-g:ycm_clear_inlay_hints_in_insert_mode = 0
+g:ycm_clear_inlay_hints_in_insert_mode = 1
 g:ycm_auto_hover = ""
 g:ycm_open_loclist_on_ycm_diags = 0
 
@@ -29,7 +40,7 @@ g:ycm_clangd_args = [ '--header-insertion=never' ]
 var SetGroup = ikeymap.SetGroup
 var SetDesc = ikeymap.SetDesc
 
-imap <C-l> <Plug>(YCMToggleSignatureHelp)
+imap <C-k> <Plug>(YCMToggleSignatureHelp)
 
 nmap K <Plug>(YCMHover)
 
@@ -60,7 +71,7 @@ nnoremap <leader>cq <Cmd>YcmCompleter FixIt<CR>
 SetDesc('<leader>cq', 'Quick Fix')
 
 def RenameSymbol(): void
-  let new_name = ilib#core#input('New name: ')
+  var new_name: string = icore.Input('New name: ')
   if empty(new_name)
     return
   endif
@@ -110,10 +121,16 @@ SetDesc('gr', 'Go to References')
 
 # }}}
 
-# load lsp config
-exec 'so ' .. fnameescape(g:ivim_bundle_home .. '/lsp-examples/vimrc.generated')
 # setup lsp {{{
 const LSP = [
+  {
+    'bin': 'pyright',
+    'conf': {
+      'name': 'python',
+      'filetypes': ['python'],
+      'cmdline': ['pyright-langserver', '--stdio']
+    },
+  },
        # {
        #   'exe': 'vim-language-server',
        #   'config': {
@@ -122,14 +139,14 @@ const LSP = [
        #     'cmdline': ['vim-language-server', '--stdio']
        #   },
        # },
-      ]
+]
 g:ycm_language_server = get(g:, 'ycm_language_server', [])
 for lsp in LSP
-  if executable(lsp.exe)
-    g:ycm_language_server += [lsp.config]
+  if icore.Executable(lsp.bin) != null
+    g:ycm_language_server += [lsp.conf]
   endif
 endfor
-# }}}
+## }}}
 
 augroup ivim_ycm
   au!
@@ -138,7 +155,7 @@ augroup ivim_ycm
   #au FileType vim b:ycm_hover = {'command': 'GetHover', 'syntax': 'help'}
 augroup END
 
-command! -nargs=0 IvimLspRestart exec 'YcmRestartServer'
-command! -nargs=0 IvimLspRefresh exec 'YcmForceCompileAndDiagnostics'
-command! -nargs=0 IvimShowDiags  FindDiag()
-command! -nargs=0 IvimShowLspLog exec 'YcmDebugInfo'
+#command! -nargs=0 IvimLspRestart exec 'YcmRestartServer'
+#command! -nargs=0 IvimLspRefresh exec 'YcmForceCompileAndDiagnostics'
+#command! -nargs=0 IvimShowDiags  FindDiag()
+#command! -nargs=0 IvimShowLspLog exec 'YcmDebugInfo'

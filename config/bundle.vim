@@ -51,12 +51,12 @@ if has_key(s_bundle, 'coding')
     iui.Error("no python3 support")
   endif
 
-  # Plug 'ycm-core/YouCompleteMe'
+  Plug 'ycm-core/YouCompleteMe'
   # # for lsp config examples
   # Plug 'ycm-core/lsp-examples'
-  # LoadConf site/bundle/ycm.vim
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  LoadConf site/bundle/coc.vim
+  LoadConf site/bundle/ycm.vim
+  #Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  #LoadConf site/bundle/coc.vim
 endif
 # }}}
 
