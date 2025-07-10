@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "./autoload/ilib/ui.vim" as iui
+import autoload "./autoload/lib/ui.vim" as ui
 
 var home: string = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 g:ivim_home = home
@@ -12,7 +12,7 @@ set rtp+=~/.vim
 const DEPENDENCY: list<string> = ['rg', 'fd']
 for dep in DEPENDENCY
   if !executable(dep)
-    iui.Error('no [' .. dep .. '] be found in PATH, some plugins may broken')
+    ui.Error('no [' .. dep .. '] be found in $PATH, some plugins may broken')
   endif
 endfor
 

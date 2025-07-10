@@ -1,20 +1,20 @@
 vim9script
 
-import autoload "../../autoload/ilib/path.vim" as ipath
-import autoload "../../autoload/ilib/platform.vim" as iplatform
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../../autoload/lib/path.vim" as path
+import autoload "../../autoload/lib/platform.vim" as platform
+import autoload "../../autoload/module/plug.vim" as plug
+import autoload "../../autoload/module/keymap.vim" as keymap
 
 g:asynctasks_extra_config = get(g:, 'asynctasks_extra_config', [])
 g:asynctasks_extra_config += [
-  ipath.Abspath(ipath.Join(g:ivim_home,
+  path.Abspath(path.Join(g:ivim_home,
     'site/third_party/asynctasks/tasks.ini')
   )
 ]
 
 g:asyncrun_open = 6
 g:asyncrun_rootmarks = g:ivim_rootmarkers
-g:asyncrun_shell = iplatform.WIN ? 'bash' : 'pwsh'
+g:asyncrun_shell = platform.WIN ? 'bash' : 'pwsh'
 g:asynctasks_rtp_config = "asynctasks.ini"
 
 # python will buffer everything written to stdout when running as a backgroup
@@ -23,10 +23,10 @@ $PYTHONUNBUFFERED = 1
 
 # {{{ LeaderF integration
 # https://github.com/skywind3000/asynctasks.vim/wiki/UI-Integration
-if iplug.Has('LeaderF')
+if plug.Has('LeaderF')
   nnoremap <leader>pt <Cmd>Leaderf --nowrap task<CR>
-  ikeymap.SetGroup('<leader>p', 'project')
-  ikeymap.SetDesc('<leader>pt', 'Query Tasks')
+  keymap.SetGroup('<leader>p', 'project')
+  keymap.SetDesc('<leader>pt', 'Query Tasks')
 
   def LfTaskSource(..._): list<string>
     var rows: list<list<string>> = asynctasks#source(&columns * 48 / 100)

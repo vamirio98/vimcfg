@@ -1,10 +1,9 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/module/keymap.vim" as keymap
 
-var SetGroup = ikeymap.SetGroup
-var SetDesc = ikeymap.SetDesc
+var SetGroup = keymap.SetGroup
+var SetDesc = keymap.SetDesc
 
 nmap <C-n> <plug>(YoinkPostPasteSwapBack)
 nmap <C-p> <plug>(YoinkPostPasteSwapForward)

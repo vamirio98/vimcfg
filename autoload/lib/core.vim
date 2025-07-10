@@ -1,11 +1,11 @@
 vim9script
 
-import autoload "./platform.vim" as iplatform
-import autoload "./path.vim" as ipath
-import autoload "./string.vim" as istring
-import autoload "./python.vim" as ipython
+import autoload "./platform.vim" as platform
+import autoload "./path.vim" as path
+import autoload "./string.vim" as str
+import autoload "./python.vim" as python
 
-const WIN: bool = iplatform.WIN
+const WIN: bool = platform.WIN
 var shell_error: number = 0
 
 
@@ -18,16 +18,16 @@ export def System(cmd: string, cwd: string = null_string,
   var sinput: string = null_string
   if cwd != null
     previous = getcwd()
-    ipath.ChdirNoautocmd(cwd)
+    path.ChdirNoautocmd(cwd)
   endif
   if input != null
     sinput = type(input) == v:t_string ? input : (
       type(input) == v:t_list ? join(input, '\n') : null_string
     )
   endif
-  var hr: any = ipython.System(cmd, sinput)
+  var hr: any = python.System(cmd, sinput)
   if cwd != null
-    ipath.ChdirNoautocmd(previous)
+    path.ChdirNoautocmd(previous)
   endif
   shell_error = v:shell_error
   if encoding != null && has('iconv')
@@ -54,7 +54,7 @@ export def Input(...args: list<any>): string
     text = null_string
   endtry
   inputrestore()
-  return istring.Strip(text)
+  return str.Strip(text)
 enddef
 
 #----------------------------------------------------------------
@@ -93,13 +93,13 @@ enddef
 #----------------------------------------------------------------------
 export def Which(name: string): string
   var sep: string = WIN ? ';' : ':'
-  if ipath.IsAbs(name) && filereadable(name)
+  if path.IsAbs(name) && filereadable(name)
     return name
   endif
-  for path in split($PATH, sep)
-    var filename: string = ipath.Join(path, name)
+  for p in split($PATH, sep)
+    var filename: string = path.Join(p, name)
     if filereadable(filename)
-      return ipath.Abspath(filename)
+      return path.Abspath(filename)
     endif
   endfor
   return null_string

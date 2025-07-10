@@ -1,13 +1,10 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/ilib/ui.vim" as iui
-import autoload "../../autoload/ilib/path.vim" as ipath
-import autoload "../../autoload/ilib/core.vim" as icore
+import autoload "../../autoload/module/keymap.vim" as keymap
+import autoload "../../autoload/lib/core.vim" as core
 
 # install {{{ #
-var clangd: string = icore.Executable('clangd')
+var clangd: string = core.Executable('clangd')
 if clangd != null
   g:ycm_clangd_binary_path = clangd
 endif
@@ -37,8 +34,8 @@ g:ycm_clangd_args = [ '--header-insertion=never' ]
 
 # {{{ map
 
-var SetGroup = ikeymap.SetGroup
-var SetDesc = ikeymap.SetDesc
+var SetGroup = keymap.SetGroup
+var SetDesc = keymap.SetDesc
 
 imap <C-k> <Plug>(YCMToggleSignatureHelp)
 
@@ -71,7 +68,7 @@ nnoremap <leader>cq <Cmd>YcmCompleter FixIt<CR>
 SetDesc('<leader>cq', 'Quick Fix')
 
 def RenameSymbol(): void
-  var new_name: string = icore.Input('New name: ')
+  var new_name: string = core.Input('New name: ')
   if empty(new_name)
     return
   endif
@@ -142,7 +139,7 @@ const LSP = [
 ]
 g:ycm_language_server = get(g:, 'ycm_language_server', [])
 for lsp in LSP
-  if icore.Executable(lsp.bin) != null
+  if core.Executable(lsp.bin) != null
     g:ycm_language_server += [lsp.conf]
   endif
 endfor

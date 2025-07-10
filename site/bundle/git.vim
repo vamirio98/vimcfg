@@ -1,12 +1,12 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/ilib/core.vim" as icore
-import autoload "../../autoload/ilib/ui.vim" as iui
-import autoload "../../autoload/ilib/project.vim" as iproject
-import autoload "../../autoload/ilib/string.vim" as istring
-import autoload "../../autoload/ilib/buffer.vim" as ibuffer
+import autoload "../../autoload/module/keymap.vim" as keymap
+import autoload "../../autoload/module/plug.vim" as plug
+import autoload "../../autoload/lib/core.vim" as core
+import autoload "../../autoload/lib/ui.vim" as ui
+import autoload "../../autoload/lib/project.vim" as project
+import autoload "../../autoload/lib/string.vim" as str
+import autoload "../../autoload/lib/buffer.vim" as buffer
 
 g:gitgutter_map_keys = 0
 
@@ -20,8 +20,8 @@ g:gitgutter_close_preview_on_escape = 0
 g:gitgutter_grep = 'rg --color=never'
 
 # map {{{
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 
 SetGroup('<leader>g', 'git')
 
@@ -32,25 +32,25 @@ SetDesc(']c', 'Next Hunk')
 
 # {{{ git diff base
 def IsGitRepo(cwd: string = null_string): bool
-  var path = cwd == null ? expand('%:h') : cwd
-  var res = icore.System('git rev-parse --is-inside-work-tree', path)
-  res = istring.Strip(split(res, '\n')[0])
+  var dir = cwd == null ? expand('%:h') : cwd
+  var res = core.System('git rev-parse --is-inside-work-tree', dir)
+  res = str.Strip(split(res, '\n')[0])
   return res == 'true'
 enddef
 def GetGitCommits(cwd: string = null_string, reflog: bool = false): list<string>
-  var path: string = cwd == null ? iproject.CurRoot() : cwd
-  if !IsGitRepo(path)
+  var dir: string = cwd == null ? project.CurRoot() : cwd
+  if !IsGitRepo(dir)
     return []
   endif
 
   var cmd: string = reflog ? 'git reflog' : 'git log --oneline'
-  var res = icore.System(cmd, path)
+  var res = core.System(cmd, dir)
   var commits: list<string> = split(res, "\n")
   return commits
 enddef
-if iplug.Has('LeaderF')
+if plug.Has('LeaderF')
   def LfGitDiffBaseSource(..._): list<string>
-    return GetGitCommits(iproject.CurRoot())
+    return GetGitCommits(project.CurRoot())
   enddef
 
   def LfGitDiffBaseAccept(line: string, arg: any): void
@@ -61,7 +61,7 @@ if iplug.Has('LeaderF')
     var token = split(line, ' ')
     var hash: string = token[0]
     g:gitgutter_diff_base = hash
-    iui.Warn(printf('Change git diff base to [ %s ]', line), true)
+    ui.Warn(printf('Change git diff base to [ %s ]', line), true)
   enddef
 
   def LfGitDiffBasePreview(_: any, _: any, line: string, _: any): any
@@ -69,13 +69,13 @@ if iplug.Has('LeaderF')
       return []
     endif
 
-    var bid: number = ibuffer.Alloc(true, 'leaderf_git_preview')
-    var obj: dict<any> = ibuffer.Object(bid)
+    var bid: number = buffer.Alloc(true, 'leaderf_git_preview')
+    var obj: dict<any> = buffer.Object(bid)
     setbufvar(bid, '&ft', 'git')
 
     var hash: string = split(line, ' ')[0]
-    var log = icore.System(printf('git log -n 1 %s', hash))
-    ibuffer.Update(bid, log)
+    var log = core.System(printf('git log -n 1 %s', hash))
+    buffer.Update(bid, log)
     return [obj['path'], 1, ""]
   enddef
 
@@ -93,9 +93,9 @@ if iplug.Has('LeaderF')
   nnoremap <leader>gb <Cmd>Leaderf git_diff_base<CR>
 else
   def ChangeGitBase(): void
-    var commits: list<string> = GetGitCommits(iproject.CurRoot())
+    var commits: list<string> = GetGitCommits(project.CurRoot())
     if empty(commits)
-      iui.Warn('No commit found')
+      ui.Warn('No commit found')
       return
     endif
 
@@ -104,7 +104,7 @@ else
     endif
     commits = map(commits, (index, value) => printf('%d. %s', index + 1, value))
     commits = insert(commits, 'Select new git diff base:')
-    var choice: number = icore.Inputlist(commits)
+    var choice: number = core.Inputlist(commits)
     if choice <= 0 || choice >= len(commits)
       return
     endif
@@ -112,7 +112,7 @@ else
     var hash: string = token[1]
     var log: string = commits[choice][len(token[0]) + 1 : -1]
     g:gitgutter_diff_base = hash
-    iui.Warn(printf('Change git diff base to [ %s ]', log), true)
+    ui.Warn(printf('Change git diff base to [ %s ]', log), true)
   enddef
   nnoremap <leader>gb <ScriptCmd>ChangeGitBase()<CR>
 endif

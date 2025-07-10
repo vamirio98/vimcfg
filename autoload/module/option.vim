@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "../ilib/ui.vim" as iui
+import autoload "../lib/ui.vim" as ui
 
 type GetFunc = func(): any
 type SetFunc = func(bool): void
@@ -32,11 +32,11 @@ export class Option
     return (): void => {
       if opt.on == null
         opt.Set(!opt.Get())
-        iui.Info((opt.Get() ? 'enable ' : 'disable ') .. name)
+        ui.Info((opt.Get() ? 'enable ' : 'disable ') .. name)
       else
         exe printf("setlocal %s=%s", name,
           (opt.Get() == opt.on ? opt.off : opt.on))
-        iui.Info('set ' .. name .. ' = ' .. opt.Get())
+        ui.Info('set ' .. name .. ' = ' .. opt.Get())
       endif
     }
   enddef

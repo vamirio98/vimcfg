@@ -1,8 +1,8 @@
 vim9script
 
-import autoload "./platform.vim" as iplatform
+import autoload "./platform.vim" as platform
 
-const WIN: bool = iplatform.WIN
+const WIN: bool = platform.WIN
 export const SEP: string = WIN ? '\' : '/'
 
 

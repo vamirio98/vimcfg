@@ -1,9 +1,8 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/ilib/path.vim" as ipath
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/ilib/ui.vim" as iui
+import autoload "../../autoload/module/keymap.vim" as keymap
+import autoload "../../autoload/lib/path.vim" as path
+import autoload "../../autoload/module/plug.vim" as plug
 
 # some servers have issues with backup files,
 # see https://github.com/neoclide/coc.nvim/issues/649
@@ -26,13 +25,13 @@ g:coc_global_extensions = [
 ]
 
 # global coc-settings.json
-g:coc_config_home = ipath.Join(g:ivim_home, 'site', 'third_party', 'coc')
+g:coc_config_home = path.Join(g:ivim_home, 'site', 'third_party', 'coc')
 # global settings
 g:coc_user_config = get(g:, 'coc_user_config', {})
 g:coc_user_config['workspace.rootPatterns'] = g:ivim_rootmarkers
 
 # use UltiSnip
-if iplug.Has('ultisnips')
+if plug.Has('ultisnips')
   g:coc_snippet_next = ''
   g:coc_snippet_prev = ''
   g:coc_selectmode_mapping = 0
@@ -51,8 +50,8 @@ g:coc_notify_info_icon = ''
 g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰', ]
 
 # {{{ keymap
-var SetGroup = ikeymap.SetGroup
-var SetDesc = ikeymap.SetDesc
+var SetGroup = keymap.SetGroup
+var SetDesc = keymap.SetDesc
 
 def ShowDoc(): void
   if g:CocHasProvider('hover')

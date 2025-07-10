@@ -1,9 +1,9 @@
 vim9script
 
-import autoload "../../autoload/ilib/path.vim" as ipath
-import autoload "../../autoload/ilib/project.vim" as iproject
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../../autoload/lib/path.vim" as path
+import autoload "../../autoload/lib/project.vim" as project
+import autoload "../../autoload/module/plug.vim" as plug
+import autoload "../../autoload/module/keymap.vim" as keymap
 
 g:Lf_ShortcutF = ''
 g:Lf_ShortcutB = ''
@@ -30,18 +30,18 @@ g:Lf_ShowHidden = 1
 
 # {{{ hide help file in MRU
 g:Lf_MruFileExclude = get(g:, 'Lf_MruFileExclude', [])
-for plug in values(g:plugs)
-  var plug_dir: string = plug.dir
-  var doc: string = ipath.Join(plug_dir, 'doc', '*')
+for plugin in values(g:plugs)
+  var plug_dir: string = plugin.dir
+  var doc: string = path.Join(plug_dir, 'doc', '*')
   g:Lf_MruFileExclude += [doc]
 endfor
 # }}}
 
 # vim-gutentags integration {{{
-if iplug.Has('vim-gutentags')
+if plug.Has('vim-gutentags')
   g:Lf_GtagsGutentags = 1
   g:Lf_CacheDirectory = g:ivim_cache_dir
-  var tag_cache_dir: string = ipath.Join(g:Lf_CacheDirectory, "LeaderF", "gtags")
+  var tag_cache_dir: string = path.Join(g:Lf_CacheDirectory, "LeaderF", "gtags")
   # FIXME: cmd.exe can _NOT_ handle '\\' in file path
   tag_cache_dir = substitute(tag_cache_dir, '\\\\', '\\', 'g')
   if !isdirectory(tag_cache_dir)
@@ -53,8 +53,8 @@ endif
 # }}}
 
 # {{{ keymap
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 
 # {{{ file
 SetGroup('<leader>f', 'file')
@@ -71,7 +71,7 @@ nnoremap <leader>fC <ScriptCmd>LiveSearchVimcfg()<CR>
 SetDesc('<leader>fC', 'Live Search Config')
 
 def SearchFileInProject()
-  var root = iproject.GetRoot('.')
+  var root = project.GetRoot('.')
   exec 'LeaderfFile' root
 enddef
 nnoremap <leader>ff <ScriptCmd>SearchFileInProject()<CR>
@@ -139,7 +139,7 @@ SetDesc('<leader>s:', 'Command')
 nnoremap <leader>s/ <Cmd>LeaderfHistorySearch<CR>
 SetDesc('<leader>s/', 'Search History')
 def LiveSearchInRoot(): void
-  var root: string = iproject.CurRoot()
+  var root: string = project.CurRoot()
   exec 'Leaderf rg --live --no-fixed-string' root
 enddef
 nnoremap <leader>/ <ScriptCmd>LiveSearchInRoot()<CR>

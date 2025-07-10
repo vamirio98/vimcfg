@@ -1,7 +1,7 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/ilib/project.vim" as iproject
+import autoload "../../autoload/module/keymap.vim" as keymap
+import autoload "../../autoload/lib/project.vim" as project
 
 g:fzf_vim = get(g:, 'fzf_vim', {})
 
@@ -12,8 +12,8 @@ g:fzf_layout = { 'down': '30%' }
 g:fzf_vim.preview_window = [ 'right,50%,<70(up,40%)', 'ctrl-/' ]
 
 # {{{ keymaps
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 
 SetGroup('<leader>f', 'file')
 
@@ -29,7 +29,7 @@ SetDesc('<leader>fc', 'Search Config File')
 #SetDesc('<leader>fC', 'Live Search Config')
 
 def SearchFileInProject()
-  var root: string = iproject.CurRoot()
+  var root: string = project.CurRoot()
   exec 'Files' root
 enddef
 nnoremap <leader>ff <ScriptCmd>SearchFileInProject()<CR>

@@ -1,8 +1,8 @@
 vim9script
 # only support python3
 
-import autoload "./ui.vim" as iui
-import autoload "./platform.vim" as iplatform
+import autoload "./ui.vim" as ui
+import autoload "./platform.vim" as platform
 
 var s_health: string = null_string
 var s_ensure: bool = false  # ensure the `vim` module has been import
@@ -32,7 +32,7 @@ enddef
 #--------------------------------------------------------------
 export def Exec(script: any): void
   if !s_has_py
-    iui.Error(s_health)
+    ui.Error(s_health)
     return
   endif
   var code: string = type(script) == v:t_string ? script : (
@@ -47,7 +47,7 @@ enddef
 #--------------------------------------------------------------
 export def Eval(script: any): any
   if !s_has_py
-    iui.Error(s_health)
+    ui.Error(s_health)
     return null
   endif
   var code: string = type(script) == v:t_string ? script : (
@@ -62,7 +62,7 @@ enddef
 #--------------------------------------------------------------
 export def File(filename: string): void
   if !s_has_py
-    iui.Error(s_health)
+    ui.Error(s_health)
     return
   endif
   exec 'py3file' fnameescape(filename)
@@ -73,7 +73,7 @@ enddef
 #--------------------------------------------------------------
 export def Call(funcname: string, args: any): any
   if !s_has_py
-    iui.Error(s_health)
+    ui.Error(s_health)
     return null
   endif
   if !s_ensure
@@ -97,7 +97,7 @@ export def System(cmd: string, input: any = null): any
       type(input) == v:t_list ? join(input, '\n') : string(input)
     )
   endif
-  if !iplatform.WIN || !s_has_py
+  if !platform.WIN || !s_has_py
     var text: string = !has_input ? system(cmd) : system(cmd, sinput)
     shell_error = v:shell_error
     return text

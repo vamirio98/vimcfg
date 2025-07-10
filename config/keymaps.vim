@@ -1,9 +1,9 @@
 vim9script
 
-import autoload "../autoload/ilib/ui.vim" as iui
-import autoload "../autoload/imodule/option.vim" as ioption
-import autoload "../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../autoload/imodule/utils.vim" as iutils
+import autoload "../autoload/lib/ui.vim" as ui
+import autoload "../autoload/module/option.vim" as option
+import autoload "../autoload/module/keymap.vim" as keymap
+import autoload "../autoload/module/utils.vim" as utils
 
 # {{{ make sure function work normally
 # set Alt and function key in terminal
@@ -99,9 +99,9 @@ if has('terminal') && exists(':terminal') == 2 && has('patch-8.1.1')
   tnoremap <esc><esc> <C-\><C-n>
 endif
 
-type Option = ioption.Option
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+type Option = option.Option
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 
 # resize window {{{
 # increase window height
@@ -139,10 +139,10 @@ nnoremap <leader>bb <Cmd>e #<CR>
 SetDesc('<leader>bb', 'Switch to Other Buffer')
 
 # delete buffer
-nnoremap <leader>bd <ScriptCmd>iutils.BufDel()<CR>
+nnoremap <leader>bd <ScriptCmd>utils.BufDel()<CR>
 SetDesc('<leader>bd', 'Delete Buffer')
 # delete other buffers
-nnoremap <leader>bo <ScriptCmd>iutils.BufDelOther()<CR>
+nnoremap <leader>bo <ScriptCmd>utils.BufDelOther()<CR>
 SetDesc('<leader>bo', 'Delete Other Buffers')
 # delete buffer and window
 nnoremap <leader>bD <cmd>:bd<cr>
@@ -193,7 +193,7 @@ SetGroup('<leader>x', 'location')
 def ToggleLocList(): void
   var ll = getloclist(bufnr('%'))
   if len(ll) == 0
-    iui.Warn('location list is empty')
+    ui.Warn('location list is empty')
     lclose
   else
     lopen
@@ -207,7 +207,7 @@ SetGroup('<leader>x', 'quickfix')
 def ToggleQfList(): void
   var qf = getqflist({'bufnr': bufnr('%')})
   if len(qf) == 0
-    iui.Warn('quickfix list is empty')
+    ui.Warn('quickfix list is empty')
     cclose
   else
     copen

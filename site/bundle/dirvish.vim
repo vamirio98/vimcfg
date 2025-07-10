@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "../../autoload/ilib/ui.vim" as iui
+import autoload "../../autoload/lib/ui.vim" as ui
 
 g:ivim_dirvish_hide_dotfile = get(g:, 'ivim_dirvish_hide_dotfile', 1)
 
@@ -29,7 +29,7 @@ enddef
 
 def ToggleHideDotfile()
   g:ivim_dirvish_hide_dotfile = !g:ivim_dirvish_hide_dotfile
-  iui.Info(printf('%s dot files', g:ivim_dirvish_hide_dotfile ? 'Hide' : 'Show'))
+  ui.Info(printf('%s dot files', g:ivim_dirvish_hide_dotfile ? 'Hide' : 'Show'))
   exec 'Dirvish'
 enddef
 

@@ -1,7 +1,7 @@
 vim9script
 
-import autoload "../../autoload/ilib/string.vim" as istring
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../../autoload/lib/string.vim" as str
+import autoload "../../autoload/module/keymap.vim" as keymap
 
 g:ivim_indent_guide_enabled = get(g:, 'ivim_indent_guide_enabled', 1)
 
@@ -16,10 +16,10 @@ g:indent_guides_tab_guides = 1
 # {{{ keymap
 def StripListchars(listchars: string): string
   var lc: string = listchars
-  if istring.Contains(lc, 'tab:')
+  if str.Contains(lc, 'tab:')
     lc = substitute(lc, '\vtab:.{-},', 'tab:\\ \\ ,', '')
   endif
-  if istring.Contains(lc, 'lead:')
+  if str.Contains(lc, 'lead:')
     lc = substitute(lc, 'lead:.{-},', 'lead:\\ ,', '')
   endif
   return lc
@@ -42,8 +42,8 @@ def g:ToggleIndentGuides(): void
   endif
 enddef
 
-ikeymap.SetGroup('<leader>u', 'ui')
-ikeymap.SetDesc('<leader>ui', 'Toggle Indent Guides')
+keymap.SetGroup('<leader>u', 'ui')
+keymap.SetDesc('<leader>ui', 'Toggle Indent Guides')
 nnoremap <leader>ui <Cmd>call g:ToggleIndentGuides()<CR>
 # }}}
 

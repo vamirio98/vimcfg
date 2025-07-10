@@ -1,7 +1,7 @@
 vim9script
 
-import autoload "../../autoload/imodule/plug.vim" as iplug
-import autoload "../../autoload/ilib/path.vim" as ipath
+import autoload "../../autoload/module/plug.vim" as plug
+import autoload "../../autoload/lib/path.vim" as path
 
 g:gruvbox_material_enable_italic = 1
 
@@ -28,15 +28,15 @@ endif
 
 # {{{ update colortheme for lightline
 def UpdateTheme()
-  if iplug.Has('lightline.vim')
-    var dst_dir: string = ipath.Abspath('~/.vim/autoload/lightline/colorscheme/')
+  if plug.Has('lightline.vim')
+    var dst_dir: string = path.Abspath('~/.vim/autoload/lightline/colorscheme/')
     if !isdirectory(dst_dir)
       silent! mkdir(dst_dir, 'p')
     endif
 
-    var src: string = ipath.Join(iplug.PluginDir('gruvbox-material'),
+    var src: string = path.Join(plug.PluginDir('gruvbox-material'),
       'autoload/lightline/colorscheme/gruvbox_material.vim')
-    var dst: string = ipath.Join(dst_dir, 'gruvbox_material.vim')
+    var dst: string = path.Join(dst_dir, 'gruvbox_material.vim')
     if !filereadable(dst)
       filecopy(src, dst)
     elseif getftime(src) > getftime(dst)

@@ -1,8 +1,8 @@
 vim9script
 
-import autoload "../autoload/ilib/platform.vim" as iplatform
-import autoload "../autoload/ilib/path.vim" as ipath
-import autoload "../autoload/ilib/ui.vim" as iui
+import autoload "../autoload/lib/platform.vim" as platform
+import autoload "../autoload/lib/path.vim" as path
+import autoload "../autoload/lib/ui.vim" as ui
 
 set nocompatible
 set backspace=indent,eol,start
@@ -50,7 +50,7 @@ set autowrite
 set viewoptions=cursor,curdir,folds,slash,unix
 
 set clipboard^=unnamed,unnamedplus
-if (!empty($SSH_TTY) || iplatform.WSL)
+if (!empty($SSH_TTY) || platform.WSL)
   # let vim clipboard sync with system
   # from https://www.zhihu.com/tardis/zm/ans/2156080913?source_id=1003
   def RawEcho(str: string)
@@ -162,9 +162,9 @@ g:maplocalleader = '\'
 g:ivim_rootmarkers = ['.git', '.svn', '.hg', '.root', '.project']
 
 # {{{ ensure all directories is exists
-g:ivim_cache_dir = ipath.Abspath('~/.cache/vim')
-g:ivim_bundle_home = ipath.Abspath('~/.vim/bundle')
-g:ivim_swapfile_dir = ipath.Abspath('~/.cache/vim/swapfiles')
+g:ivim_cache_dir = path.Abspath('~/.cache/vim')
+g:ivim_bundle_home = path.Abspath('~/.vim/bundle')
+g:ivim_swapfile_dir = path.Abspath('~/.cache/vim/swapfiles')
 
 const DIRS = [
   g:ivim_cache_dir,
@@ -174,7 +174,7 @@ const DIRS = [
 for d in DIRS
   if !isdirectory(d)
     if !mkdir(d, 'p')
-      iui.Error("Can not create dir " .. d)
+      ui.Error("Can not create dir " .. d)
     endif
   endif
 endfor
@@ -184,4 +184,4 @@ endfor
 # see :h 'directory'
 # use trailing '//' to make the swapfile name built from the complete path
 # to the file with all path separators substituted to percent '%' signs
-exec 'set directory=' .. ipath.StripSlash(g:ivim_swapfile_dir) .. '//'
+exec 'set directory=' .. path.StripSlash(g:ivim_swapfile_dir) .. '//'

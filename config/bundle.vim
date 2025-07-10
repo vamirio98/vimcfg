@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "../autoload/ilib/ui.vim" as iui
+import autoload "../autoload/lib/ui.vim" as ui
 
 if !exists('g:ivim_bundle')
   g:ivim_bundle = [
@@ -48,7 +48,7 @@ if has_key(s_bundle, 'coding')
     Plug 'honza/vim-snippets'
     LoadConf site/bundle/ultisnips.vim
   else
-    iui.Error("no python3 support")
+    ui.Error("no python3 support")
   endif
 
   Plug 'ycm-core/YouCompleteMe'

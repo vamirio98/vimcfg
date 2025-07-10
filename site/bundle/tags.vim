@@ -1,8 +1,8 @@
 vim9script
 
-import autoload "../../autoload/ilib/ui.vim" as iui
-import autoload "../../autoload/ilib/path.vim" as ipath
-import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/lib/ui.vim" as ui
+import autoload "../../autoload/lib/path.vim" as path
+import autoload "../../autoload/module/plug.vim" as plug
 
 # do NOT append default markers
 g:gutentags_add_default_project_roots = 0
@@ -15,9 +15,9 @@ g:gutentags_project_root = get(g:, 'ivim_rootmarkers',
 g:gutentags_ctas_tagfile = 'tags'
 
 # if has LeaderF, set tags directory by LeaderF
-if !iplug.Has('LeaderF')
+if !plug.Has('LeaderF')
   # detect dir ~/.cache/tags, create new one if it doesn't exist
-  var tag_cache_dir: string = ipath.Join(g:ivim_cache_dir, 'tags')
+  var tag_cache_dir: string = path.Join(g:ivim_cache_dir, 'tags')
   if !isdirectory(tag_cache_dir)
     silent! mkdir(tag_cache_dir, 'p')
   endif
@@ -38,7 +38,7 @@ if executable('gtags-cscope') && executable('gtags')
   g:gutentags_modules += ['gtags_cscope']
 endif
 if empty(g:gutentags_modules)
-  iui.Error('No ctags/gtags found')
+  ui.Error('No ctags/gtags found')
 endif
 
 # set ctags arguments

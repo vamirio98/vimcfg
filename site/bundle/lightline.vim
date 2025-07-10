@@ -1,8 +1,8 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
-import autoload "../../autoload/ilib/ui.vim" as iui
-import autoload "../../autoload/imodule/plug.vim" as iplug
+import autoload "../../autoload/module/keymap.vim" as keymap
+import autoload "../../autoload/lib/ui.vim" as ui
+import autoload "../../autoload/module/plug.vim" as plug
 
 # {{{ setting
 set noshowmode
@@ -168,7 +168,7 @@ def SetupStlLspDiagColor(): void
   NewHighlight('IvimStlLspDiagWarn', 'IvimStlB', 'Yellow')
 enddef
 def g:IvimStlLspDiag(): string
-  if iplug.Has('YouCompleteMe')
+  if plug.Has('YouCompleteMe')
     var error = youcompleteme#GetErrorCount()
     var warn = youcompleteme#GetWarningCount()
     return printf('%s%s%s',
@@ -200,8 +200,8 @@ enddef
 # }}}
 
 # {{{ keymap
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 
 nmap H <Plug>lightline#bufferline#go_previous()
 nmap L <Plug>lightline#bufferline#go_next()
@@ -228,13 +228,13 @@ augroup ivim_lightline
   au!
   # wait for colorscheme loaded
   au VimEnter * SetupColor()
-  if iplug.Has('coc.nvim')
+  if plug.Has('coc.nvim')
     au User CocStatusChange lightline#update()
   endif
-  if iplug.Has('YouCompleteMe')
+  if plug.Has('YouCompleteMe')
     au CursorHold * lightline#update()
   endif
-  if iplug.Has('vim-gutentags')
+  if plug.Has('vim-gutentags')
     au User GutentagsUpdating lightline#update()
     au User GutentagsUpdated lightline#update()
   endif
@@ -248,6 +248,6 @@ augroup ivim_lightline
       lightline#bufferline#reload()
     enddef
     au BufDelete * if timer_start(200, function('ReloadBufline')) == -1
-      | iui.Error('cannot refresh bufferline') | endif
+      | ui.Error('cannot refresh bufferline') | endif
   endif
 augroup END

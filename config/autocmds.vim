@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "../autoload/ilib/ui.vim" as iui
+import autoload "../autoload/lib/ui.vim" as ui
 
 # auto load change.
 set autoread
@@ -12,7 +12,7 @@ augroup ivim_config_autoreload
         \ | checktime | endif
   # notification after file change
   au FileChangedShellPost *
-        \ iui.Warn('File changed on disk. Buffer reloaded.')
+        \ ui.Warn('File changed on disk. Buffer reloaded.')
 augroup END
 
 

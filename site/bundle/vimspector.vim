@@ -1,9 +1,9 @@
 vim9script
 
-import autoload "../../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../../autoload/module/keymap.vim" as keymap
 
-var SetGroup: func = ikeymap.SetGroup
-var SetDesc: func = ikeymap.SetDesc
+var SetGroup: func = keymap.SetGroup
+var SetDesc: func = keymap.SetDesc
 SetGroup('<leader>d', 'debug')
 
 nmap <silent> <leader>db <Plug>VimspectorToggleBreakpoint

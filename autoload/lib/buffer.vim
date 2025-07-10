@@ -1,7 +1,6 @@
 vim9script
 
-import autoload "./ui.vim" as iui
-import autoload "./path.vim" as ipath
+import autoload "./path.vim" as path
 
 # for anonymous buffers
 var s_anon: list<number> = []
@@ -210,10 +209,10 @@ export def Alloc(named: bool = false, name: string = null_string): number
       remove(s_named, name)
     else
       if name != null
-        filepath = ipath.Join(ipath.Tmpdir(), name)
+        filepath = path.Join(path.Tmpdir(), name)
       else
-        filepath = ipath.Tmpfile()
-        new_name = ipath.Basename(filepath)
+        filepath = path.Tmpfile()
+        new_name = path.Basename(filepath)
       endif
       silent bid = bufadd(filepath)
       new = true

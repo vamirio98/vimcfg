@@ -5,16 +5,16 @@ if exists('g:isession_loaded')
 endif
 g:isession_loaded = 1
 
-import autoload "../autoload/ilib/core.vim" as icore
-import autoload "../autoload/ilib/path.vim" as ipath
-import autoload "../autoload/ilib/project.vim" as iproject
-import autoload "../autoload/ilib/ui.vim" as iui
-import autoload "../autoload/imodule/plug.vim" as iplug
-import autoload "../autoload/imodule/keymap.vim" as ikeymap
+import autoload "../autoload/lib/core.vim" as core
+import autoload "../autoload/lib/path.vim" as path
+import autoload "../autoload/lib/project.vim" as project
+import autoload "../autoload/lib/ui.vim" as ui
+import autoload "../autoload/module/plug.vim" as plug
+import autoload "../autoload/module/keymap.vim" as keymap
 
 g:ivim_cache_dir = get(g:, 'ivim_cache_dir', resolve(expand('~/.cache/vim')))
 g:ivim_session_dir = get(g:, 'ivim_session_dir',
-  ipath.Join(g:ivim_cache_dir, 'session'))
+  path.Join(g:ivim_cache_dir, 'session'))
 # auto update session when leave vim
 g:ivim_auto_update_session = get(g:, 'ivim_auto_update_session', 1)
 
@@ -35,7 +35,7 @@ enddef
 
 def WriteSessionFile(name: string): void
   var new_name: string = fnamemodify(name, ':t')
-  exec 'silent mksession!' ipath.Join(s_session_dir, new_name)
+  exec 'silent mksession!' path.Join(s_session_dir, new_name)
 enddef
 
 # SessionSave({bang} [, {name} [, {silent}]])
@@ -43,31 +43,31 @@ def g:SessionSave(bang: bool = false, name: string = null_string,
     silent: bool = false): void
   # ensure session directory exists
   if !isdirectory(s_session_dir)
-    var choice: number = icore.Confirm(
+    var choice: number = core.Confirm(
       s_session_dir .. ' is not exists, create it?', "&Yes\n&No", 1)
     if choice == 1
       silent mkdir(s_session_dir, 'p')
     else
-      iui.Error('The session directory does not exist: ' .. s_session_dir)
+      ui.Error('The session directory does not exist: ' .. s_session_dir)
       return
     endif
   endif
 
   var new_name: string = name
   if new_name == null
-    new_name = icore.Input('Session name: ',
-      fnamemodify(iproject.CurRoot(), ':t'), 'customlist,g:SessionList'
+    new_name = core.Input('Session name: ',
+      fnamemodify(project.CurRoot(), ':t'), 'customlist,g:SessionList'
     )
   endif
   if empty(new_name)
-    iui.Error('Need session name')
+    ui.Error('Need session name')
     return
   endif
 
-  var file: string = ipath.Join(s_session_dir, new_name)
+  var file: string = path.Join(s_session_dir, new_name)
 
   if filereadable(file) && !bang
-    var choice: number = icore.Confirm(
+    var choice: number = core.Confirm(
       new_name .. ' is already exist, overwrite?', "&Yes\n&No", 2)
     if choice != 1
       return
@@ -77,7 +77,7 @@ def g:SessionSave(bang: bool = false, name: string = null_string,
   WriteSessionFile(new_name)
 
   if !silent
-    iui.Info('Saved session [' .. new_name .. ']')
+    ui.Info('Saved session [' .. new_name .. ']')
   endif
 enddef
 
@@ -86,22 +86,22 @@ enddef
 def g:SessionLoad(load_last_session: bool = false, name: string = null_string,
     silent: bool = false): void
   if !isdirectory(s_session_dir)
-    iui.Error('The session direcotry does not exist: ' .. s_session_dir)
+    ui.Error('The session direcotry does not exist: ' .. s_session_dir)
     return
   endif
 
   var new_name: string = name
   if new_name == null
-    new_name = icore.Input('Session name: ', '', 'customlist,g:SessionList')
+    new_name = core.Input('Session name: ', '', 'customlist,g:SessionList')
   endif
   if empty(new_name)
-    iui.Error('Need session name')
+    ui.Error('Need session name')
     return
   endif
 
-  var file: string = ipath.Join(s_session_dir, new_name)
+  var file: string = path.Join(s_session_dir, new_name)
   if !filereadable(file)
-    iui.Error('The session file does not exist: ' .. file)
+    ui.Error('The session file does not exist: ' .. file)
     return
   endif
 
@@ -109,7 +109,7 @@ def g:SessionLoad(load_last_session: bool = false, name: string = null_string,
   bufdo bd
   exec 'source' file
   if !silent
-    iui.Info('Loaded session [' .. new_name .. ']')
+    ui.Info('Loaded session [' .. new_name .. ']')
   endif
 enddef
 
@@ -117,26 +117,26 @@ enddef
 def g:SessionDelete(bang: bool = false, name: string = null_string,
     silent: bool = false): void
   if !isdirectory(s_session_dir)
-    iui.Error('The session direcotry does not exist: ' .. s_session_dir)
+    ui.Error('The session direcotry does not exist: ' .. s_session_dir)
     return
   endif
 
   var new_name: string = name
   if new_name == null
-    new_name = icore.Input('Session name: ', '', 'customlist,g:SessionList')
+    new_name = core.Input('Session name: ', '', 'customlist,g:SessionList')
   endif
   if empty(new_name)
-    iui.Error('Need session name')
+    ui.Error('Need session name')
     return
   endif
 
-  var file: string = ipath.Join(s_session_dir, new_name)
+  var file: string = path.Join(s_session_dir, new_name)
   if !filereadable(file)
-    iui.Error('No such file: ' .. file)
+    ui.Error('No such file: ' .. file)
     return
   endif
   if !bang
-    var choice: number = icore.Confirm(
+    var choice: number = core.Confirm(
       'Delete session ' .. new_name .. '?', "&Yes\n&No", 2)
     if choice != 1
       return
@@ -144,7 +144,7 @@ def g:SessionDelete(bang: bool = false, name: string = null_string,
   endif
   delete(file)
   if !silent
-    iui.Warn('Delete session [' .. new_name .. ']')
+    ui.Warn('Delete session [' .. new_name .. ']')
   endif
 enddef
 
@@ -163,7 +163,7 @@ command! -nargs=? -bar -bang -complete=customlist,g:SessionList
 command! -nargs=? -bar -bang -complete=customlist,g:SessionList
       \ IvimSessionDelete g:SessionDelete(<bang>0, <f-args>)
 command! -nargs=0 -bar IvimSessionClose g:SessionClose()
-command! -nargs=0 IvimRoot iui.Info(iproject.CurRoot())
+command! -nargs=0 IvimRoot ui.Info(project.CurRoot())
 
 augroup ivim_plugin_isession
   au!
@@ -173,9 +173,9 @@ augroup ivim_plugin_isession
 augroup END
 
 # {{{ leaderf integration
-if iplug.Has('LeaderF')
+if plug.Has('LeaderF')
   nnoremap <leader>sp <Cmd>Leaderf project<CR>
-  ikeymap.SetDesc('<leader>sp', 'Project')
+  keymap.SetDesc('<leader>sp', 'Project')
 
   def LfProjectSource(..._): list<string>
     return g:SessionList('')
